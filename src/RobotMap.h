@@ -1,6 +1,22 @@
 #ifndef ROBOTMAP_H
 #define ROBOTMAP_H
+#include "WPILib.h"
+#include "CANTalon.h"
 
+class RobotMap {
+public:
+	static std::shared_ptr<CANTalon> drivetrainFrontLeftMotor;
+	static std::shared_ptr<CANTalon> drivetrainRearLeftMotor;
+	static std::shared_ptr<CANTalon> drivetrainFrontRightMotor;
+	static std::shared_ptr<CANTalon> drivetrainRearRightMotor;
+	static std::shared_ptr<RobotDrive> drivetrainChassis;
+	static std::shared_ptr<Encoder> drivetrainLeftEncoder;
+	static std::shared_ptr<Encoder> drivetrainRightEncoder;
+	static std::shared_ptr<DoubleSolenoid> drivetrainShift;
+
+
+	static void init();
+};
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
