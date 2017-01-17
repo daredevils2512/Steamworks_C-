@@ -19,11 +19,12 @@ private:
 	std::shared_ptr<Encoder> LeftEncoder;
 	std::shared_ptr<Encoder> RightEncoder;
 	std::shared_ptr<DoubleSolenoid> DriveTrainShift;
+
 public:
 	Drivetrain();
 	void InitDefaultCommand();
 	void DriveRobot(double move, double turn);
-	void Shift (bool dir);
+	void Shifter (DoubleSolenoid::Value dir);
 	void GetEncoders();
 	void ResetEncoders();
 	void SetAutonomous();

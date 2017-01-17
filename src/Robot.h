@@ -1,4 +1,3 @@
-
 #ifndef SRC_ROBOT_H_
 #define SRC_ROBOT_H_
 
@@ -7,6 +6,7 @@
 #include "Commands/Command.h"
 #include "LiveWindow/LiveWindow.h"
 #include "Subsystems/Drivetrain.h"
+#include "Subsystems/CompressorSubsystem.h"
 #include "OI.h"
 
 class Robot : public IterativeRobot {
@@ -16,6 +16,7 @@ public:
 	LiveWindow *lw = LiveWindow::GetInstance();
 
 static std::shared_ptr<Drivetrain> drivetrain;
+static std::shared_ptr<CompressorSubsystem> compressor;
 
 virtual void RobotInit();
 virtual void DisabledInit();

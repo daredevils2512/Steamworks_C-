@@ -7,6 +7,7 @@ class OI
 {
 private:
 	Joystick driverController{0};
+	JoystickButton DRC_rightBumper{&driverController, 6};
 public:
 	OI();
 	double GetX();

@@ -12,9 +12,9 @@ public:
 	static std::shared_ptr<RobotDrive> drivetrainChassis;
 	static std::shared_ptr<Encoder> drivetrainLeftEncoder;
 	static std::shared_ptr<Encoder> drivetrainRightEncoder;
+	static std::shared_ptr<Relay> compressorSpike;
+	static std::shared_ptr<DigitalInput> compressorPressureSwitch;
 	static std::shared_ptr<DoubleSolenoid> drivetrainShift;
-
-
 	static void init();
 };
 /**
@@ -33,5 +33,4 @@ public:
 // number and the module. For example you with a rangefinder:
 // constexpr int RANGE_FINDER_PORT = 1;
 // constexpr int RANGE_FINDER_MODULE = 1;
-
 #endif  // ROBOTMAP_H

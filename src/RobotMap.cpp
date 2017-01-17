@@ -9,6 +9,8 @@ std::shared_ptr<CANTalon> RobotMap::drivetrainRearRightMotor;
 std::shared_ptr<RobotDrive> RobotMap::drivetrainChassis;
 std::shared_ptr<Encoder> RobotMap::drivetrainLeftEncoder;
 std::shared_ptr<Encoder> RobotMap::drivetrainRightEncoder;
+std::shared_ptr<Relay> RobotMap::compressorSpike;
+std::shared_ptr<DigitalInput> RobotMap::compressorPressureSwitch;
 std::shared_ptr<DoubleSolenoid> RobotMap::drivetrainShift;
 
 
@@ -16,7 +18,7 @@ void RobotMap::init() {
 	LiveWindow *lw = LiveWindow::GetInstance();
 
 	drivetrainFrontLeftMotor.reset (new CANTalon(1));
-	lw ->AddActuator ("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
+	lw ->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
 
 	drivetrainRearLeftMotor.reset (new CANTalon(2));
 	lw ->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
@@ -25,7 +27,7 @@ void RobotMap::init() {
 	lw ->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
 
 	drivetrainRearRightMotor.reset (new CANTalon(4));
-	lw -> AddActuator ("Drivetrain" , "FrontRightMotor" , drivetrainRearRightMotor);
+	lw -> AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainRearRightMotor);
 
 	drivetrainChassis.reset (new RobotDrive (drivetrainFrontLeftMotor , drivetrainRearLeftMotor , drivetrainFrontRightMotor , drivetrainRearRightMotor));
 
@@ -43,8 +45,10 @@ void RobotMap::init() {
 	drivetrainShift.reset (new DoubleSolenoid (1 , 2 , 3));
 	lw ->AddActuator("Drivetrain" , "DoubleSolenoid" , drivetrainShift);
 
+	compressorSpike.reset(new Relay(1));
+	lw->AddActuator("Compressor", "CompressorSpike", compressorSpike);
+
+	compressorPressureSwitch.reset(new DigitalInput(1));
+	lw->AddSensor("Compressor", "CompressorPressureSwitch", compressorPressureSwitch);
 
 }
-
-
-

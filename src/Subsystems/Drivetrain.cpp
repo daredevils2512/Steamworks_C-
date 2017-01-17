@@ -19,9 +19,8 @@ void Drivetrain::InitDefaultCommand() {
     // Set the default command for a subsystem here.
     // SetDefaultCommand(new MySpecialCommand());
 
-	SetDefaultCommand(new Drive(0 , 0));
+	SetDefaultCommand(new Drive(0.0 , 0.0));
 }
-
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
@@ -29,8 +28,9 @@ void Drivetrain::InitDefaultCommand() {
 void Drivetrain::DriveRobot(double move, double turn) {
 	Chassis->TankDrive(move, turn, false);
 }
-void Drivetrain::Shift(bool dir) {
 
+void Drivetrain::Shifter(DoubleSolenoid::Value dir) {
+	DriveTrainShift->Set(dir);
 }
 
 void Drivetrain::GetEncoders() {
@@ -42,4 +42,3 @@ void Drivetrain::ResetEncoders() {
 	LeftEncoder->Reset();
 	RightEncoder->Reset();
 }
-

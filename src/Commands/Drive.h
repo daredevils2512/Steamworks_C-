@@ -9,7 +9,6 @@
 class Drive: public Command {
 public:
 	Drive(double move , double turn);
-
 	virtual void Initialize();
 	virtual void Execute();
 	virtual bool IsFinished();
