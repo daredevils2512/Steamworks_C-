@@ -41,10 +41,6 @@ void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
 	SmartDashboard::PutNumber("left encoder", RobotMap::drivetrainLeftEncoder->GetDistance());
 	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder->GetDistance());
-	SmartDashboard::PutNumber("front left motor" , RobotMap::drivetrainFrontLeftMotor->Get());
-	SmartDashboard::PutNumber("rear left motor" , RobotMap::drivetrainRearLeftMotor->Get());
-	SmartDashboard::PutNumber("front right motor" , RobotMap::drivetrainFrontRightMotor->Get());
-	SmartDashboard::PutNumber("rear right motor" , RobotMap::drivetrainRearRightMotor->Get());
 }
 
 void Robot::TestPeriodic() {

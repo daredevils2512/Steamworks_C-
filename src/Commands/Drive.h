@@ -8,7 +8,7 @@
 
 class Drive: public Command {
 public:
-	Drive(double move , double turn);
+	Drive();
 	virtual void Initialize();
 	virtual void Execute();
 	virtual bool IsFinished();
@@ -16,8 +16,7 @@ public:
 	virtual void Interrupted();
 
 private:
-	double m_move;
-	double m_turn;
+
 };
 
 #endif

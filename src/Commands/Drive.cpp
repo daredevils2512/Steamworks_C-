@@ -1,9 +1,7 @@
 #include "Drive.h"
 #include "OI.h"
 
-Drive::Drive(double move , double turn) : Command() {
-	m_move = move;
-	m_turn = turn;
+Drive::Drive() : Command() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::drivetrain.get());
