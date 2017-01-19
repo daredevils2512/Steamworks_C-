@@ -6,6 +6,7 @@ std::shared_ptr<CANTalon> RobotMap::drivetrainFrontLeftMotor;
 std::shared_ptr<CANTalon> RobotMap::drivetrainRearLeftMotor;
 std::shared_ptr<CANTalon> RobotMap::drivetrainFrontRightMotor;
 std::shared_ptr<CANTalon> RobotMap::drivetrainRearRightMotor;
+std::shared_ptr<CANTalon> RobotMap::climberMotor;
 std::shared_ptr<frc::RobotDrive> RobotMap::drivetrainChassis;
 std::shared_ptr<frc::Encoder> RobotMap::drivetrainLeftEncoder;
 std::shared_ptr<frc::Encoder> RobotMap::drivetrainRightEncoder;
@@ -14,20 +15,23 @@ std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
 
 
+
 void RobotMap::init() {
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
 
 	drivetrainFrontLeftMotor.reset (new CANTalon(1));
-	lw ->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
+	lw -> AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
 
 	drivetrainRearLeftMotor.reset (new CANTalon(2));
-	lw ->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
+	lw -> AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
 
 	drivetrainFrontRightMotor.reset (new CANTalon(3));
-	lw ->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
+	lw -> AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
 
 	drivetrainRearRightMotor.reset (new CANTalon(4));
 	lw -> AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainRearRightMotor);
+
+	climberMotor.reset (new CANTalon(5));
 
 	drivetrainChassis.reset (new frc::RobotDrive (drivetrainFrontLeftMotor , drivetrainRearLeftMotor , drivetrainFrontRightMotor , drivetrainRearRightMotor));
 

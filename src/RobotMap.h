@@ -9,6 +9,7 @@ public:
 	static std::shared_ptr<CANTalon> drivetrainRearLeftMotor;
 	static std::shared_ptr<CANTalon> drivetrainFrontRightMotor;
 	static std::shared_ptr<CANTalon> drivetrainRearRightMotor;
+	static std::shared_ptr<CANTalon> climberMotor;
 	static std::shared_ptr<RobotDrive> drivetrainChassis;
 	static std::shared_ptr<Encoder> drivetrainLeftEncoder;
 	static std::shared_ptr<Encoder> drivetrainRightEncoder;
