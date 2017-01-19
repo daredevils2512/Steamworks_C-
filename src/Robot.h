@@ -7,6 +7,7 @@
 #include "LiveWindow/LiveWindow.h"
 #include "Subsystems/Drivetrain.h"
 #include "Subsystems/CompressorSubsystem.h"
+#include "Subsystems/Climber.h"
 #include "OI.h"
 
 class Robot : public IterativeRobot {
@@ -17,6 +18,7 @@ public:
 
 static std::shared_ptr<Drivetrain> drivetrain;
 static std::shared_ptr<CompressorSubsystem> compressor;
+static std::shared_ptr<Climber> climber;
 
 virtual void RobotInit();
 virtual void DisabledInit();
