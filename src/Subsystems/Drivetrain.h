@@ -25,7 +25,7 @@ public:
 	void InitDefaultCommand();
 	void DriveRobot(double move, double turn);
 	void Shifter (DoubleSolenoid::Value dir);
-	void GetEncoders();
+	void GetEncoders(double distance);
 	void ResetEncoders();
 	void SetAutonomous();
 	bool GetAutonomous();
