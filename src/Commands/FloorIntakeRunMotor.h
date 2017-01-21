@@ -14,6 +14,7 @@ public:
 	void End();
 	void Interrupted();
 
+	//makes a speed double
 private:
 	double m_speed;
 };

@@ -14,6 +14,7 @@ void ClimberRunMotor::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ClimberRunMotor::Execute() {
+	//Sets the speed of the climberMotor
 	Robot::climber->SetSpeed(m_speed);
 }
 
@@ -24,6 +25,7 @@ bool ClimberRunMotor::IsFinished() {
 
 // Called once after isFinished returns true
 void ClimberRunMotor::End() {
+	//Turns the motor off
 	Robot::climber->SetSpeed(0.0);
 }
 

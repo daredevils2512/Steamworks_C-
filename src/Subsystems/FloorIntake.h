@@ -12,6 +12,7 @@ private:
 	// for methods that implement subsystem capabilities
 	std::shared_ptr<CANTalon> intakeMotor;
 
+	//creates usable functions
 public:
 	FloorIntake();
 	void InitDefaultCommand();

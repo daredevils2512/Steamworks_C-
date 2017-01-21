@@ -14,6 +14,7 @@ private:
 
 public:
 	Climber();
+	//creating the usable functions for this subsystem
 	void InitDefaultCommand();
 	void SetSpeed(double speed);
 
