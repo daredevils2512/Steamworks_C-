@@ -9,6 +9,7 @@ void CompressorRun::Initialize() {
 
 void CompressorRun::Execute() {
 	{
+		//if the robot is not fully pressurized the compressor will turn on and run
 		if(!Robot::compressor->Pressurized()) {
 			Robot::compressor->On();
 		}else{
