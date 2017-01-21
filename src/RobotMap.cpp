@@ -7,6 +7,7 @@ std::shared_ptr<CANTalon> RobotMap::drivetrainRearLeftMotor;
 std::shared_ptr<CANTalon> RobotMap::drivetrainFrontRightMotor;
 std::shared_ptr<CANTalon> RobotMap::drivetrainRearRightMotor;
 std::shared_ptr<CANTalon> RobotMap::climberMotor;
+std::shared_ptr<CANTalon> RobotMap::intakeMotor;
 std::shared_ptr<frc::RobotDrive> RobotMap::drivetrainChassis;
 std::shared_ptr<frc::Encoder> RobotMap::drivetrainLeftEncoder;
 std::shared_ptr<frc::Encoder> RobotMap::drivetrainRightEncoder;
@@ -32,6 +33,8 @@ void RobotMap::init() {
 	lw -> AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainRearRightMotor);
 
 	climberMotor.reset (new CANTalon(5));
+
+	intakeMotor.reset (new CANTalon(6));
 
 	drivetrainChassis.reset (new frc::RobotDrive (drivetrainFrontLeftMotor , drivetrainRearLeftMotor , drivetrainFrontRightMotor , drivetrainRearRightMotor));
 

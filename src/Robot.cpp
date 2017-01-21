@@ -4,12 +4,14 @@
 std::shared_ptr<Drivetrain> Robot::drivetrain;
 std::shared_ptr<CompressorSubsystem> Robot::compressor;
 std::shared_ptr<Climber> Robot::climber;
+std::shared_ptr<FloorIntake> Robot::floorIntake;
 std::unique_ptr<OI> Robot::oi;
 
 void Robot::RobotInit() {
     drivetrain.reset(new Drivetrain());
     compressor.reset(new CompressorSubsystem());
     climber.reset(new Climber());
+    floorIntake.reset(new FloorIntake());
 	oi.reset(new OI());
 
   }

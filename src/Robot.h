@@ -8,6 +8,7 @@
 #include "Subsystems/Drivetrain.h"
 #include "Subsystems/CompressorSubsystem.h"
 #include "Subsystems/Climber.h"
+#include "Subsystems/FloorIntake.h"
 #include "OI.h"
 
 class Robot : public IterativeRobot {
@@ -19,6 +20,7 @@ public:
 static std::shared_ptr<Drivetrain> drivetrain;
 static std::shared_ptr<CompressorSubsystem> compressor;
 static std::shared_ptr<Climber> climber;
+static std::shared_ptr<FloorIntake> floorIntake;
 
 virtual void RobotInit();
 virtual void DisabledInit();
