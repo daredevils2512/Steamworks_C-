@@ -14,5 +14,7 @@ void Climber::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void Climber::SetSpeed(double speed) {
+
+	//sets speed of the climber motor
 	motor->Set(speed);
 }

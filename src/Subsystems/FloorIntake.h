@@ -1,23 +1,22 @@
-#ifndef Climber_H
-#define Climber_H
+#ifndef FloorIntake_H
+#define FloorIntake_H
 
 #include <Commands/Subsystem.h>
 #include "WPILib.h"
 #include "CANTalon.h"
 #include <RobotMap.h>
 
-class Climber : public Subsystem {
+class FloorIntake : public Subsystem {
 private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
-	std::shared_ptr<CANTalon> motor;
+	std::shared_ptr<CANTalon> intakeMotor;
 
+	//creates usable functions
 public:
-	Climber();
-	//creating the usable functions for this subsystem
+	FloorIntake();
 	void InitDefaultCommand();
 	void SetSpeed(double speed);
-
 };
 
-#endif  // Climber_H
+#endif  // FloorIntake_H

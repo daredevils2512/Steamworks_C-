@@ -1,17 +1,20 @@
 #include "Robot.h"
 
-//access pointer objects delcared in Robot.h
+//access pointer objects declared in Robot.h
 std::shared_ptr<Drivetrain> Robot::drivetrain;
 std::shared_ptr<CompressorSubsystem> Robot::compressor;
 std::shared_ptr<Climber> Robot::climber;
+std::shared_ptr<FloorIntake> Robot::floorIntake;
 std::unique_ptr<OI> Robot::oi;
 
 void Robot::RobotInit() {
+	//starts subsystems
     drivetrain.reset(new Drivetrain());
     compressor.reset(new CompressorSubsystem());
     climber.reset(new Climber());
+    floorIntake.reset(new FloorIntake());
+    //starts operator interface
 	oi.reset(new OI());
-
   }
 
 void Robot::DisabledInit(){
@@ -23,6 +26,7 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
+	//starts autonomous
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
 
@@ -41,6 +45,9 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
+	//prints information to the smart dashboard
+	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainLeftEncoder ->GetDistance());
+	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder ->GetDistance());
 }
 
 void Robot::TestPeriodic() {

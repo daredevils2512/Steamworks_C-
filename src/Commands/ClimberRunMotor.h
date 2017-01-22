@@ -15,6 +15,7 @@ public:
 	void Interrupted();
 
 private:
+	//creating a double to store the spped inputed
 	double m_speed;
 };
 

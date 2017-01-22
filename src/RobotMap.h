@@ -5,16 +5,24 @@
 
 class RobotMap {
 public:
+	//4 speed controllers for drivetrain
 	static std::shared_ptr<CANTalon> drivetrainFrontLeftMotor;
 	static std::shared_ptr<CANTalon> drivetrainRearLeftMotor;
 	static std::shared_ptr<CANTalon> drivetrainFrontRightMotor;
 	static std::shared_ptr<CANTalon> drivetrainRearRightMotor;
+	//1 speed controller for running the climber motor
 	static std::shared_ptr<CANTalon> climberMotor;
+	
+	static std::shared_ptr<CANTalon> intakeMotor;
+	//robot drivetrain
 	static std::shared_ptr<frc::RobotDrive> drivetrainChassis;
+	//2 encoders to track drivetrain distance traveled
 	static std::shared_ptr<frc::Encoder> drivetrainLeftEncoder;
 	static std::shared_ptr<frc::Encoder> drivetrainRightEncoder;
+	//compressor switch and sensor to regulate compressor when connected to robot
 	static std::shared_ptr<frc::Relay> compressorSpike;
 	static std::shared_ptr<frc::DigitalInput> compressorPressureSwitch;
+	//1 pneumatic actuator for shifting gears on drivetrain
 	static std::shared_ptr<frc::DoubleSolenoid> drivetrainShift;
 	static void init();
 };

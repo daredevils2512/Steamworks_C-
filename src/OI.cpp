@@ -6,15 +6,17 @@
 
 OI::OI()
 {
-	// Process operator interface input here.
+	// activates commands here based off of operator input
 	DRC_rightBumper.WhenReleased(new DrivetrainShift(false));
 	DRC_rightBumper.WhileHeld(new DrivetrainShift(true));
 }
 
 double OI::GetX() {
+	//gets forward/backward values
 	return driverController.GetRawAxis(1);
 
 }
 double OI::GetY() {
+	//gets turning values
 	return driverController.GetRawAxis(4);
 }
