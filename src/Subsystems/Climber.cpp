@@ -2,7 +2,7 @@
 #include "../RobotMap.h"
 
 Climber::Climber() : Subsystem("Climber") {
-	climberMotor = RobotMap::climberMotor;
+	motor = RobotMap::climberMotor;
 }
 
 void Climber::InitDefaultCommand() {
@@ -14,5 +14,5 @@ void Climber::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void Climber::SetSpeed(double speed) {
-	climberMotor->Set(speed);
+	motor->Set(speed);
 }

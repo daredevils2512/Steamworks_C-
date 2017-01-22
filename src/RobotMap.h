@@ -10,12 +10,12 @@ public:
 	static std::shared_ptr<CANTalon> drivetrainFrontRightMotor;
 	static std::shared_ptr<CANTalon> drivetrainRearRightMotor;
 	static std::shared_ptr<CANTalon> climberMotor;
-	static std::shared_ptr<RobotDrive> drivetrainChassis;
-	static std::shared_ptr<Encoder> drivetrainLeftEncoder;
-	static std::shared_ptr<Encoder> drivetrainRightEncoder;
-	static std::shared_ptr<Relay> compressorSpike;
-	static std::shared_ptr<DigitalInput> compressorPressureSwitch;
-	static std::shared_ptr<DoubleSolenoid> drivetrainShift;
+	static std::shared_ptr<frc::RobotDrive> drivetrainChassis;
+	static std::shared_ptr<frc::Encoder> drivetrainLeftEncoder;
+	static std::shared_ptr<frc::Encoder> drivetrainRightEncoder;
+	static std::shared_ptr<frc::Relay> compressorSpike;
+	static std::shared_ptr<frc::DigitalInput> compressorPressureSwitch;
+	static std::shared_ptr<frc::DoubleSolenoid> drivetrainShift;
 	static void init();
 };
 /**
