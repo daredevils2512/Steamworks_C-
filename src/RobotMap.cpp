@@ -22,7 +22,7 @@ void RobotMap::init() {
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
 
 	drivetrainFrontLeftMotor.reset (new CANTalon(1));
-	lw->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor.get());
+	lw->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
 
 	drivetrainRearLeftMotor.reset (new CANTalon(2));
 	lw->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
@@ -34,8 +34,10 @@ void RobotMap::init() {
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainRearRightMotor);
 
 	climberMotor.reset (new CANTalon(5));
+	lw->AddActuator("Climber" , "ClimberMotor" , climberMotor);
 
 	intakeMotor.reset (new CANTalon(6));
+	lw->AddActuator("FloorIntake" , "IntakeMotor" , intakeMotor);
 
 	drivetrainChassis.reset (new frc::RobotDrive (drivetrainFrontLeftMotor , drivetrainRearLeftMotor , drivetrainFrontRightMotor , drivetrainRearRightMotor));
 
