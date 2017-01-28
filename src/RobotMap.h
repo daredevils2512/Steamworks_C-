@@ -14,6 +14,12 @@ public:
 	static std::shared_ptr<CANTalon> climberMotor;
 	
 	static std::shared_ptr<CANTalon> intakeMotor;
+
+	static std::shared_ptr<CANTalon> shooterLeftFlywheel;
+	static std::shared_ptr<CANTalon> shooterRightFlywheel;
+	static std::shared_ptr<CANTalon> shooterTurretSwivel;
+	static std::shared_ptr<CANTalon> shooterSpinCycleFeed;
+
 	//robot drivetrain
 	static std::shared_ptr<frc::RobotDrive> drivetrainChassis;
 	//2 encoders to track drivetrain distance traveled
@@ -22,8 +28,12 @@ public:
 	//compressor switch and sensor to regulate compressor when connected to robot
 	static std::shared_ptr<frc::Relay> compressorSpike;
 	static std::shared_ptr<frc::DigitalInput> compressorPressureSwitch;
+	static std::shared_ptr<frc::DigitalInput> shooterLeftLimitSwitch;
+	static std::shared_ptr<frc::DigitalInput> shooterRightLimitSwitch;
 	//1 pneumatic actuator for shifting gears on drivetrain
 	static std::shared_ptr<frc::DoubleSolenoid> drivetrainShift;
+	static std::shared_ptr<frc::DoubleSolenoid> shooterHoodActuator;
+
 	static void init();
 };
 /**

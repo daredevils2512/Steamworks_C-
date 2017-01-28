@@ -5,6 +5,7 @@ std::shared_ptr<Drivetrain> Robot::drivetrain;
 std::shared_ptr<CompressorSubsystem> Robot::compressor;
 std::shared_ptr<Climber> Robot::climber;
 std::shared_ptr<FloorIntake> Robot::floorIntake;
+std::shared_ptr<Shooter> Robot::shooter;
 std::unique_ptr<OI> Robot::oi;
 
 void Robot::RobotInit() {
@@ -13,6 +14,7 @@ void Robot::RobotInit() {
     compressor.reset(new CompressorSubsystem());
     climber.reset(new Climber());
     floorIntake.reset(new FloorIntake());
+    shooter.reset(new Shooter());
     //starts operator interface
 	oi.reset(new OI());
   }

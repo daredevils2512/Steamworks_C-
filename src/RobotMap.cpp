@@ -9,12 +9,19 @@ std::shared_ptr<CANTalon> RobotMap::drivetrainFrontRightMotor;
 std::shared_ptr<CANTalon> RobotMap::drivetrainRearRightMotor;
 std::shared_ptr<CANTalon> RobotMap::climberMotor;
 std::shared_ptr<CANTalon> RobotMap::intakeMotor;
+std::shared_ptr<CANTalon> RobotMap::shooterLeftFlywheel;
+std::shared_ptr<CANTalon> RobotMap::shooterRightFlywheel;
+std::shared_ptr<CANTalon> RobotMap::shooterTurretSwivel;
+std::shared_ptr<CANTalon> RobotMap::shooterSpinCycleFeed;
 std::shared_ptr<frc::RobotDrive> RobotMap::drivetrainChassis;
 std::shared_ptr<frc::Encoder> RobotMap::drivetrainLeftEncoder;
 std::shared_ptr<frc::Encoder> RobotMap::drivetrainRightEncoder;
 std::shared_ptr<frc::Relay> RobotMap::compressorSpike;
 std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
+std::shared_ptr<frc::DigitalInput> RobotMap::shooterLeftLimitSwitch;
+std::shared_ptr<frc::DigitalInput> RobotMap::shooterRightLimitSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
+std::shared_ptr<frc::DoubleSolenoid> RobotMap::shooterHoodActuator;
 
 //runs at startup of robot
 void RobotMap::init() {
@@ -39,6 +46,18 @@ void RobotMap::init() {
 	intakeMotor.reset (new CANTalon(6));
 	lw->AddActuator("FloorIntake" , "IntakeMotor" , intakeMotor);
 
+	shooterLeftFlywheel.reset (new CANTalon(7));
+	lw->AddActuator("Shooter" , "LeftFlywheel" , shooterLeftFlywheel);
+
+	shooterRightFlywheel.reset (new CANTalon(8));
+	lw->AddActuator("Shooter" , "RightFlywheel" , shooterRightFlywheel);
+
+	shooterTurretSwivel.reset (new CANTalon(9));
+	lw->AddActuator("Shooter" , "TurretSwivel" , shooterTurretSwivel);
+
+	shooterSpinCycleFeed.reset (new CANTalon(10));
+	lw->AddActuator("Shooter" , "SpinCycleFeed" , shooterSpinCycleFeed);
+
 	drivetrainChassis.reset (new frc::RobotDrive (drivetrainFrontLeftMotor , drivetrainRearLeftMotor , drivetrainFrontRightMotor , drivetrainRearRightMotor));
 
 	drivetrainChassis ->SetSafetyEnabled(true);
@@ -58,10 +77,17 @@ void RobotMap::init() {
 	drivetrainShift.reset (new frc::DoubleSolenoid (1 , 0 , 1));
 	lw -> AddActuator("Drivetrain" , "DoubleSolenoid" , drivetrainShift);
 
+	shooterHoodActuator.reset (new frc::DoubleSolenoid (1, 2, 3));
+	lw -> AddActuator("Shooter", "HoodActuator", shooterHoodActuator);
+
 	compressorSpike.reset(new frc::Relay(1));
 	lw -> AddActuator("Compressor", "CompressorSpike", compressorSpike);
 
-	compressorPressureSwitch.reset(new frc::DigitalInput(1));
+	compressorPressureSwitch.reset(new frc::DigitalInput(0));
 	lw -> AddSensor("Compressor", "CompressorPressureSwitch", compressorPressureSwitch);
+
+	shooterLeftLimitSwitch.reset(new frc::DigitalInput(1));
+	lw -> AddSensor("Shooter", "LeftLimitSwitch", shooterLeftLimitSwitch);
+
 
 }
