@@ -23,6 +23,7 @@ std::shared_ptr<frc::DigitalInput> RobotMap::shooterRightLimitSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearLimitSwitch;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearPhotoeye;
+std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearSolenoid;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::shooterHoodActuator;
 std::shared_ptr<Pixy> RobotMap::shooterPixy;
 
@@ -81,16 +82,16 @@ void RobotMap::init() {
 		drivetrainChassis ->SetMaxOutput(1.0);
 
 	drivetrainLeftEncoder.reset (new frc::Encoder (0 , 1 , false , frc::Encoder::k4X));
-	lw -> AddSensor("Drivetrain" , "LeftEncoder" , drivetrainLeftEncoder);
+	lw ->AddSensor("Drivetrain" , "LeftEncoder" , drivetrainLeftEncoder);
 	drivetrainLeftEncoder ->SetDistancePerPulse(0.0981747704246);
 	//took wheel diameter of 4 inches and multiplied by pi to get 12.56 inch circumference
 	//then divided circumference by 128 clicks to get the distance per pulse value
 	drivetrainRightEncoder.reset (new frc::Encoder (2 , 3 , false , frc::Encoder::k4X));
-	lw -> AddSensor("Drivetrain" , "RightEncoder" , drivetrainRightEncoder);
+	lw ->AddSensor("Drivetrain" , "RightEncoder" , drivetrainRightEncoder);
 	drivetrainRightEncoder ->SetDistancePerPulse(0.0981747704246);
 
 	shooterHoodActuator.reset (new frc::DoubleSolenoid (1, 2, 3));
-	lw -> AddActuator("Shooter", "HoodActuator", shooterHoodActuator);
+	lw ->AddActuator("Shooter", "HoodActuator", shooterHoodActuator);
 
 	compressorSpike.reset(new frc::Relay(1));
 	lw ->AddActuator("Compressor", "CompressorSpike", compressorSpike);
@@ -98,19 +99,22 @@ void RobotMap::init() {
 	compressorPressureSwitch.reset(new frc::DigitalInput(0));
 	lw ->AddSensor("Compressor", "CompressorPressureSwitch", compressorPressureSwitch);
 
-	drivetrainShift.reset (new frc::DoubleSolenoid (1 , 0 , 1));
-	shooterLeftLimitSwitch.reset(new frc::DigitalInput(1));
+	drivetrainShift.reset (new frc::DoubleSolenoid (1, 0, 1));
 	lw ->AddActuator("Drivetrain" , "DoubleSolenoid" , drivetrainShift);
 
-	gearLimitSwitch.reset (new frc::DigitalInput(1));
+	shooterLeftLimitSwitch.reset(new frc::DigitalInput(1));
+	lw ->AddSensor("Shooter", "LeftLimitSwitch", shooterLeftLimitSwitch);
+
+	shooterRightLimitSwitch.reset(new frc::DigitalInput(2));
+	lw ->AddSensor ("Shooter" , "RightLimitSwitch" , shooterRightLimitSwitch);
+
+	gearLimitSwitch.reset (new frc::DigitalInput(3));
 	lw ->AddSensor("Gear" , "GearLimitSwitch" , gearLimitSwitch);
 
-	gearPhotoeye.reset (new frc::DigitalInput(2));
+	gearPhotoeye.reset (new frc::DigitalInput(4));
 	lw ->AddSensor("Gear" , "GearPhotoeye" , gearPhotoeye);
 
-	lw -> AddSensor("Shooter", "LeftLimitSwitch", shooterLeftLimitSwitch);
-
-	shooterPixy = new Pixy(frc::SPI::kOnboardCS0,frc::SPI::kOnboardCS3);
-
+	gearSolenoid.reset (new frc::DoubleSolenoid(2, 3, 4));
+	lw ->AddActuator("Gear" , "GearSolenoid" , gearSolenoid);
 
 }
