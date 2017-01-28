@@ -76,11 +76,16 @@ void Drivetrain::DriveCircle(double actualRadius, bool direction, double distanc
 
 	//uses the boolean direction to determine which way to turn. True = left, False = right
 	//And sets the outer side to the velocity inputed and the inner side to the velocity we found
+	//Sets the control mode for the Talons to kSpeed for PID
 	if (direction == true) {
+		RearRightMotor->SetControlMode(CANSpeedController::kSpeed);
 		RearRightMotor->Set(outerVelocity);
+		RearLeftMotor->SetControlMode(CANSpeedController::kSpeed);
 		RearLeftMotor->Set(innerVelocity);
 	} else {
 		RearLeftMotor->Set(outerVelocity);
+		RearRightMotor->SetControlMode(CANSpeedController::kSpeed);
+		RearLeftMotor->SetControlMode(CANSpeedController::kSpeed);
 		RearRightMotor->Set(innerVelocity);
 	}
 }

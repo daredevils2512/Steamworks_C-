@@ -28,6 +28,7 @@ void RobotMap::init() {
 
 	drivetrainRearLeftMotor.reset (new CANTalon(2));
 	lw->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
+	drivetrainRearLeftMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 
 	drivetrainFrontRightMotor.reset (new CANTalon(3));
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
@@ -36,6 +37,7 @@ void RobotMap::init() {
 
 	drivetrainRearRightMotor.reset (new CANTalon(4));
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainRearRightMotor);
+	drivetrainRearRightMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 
 	climberMotor.reset (new CANTalon(5));
 	lw->AddActuator("Climber" , "ClimberMotor" , climberMotor);
