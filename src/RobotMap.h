@@ -13,7 +13,7 @@ public:
 	static std::shared_ptr<CANTalon> drivetrainRearRightMotor;
 	//1 speed controller for running the climber motor
 	static std::shared_ptr<CANTalon> climberMotor;
-	
+	//1 speed controller for running the intake motor
 	static std::shared_ptr<CANTalon> intakeMotor;
 
 	static std::shared_ptr<CANTalon> shooterLeftFlywheel;
@@ -34,6 +34,10 @@ public:
 	static std::shared_ptr<frc::DigitalInput> shooterRightLimitSwitch;
 	//1 pneumatic actuator for shifting gears on drivetrain
 	static std::shared_ptr<frc::DoubleSolenoid> drivetrainShift;
+	//1 limit switch to notify once gear is in the slot
+	static std::shared_ptr<frc::DigitalInput> gearLimitSwitch;
+	//1 photoeye to notify if the gear is far enough out of the slot
+	static std::shared_ptr<frc::DigitalInput> gearPhotoeye;
 	static std::shared_ptr<frc::DoubleSolenoid> shooterHoodActuator;
 
 

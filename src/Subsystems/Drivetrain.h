@@ -28,6 +28,7 @@ public:
 	void GetEncoders(double distance);
 	void ResetEncoders();
 	void SetAutonomous();
+	void DriveCircle(double actualRadius, bool direction, double distance, double outerVelocity);
 	bool GetAutonomous();
 
 };
