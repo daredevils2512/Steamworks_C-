@@ -15,6 +15,8 @@ std::shared_ptr<frc::Encoder> RobotMap::drivetrainRightEncoder;
 std::shared_ptr<frc::Relay> RobotMap::compressorSpike;
 std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
+std::shared_ptr<frc::DigitalInput> RobotMap::gearLimitSwitch;
+std::shared_ptr<frc::DigitalInput> RobotMap::gearPhotoeye;
 
 //runs at startup of robot
 void RobotMap::init() {
@@ -55,13 +57,19 @@ void RobotMap::init() {
 	lw -> AddSensor("Drivetrain" , "RightEncoder" , drivetrainRightEncoder);
 	drivetrainRightEncoder ->SetDistancePerPulse(0.0981747704246);
 
-	drivetrainShift.reset (new frc::DoubleSolenoid (1 , 0 , 1));
-	lw -> AddActuator("Drivetrain" , "DoubleSolenoid" , drivetrainShift);
-
 	compressorSpike.reset(new frc::Relay(1));
-	lw -> AddActuator("Compressor", "CompressorSpike", compressorSpike);
+	lw ->AddActuator("Compressor", "CompressorSpike", compressorSpike);
 
 	compressorPressureSwitch.reset(new frc::DigitalInput(1));
-	lw -> AddSensor("Compressor", "CompressorPressureSwitch", compressorPressureSwitch);
+	lw ->AddSensor("Compressor", "CompressorPressureSwitch", compressorPressureSwitch);
+
+	drivetrainShift.reset (new frc::DoubleSolenoid (1 , 0 , 1));
+	lw ->AddActuator("Drivetrain" , "DoubleSolenoid" , drivetrainShift);
+
+	gearLimitSwitch.reset (new frc::DigitalInput(1));
+	lw ->AddSensor("Gear" , "GearLimitSwitch" , gearLimitSwitch);
+
+	gearPhotoeye.reset (new frc::DigitalInput(2));
+	lw ->AddSensor("Gear" , "GearPhotoeye" , gearPhotoeye);
 
 }
