@@ -9,7 +9,7 @@ std::shared_ptr<Shooter> Robot::shooter;
 std::unique_ptr<OI> Robot::oi;
 
 void Robot::RobotInit() {
-	//starts subsystems
+	//starts subsystems and creates new instances of them
     drivetrain.reset(new Drivetrain());
     compressor.reset(new CompressorSubsystem());
     climber.reset(new Climber());

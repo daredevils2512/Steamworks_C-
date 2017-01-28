@@ -20,6 +20,7 @@ private:
 	std::shared_ptr<Encoder> RightEncoder;
 	std::shared_ptr<DoubleSolenoid> DriveTrainShift;
 
+	//Declaring all of the functions the Drivetrain subsystem can do
 public:
 	Drivetrain();
 	void InitDefaultCommand();

@@ -15,6 +15,7 @@ public:
 	void Interrupted();
 
 private:
+	//Declaring the members in private
 	double m_actualRadius;
 	bool m_direction;
 	double m_distance;

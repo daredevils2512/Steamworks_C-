@@ -29,24 +29,29 @@ std::shared_ptr<Pixy> RobotMap::shooterPixy;
 //runs at startup of robot
 void RobotMap::init() {
 	//assigns ports and settings to pointer objects declared in RobotMap.h
+	//Creating new instances of the subsystems
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
 
 	drivetrainFrontLeftMotor.reset (new CANTalon(1));
 	lw->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
+	//Setting the control mode of the front motors to slaves
 	drivetrainFrontLeftMotor->SetControlMode(CANSpeedController::kFollower);
 	drivetrainFrontLeftMotor->Set(2);
 
 	drivetrainRearLeftMotor.reset (new CANTalon(2));
 	lw->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
+	//Setting up PID with the back motors since they are the Masters
 	drivetrainRearLeftMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 
 	drivetrainFrontRightMotor.reset (new CANTalon(3));
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
+	//Setting the control mode of the front motors to slaves
 	drivetrainFrontRightMotor->SetControlMode(CANSpeedController::kFollower);
 	drivetrainFrontRightMotor->Set(4);
 
 	drivetrainRearRightMotor.reset (new CANTalon(4));
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainRearRightMotor);
+	//Setting up PID with the back motors since they are the Masters
 	drivetrainRearRightMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 
 	climberMotor.reset (new CANTalon(5));
@@ -67,6 +72,7 @@ void RobotMap::init() {
 	shooterSpinCycleFeed.reset (new CANTalon(10));
 	lw->AddActuator("Shooter" , "SpinCycleFeed" , shooterSpinCycleFeed);
 
+	//creating a new chassis consisting of all the drivetrain motors
 	drivetrainChassis.reset (new frc::RobotDrive (drivetrainFrontLeftMotor , drivetrainRearLeftMotor , drivetrainFrontRightMotor , drivetrainRearRightMotor));
 
 	drivetrainChassis ->SetSafetyEnabled(true);

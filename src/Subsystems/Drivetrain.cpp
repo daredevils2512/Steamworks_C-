@@ -63,7 +63,8 @@ void Drivetrain::DriveCircle(double actualRadius, bool direction, double distanc
 	double innerVelocity;
 	double time;
 
-	//All the maths
+	//Using all the numbers inputed and created above to figure out the circumference of all three circles
+	//Middle of the robot, outer wheels, and inner wheels
 	radiusInches = actualRadius * 12;
 	innerRadius = radiusInches - 11.5;
 	outerRadius = radiusInches + 11.5;
@@ -71,20 +72,22 @@ void Drivetrain::DriveCircle(double actualRadius, bool direction, double distanc
 	outerCirclePercent = outerCircumference / distance;
 	innerCircumference = 2 * pi * innerRadius;
 	innerCirclePercent = innerCircumference / distance;
+	//Figuring out how long it will take the outside wheels to complete the portion of the circle at the inputed velocity
 	time = outerCirclePercent / outerVelocity;
+	//Using the time figured out above to determine what velocity to set the inner wheels at
 	innerVelocity = innerCirclePercent / time;
 
 	//uses the boolean direction to determine which way to turn. True = left, False = right
 	//And sets the outer side to the velocity inputed and the inner side to the velocity we found
-	//Sets the control mode for the Talons to kSpeed for PID
+	//Sets the control mode for the TalonSRX's to kSpeed for PID
 	if (direction == true) {
 		RearRightMotor->SetControlMode(CANSpeedController::kSpeed);
 		RearRightMotor->Set(outerVelocity);
 		RearLeftMotor->SetControlMode(CANSpeedController::kSpeed);
 		RearLeftMotor->Set(innerVelocity);
 	} else {
-		RearLeftMotor->Set(outerVelocity);
 		RearRightMotor->SetControlMode(CANSpeedController::kSpeed);
+		RearLeftMotor->Set(outerVelocity);
 		RearLeftMotor->SetControlMode(CANSpeedController::kSpeed);
 		RearRightMotor->Set(innerVelocity);
 	}
