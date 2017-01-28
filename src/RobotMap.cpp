@@ -104,7 +104,5 @@ void RobotMap::init() {
 
 	lw -> AddSensor("Shooter", "LeftLimitSwitch", shooterLeftLimitSwitch);
 
-	shooterPixy = new Pixy(frc::SPI::kOnboardCS0,frc::SPI::kOnboardCS3);
-
 
 }
