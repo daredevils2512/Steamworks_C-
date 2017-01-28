@@ -14,9 +14,20 @@ private:
 	std::shared_ptr<CANTalon> TurretSwivel;
 	std::shared_ptr<CANTalon> SpinCycleFeed;
 
+	std::shared_ptr<frc::DoubleSolenoid> LeftLimitSwitch;
+	std::shared_ptr<frc::DoubleSolenoid> RightLimitSwitch;
+	std::shared_ptr<frc::DoubleSolenoid> HoodActuator;
+
 public:
 	Shooter();
 	void InitDefaultCommand();
+	void SetFlywheelSpeed(double speed);
+	void SetSpinCycleFeedSpeed(double speed);
+	void SetSwivelSpeed(double speed);
+	void ActuateHood(bool actuated);
+	bool IsHoodActuated();
+	bool IsLeftLimitSwitchPressed();
+	bool IsRightLimitSwitchPressed();
 };
 
 #endif  // Shooter_H

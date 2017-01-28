@@ -22,6 +22,7 @@ std::shared_ptr<frc::DigitalInput> RobotMap::shooterLeftLimitSwitch;
 std::shared_ptr<frc::DigitalInput> RobotMap::shooterRightLimitSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::shooterHoodActuator;
+std::shared_ptr<Pixy> RobotMap::shooterPixy;
 
 //runs at startup of robot
 void RobotMap::init() {
@@ -88,6 +89,8 @@ void RobotMap::init() {
 
 	shooterLeftLimitSwitch.reset(new frc::DigitalInput(1));
 	lw -> AddSensor("Shooter", "LeftLimitSwitch", shooterLeftLimitSwitch);
+
+	shooterPixy = new Pixy(frc::SPI::kOnboardCS0,frc::SPI::kOnboardCS3);
 
 
 }

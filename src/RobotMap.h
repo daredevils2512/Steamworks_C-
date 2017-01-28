@@ -2,6 +2,7 @@
 #define ROBOTMAP_H
 #include "WPILib.h"
 #include "CANTalon.h"
+#include "Pixy.h"
 
 class RobotMap {
 public:
@@ -19,6 +20,7 @@ public:
 	static std::shared_ptr<CANTalon> shooterRightFlywheel;
 	static std::shared_ptr<CANTalon> shooterTurretSwivel;
 	static std::shared_ptr<CANTalon> shooterSpinCycleFeed;
+	static std::shared_ptr<Pixy> shooterPixy;
 
 	//robot drivetrain
 	static std::shared_ptr<frc::RobotDrive> drivetrainChassis;
@@ -33,6 +35,8 @@ public:
 	//1 pneumatic actuator for shifting gears on drivetrain
 	static std::shared_ptr<frc::DoubleSolenoid> drivetrainShift;
 	static std::shared_ptr<frc::DoubleSolenoid> shooterHoodActuator;
+
+
 
 	static void init();
 };
