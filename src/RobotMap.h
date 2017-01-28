@@ -38,6 +38,7 @@ public:
 	static std::shared_ptr<frc::DigitalInput> gearLimitSwitch;
 	//1 photoeye to notify if the gear is far enough out of the slot
 	static std::shared_ptr<frc::DigitalInput> gearPhotoeye;
+	static std::shared_ptr<frc::DoubleSolenoid> gearSolenoid;
 	static std::shared_ptr<frc::DoubleSolenoid> shooterHoodActuator;
 
 

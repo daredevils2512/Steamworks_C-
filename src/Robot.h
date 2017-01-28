@@ -9,6 +9,7 @@
 #include "Subsystems/CompressorSubsystem.h"
 #include "Subsystems/Climber.h"
 #include "Subsystems/FloorIntake.h"
+#include "Subsystems/Gear.h"
 #include "Subsystems/Shooter.h"
 #include "OI.h"
 //class declaration of the robot
@@ -24,6 +25,7 @@ static std::shared_ptr<Drivetrain> drivetrain;
 static std::shared_ptr<CompressorSubsystem> compressor;
 static std::shared_ptr<Climber> climber;
 static std::shared_ptr<FloorIntake> floorIntake;
+static std::shared_ptr<Gear> gear;
 static std::shared_ptr<Shooter> shooter;
 
 //declaration of robot class functions

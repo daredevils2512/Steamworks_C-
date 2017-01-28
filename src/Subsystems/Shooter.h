@@ -14,8 +14,8 @@ private:
 	std::shared_ptr<CANTalon> TurretSwivel;
 	std::shared_ptr<CANTalon> SpinCycleFeed;
 
-	std::shared_ptr<frc::DoubleSolenoid> LeftLimitSwitch;
-	std::shared_ptr<frc::DoubleSolenoid> RightLimitSwitch;
+	std::shared_ptr<frc::DigitalInput> LeftLimitSwitch;
+	std::shared_ptr<frc::DigitalInput> RightLimitSwitch;
 	std::shared_ptr<frc::DoubleSolenoid> HoodActuator;
 
 public:
