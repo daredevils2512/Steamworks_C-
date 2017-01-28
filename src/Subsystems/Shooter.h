@@ -24,7 +24,7 @@ public:
 	void SetFlywheelSpeed(double speed);
 	void SetSpinCycleFeedSpeed(double speed);
 	void SetSwivelSpeed(double speed);
-	void ActuateHood(bool actuated);
+	void ActuateHood(frc::DoubleSolenoid::Value direction);
 	bool IsHoodActuated();
 	bool IsLeftLimitSwitchPressed();
 	bool IsRightLimitSwitchPressed();

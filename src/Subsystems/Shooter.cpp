@@ -20,20 +20,21 @@ void Shooter::InitDefaultCommand() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
-void Shooter::ActuateHood(bool actuated){
-
+void Shooter::ActuateHood(frc::DoubleSolenoid::Value direction){
+	HoodActuator->Set(direction);
 }
 
 void Shooter::SetFlywheelSpeed(double speed){
-
+	LeftFlywheel->Set(speed);
+	RightFlywheel->Set(speed);
 }
 
 void Shooter::SetSpinCycleFeedSpeed(double speed){
-
+	SpinCycleFeed->Set(speed);
 }
 
 void Shooter::SetSwivelSpeed(double speed){
-
+	TurretSwivel->Set(speed);
 }
 
 bool Shooter::IsHoodActuated() {
