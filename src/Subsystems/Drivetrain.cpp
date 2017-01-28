@@ -46,3 +46,41 @@ void Drivetrain::ResetEncoders() {
 	LeftEncoder->Reset();
 	RightEncoder->Reset();
 }
+
+void Drivetrain::DriveCircle(double actualRadius, bool direction, double distance, double outerVelocity) {
+	//takes the radius of a circle and makes the robot drive it
+	//sets velocity of both sides V=d/t, t=d/V
+
+	//All our important doubles
+	double innerRadius;
+	double outerRadius;
+	double radiusInches;
+	double outerCircumference;
+	double outerCirclePercent;
+	double innerCircumference;
+	double innerCirclePercent;
+	double pi = 3.1415;
+	double innerVelocity;
+	double time;
+
+	//All the maths
+	radiusInches = actualRadius * 12;
+	innerRadius = radiusInches - 11.5;
+	outerRadius = radiusInches + 11.5;
+	outerCircumference = 2 * pi * outerRadius;
+	outerCirclePercent = outerCircumference / distance;
+	innerCircumference = 2 * pi * innerRadius;
+	innerCirclePercent = innerCircumference / distance;
+	time = outerCirclePercent / outerVelocity;
+	innerVelocity = innerCirclePercent / time;
+
+	//uses the boolean direction to determine which way to turn. True = left, False = right
+	//And sets the outer side to the velocity inputed and the inner side to the velocity we found
+	if (direction == true) {
+		RearRightMotor->Set(outerVelocity);
+		RearLeftMotor->Set(innerVelocity);
+	} else {
+		RearLeftMotor->Set(outerVelocity);
+		RearRightMotor->Set(innerVelocity);
+	}
+}

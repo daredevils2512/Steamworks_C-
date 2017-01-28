@@ -23,12 +23,16 @@ void RobotMap::init() {
 
 	drivetrainFrontLeftMotor.reset (new CANTalon(1));
 	lw->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
+	drivetrainFrontLeftMotor->SetControlMode(CANSpeedController::kFollower);
+	drivetrainFrontLeftMotor->Set(2);
 
 	drivetrainRearLeftMotor.reset (new CANTalon(2));
 	lw->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
 
 	drivetrainFrontRightMotor.reset (new CANTalon(3));
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
+	drivetrainFrontRightMotor->SetControlMode(CANSpeedController::kFollower);
+	drivetrainFrontRightMotor->Set(4);
 
 	drivetrainRearRightMotor.reset (new CANTalon(4));
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainRearRightMotor);
