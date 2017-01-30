@@ -3,14 +3,16 @@
 
 Shooter::Shooter() : Subsystem("ExampleSubsystem") {
 	//quick defines
-	LeftFlywheel = RobotMap::shooterLeftFlywheel;
-	RightFlywheel = RobotMap::shooterRightFlywheel;
-	SpinCycleFeed = RobotMap::shooterSpinCycleFeed;
-	TurretSwivel = RobotMap::shooterTurretSwivel;
+	leftFlywheel = RobotMap::shooterLeftFlywheel;
+	rightFlywheel = RobotMap::shooterRightFlywheel;
+	spinCycleFeed = RobotMap::shooterSpinCycleFeed;
+	turretSwivel = RobotMap::shooterTurretSwivel;
 
-	LeftLimitSwitch = RobotMap::shooterLeftLimitSwitch;
-	RightLimitSwitch = RobotMap::shooterRightLimitSwitch;
-	HoodActuator = RobotMap::shooterHoodActuator;
+	pixyCamera = RobotMap::shooterPixy;
+
+	leftLimitSwitch = RobotMap::shooterLeftLimitSwitch;
+	rightLimitSwitch = RobotMap::shooterRightLimitSwitch;
+	hoodActuator = RobotMap::shooterHoodActuator;
 
 }
 
@@ -21,36 +23,36 @@ void Shooter::InitDefaultCommand() {
 //Below are all of the helpful methods of this class :)
 void Shooter::ActuateHood(frc::DoubleSolenoid::Value direction){
 	//Sets the hood actuator to the passed enum value
-	HoodActuator->Set(direction);
+	hoodActuator->Set(direction);
 }
 
 void Shooter::SetFlywheelSpeed(double speed){
 	//Set the flywheels to the appropriate speeds
-	LeftFlywheel->Set(speed);
-	RightFlywheel->Set(speed);
+	leftFlywheel->Set(speed);
+	rightFlywheel->Set(speed);
 }
 
 void Shooter::SetSpinCycleFeedSpeed(double speed){
 	//Sets the speed of the shooter bottom bit thingy that makes all the stuff go vhoomph
-	SpinCycleFeed->Set(speed);
+	spinCycleFeed->Set(speed);
 }
 
 void Shooter::SetSwivelSpeed(double speed){
 	//Set the speed to crank the swivel around at
-	TurretSwivel->Set(speed);
+	turretSwivel->Set(speed);
 }
 
 bool Shooter::IsHoodActuated() {
 	//is it actuate thx
-	return HoodActuator->Get();
+	return hoodActuator->Get();
 }
 
 bool Shooter::IsLeftLimitSwitchPressed(){
 	//is pressed?
-	return LeftLimitSwitch->Get();
+	return leftLimitSwitch->Get();
 }
 
 bool Shooter::IsRightLimitSwitchPressed(){
 	// IS PRESS???#??#!!
-	return RightLimitSwitch->Get();
+	return rightLimitSwitch->Get();
 }

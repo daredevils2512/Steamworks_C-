@@ -18,17 +18,17 @@
 class Pixy {
 
 private:
-	frc::SPI* m_realPixy;
-	frc::SPI* m_fakePixy;
+	std::shared_ptr<frc::SPI> m_realPixy;
+	std::shared_ptr<frc::SPI> m_fakePixy;
 	std::vector< std::vector<int> > frameData;
 	std::vector<int> objectData;
 	int emptyFrameCount = 0;
 
 public:
-	Pixy(frc::SPI* realPixy, frc::SPI* fakePixy);
+	Pixy(std::shared_ptr<frc::SPI> realPixy, std::shared_ptr<frc::SPI> fakePixy);
 
 	//adjusts settings of each pixy camera to the specifications required for communication
-	void Setup(frc::SPI* pixy);
+	void Setup(std::shared_ptr<frc::SPI> pixy);
 	//collects data starting from the first "start value" (43605 or aa55) and ending when two
 	//zeros are detected - signaling there is no more data
 	void CollectFrameData();

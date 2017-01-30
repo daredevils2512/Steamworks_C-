@@ -4,19 +4,22 @@
 #include <Commands/Subsystem.h>
 #include "../RobotMap.h"
 #include "CANTalon.h"
+#include "../Pixy.h"
 
 class Shooter : public Subsystem {
 private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
-	std::shared_ptr<CANTalon> LeftFlywheel;
-	std::shared_ptr<CANTalon> RightFlywheel;
-	std::shared_ptr<CANTalon> TurretSwivel;
-	std::shared_ptr<CANTalon> SpinCycleFeed;
+	std::shared_ptr<CANTalon> leftFlywheel;
+	std::shared_ptr<CANTalon> rightFlywheel;
+	std::shared_ptr<CANTalon> turretSwivel;
+	std::shared_ptr<CANTalon> spinCycleFeed;
 
-	std::shared_ptr<frc::DigitalInput> LeftLimitSwitch;
-	std::shared_ptr<frc::DigitalInput> RightLimitSwitch;
-	std::shared_ptr<frc::DoubleSolenoid> HoodActuator;
+	std::shared_ptr<Pixy> pixyCamera;
+
+	std::shared_ptr<frc::DigitalInput> leftLimitSwitch;
+	std::shared_ptr<frc::DigitalInput> rightLimitSwitch;
+	std::shared_ptr<frc::DoubleSolenoid> hoodActuator;
 
 public:
 	Shooter();

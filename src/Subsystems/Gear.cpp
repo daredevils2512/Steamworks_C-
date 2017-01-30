@@ -5,6 +5,8 @@ Gear::Gear() : Subsystem("Gear") {
 	limitswitch = RobotMap::gearLimitSwitch;
 	photoeye = RobotMap::gearPhotoeye;
 	solenoid = RobotMap::gearSolenoid;
+
+	pixyCamera = RobotMap::gearPixy;
 }
 
 void Gear::InitDefaultCommand() {

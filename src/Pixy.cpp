@@ -1,13 +1,13 @@
 #include "Pixy.h"
 
-Pixy::Pixy(frc::SPI* realPixy, frc::SPI* fakePixy) {
+Pixy::Pixy(std::shared_ptr<frc::SPI> realPixy, std::shared_ptr<frc::SPI> fakePixy) {
 	m_realPixy = realPixy;
 	m_fakePixy = fakePixy;
 	Setup(m_realPixy);
 	Setup(m_fakePixy);
 }
 
-void Pixy::Setup(frc::SPI* pixy) {
+void Pixy::Setup(std::shared_ptr<frc::SPI> pixy) {
 	//Most Significant Byte is sent first, data on rising edge, clock is active high,
 	//chip is active low, set clock to 1000000 hz
 	pixy->SetMSBFirst();

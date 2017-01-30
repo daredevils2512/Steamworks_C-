@@ -2,6 +2,7 @@
 #define ROBOTMAP_H
 #include "WPILib.h"
 #include "CANTalon.h"
+#include "SPI.h"
 #include "Pixy.h"
 
 class RobotMap {
@@ -20,6 +21,8 @@ public:
 	static std::shared_ptr<CANTalon> shooterRightFlywheel;
 	static std::shared_ptr<CANTalon> shooterTurretSwivel;
 	static std::shared_ptr<CANTalon> shooterSpinCycleFeed;
+	static std::shared_ptr<frc::SPI> shooterRealPixy;
+	static std::shared_ptr<frc::SPI> shooterFakePixy;
 	static std::shared_ptr<Pixy> shooterPixy;
 
 	//robot drivetrain
@@ -38,6 +41,11 @@ public:
 	static std::shared_ptr<frc::DigitalInput> gearLimitSwitch;
 	//1 photoeye to notify if the gear is far enough out of the slot
 	static std::shared_ptr<frc::DigitalInput> gearPhotoeye;
+
+	static std::shared_ptr<frc::SPI> gearRealPixy;
+	static std::shared_ptr<frc::SPI> gearFakePixy;
+	static std::shared_ptr<Pixy> gearPixy;
+
 	static std::shared_ptr<frc::DoubleSolenoid> gearSolenoid;
 	static std::shared_ptr<frc::DoubleSolenoid> shooterHoodActuator;
 
