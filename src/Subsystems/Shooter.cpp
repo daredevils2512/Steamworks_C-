@@ -56,3 +56,20 @@ bool Shooter::IsRightLimitSwitchPressed(){
 	// IS PRESS???#??#!!
 	return rightLimitSwitch->Get();
 }
+
+void Shooter::UpdateObjectData() {
+	pixyCamera->CollectFrameData();
+	targetObject = pixyCamera->GetObjectData(0);
+}
+
+bool Shooter::ObjectExists(Nullable< std::vector<int> > object) {
+	return (object.HasValue() && !pixyCamera->IsFrameEmpty());
+}
+
+Nullable< std::vector<int> > Shooter::GetObjectData() {
+	if(ObjectExists(targetObject)) {
+		return Nullable< std::vector<int> >(targetObject.GetValue());
+	}else{
+		return Nullable< std::vector<int> >();
+	}
+}

@@ -5,6 +5,7 @@
 #include "../RobotMap.h"
 #include "CANTalon.h"
 #include "../Pixy.h"
+#include "../Nullable.h"
 
 class Shooter : public Subsystem {
 private:
@@ -21,6 +22,8 @@ private:
 	std::shared_ptr<frc::DigitalInput> rightLimitSwitch;
 	std::shared_ptr<frc::DoubleSolenoid> hoodActuator;
 
+	Nullable< std::vector<int> > targetObject;
+
 public:
 	Shooter();
 	void InitDefaultCommand();
@@ -31,6 +34,9 @@ public:
 	bool IsHoodActuated();
 	bool IsLeftLimitSwitchPressed();
 	bool IsRightLimitSwitchPressed();
+	void UpdateObjectData();
+	bool ObjectExists(Nullable< std::vector<int> > object);
+	Nullable< std::vector<int> > GetObjectData();
 };
 
 #endif  // Shooter_H
