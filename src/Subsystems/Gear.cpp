@@ -25,5 +25,22 @@ void Gear::GetPhotoeye() {
 void Gear::ActuateGearIntake(DoubleSolenoid:: Value dir) {
 	solenoid->Set(dir);
 }
+
+void Gear::UpdateObjectData() {
+	pixyCamera->CollectFrameData();
+}
+
+bool Gear::ObjectExists(Nullable< std::vector<int> > object) {
+	return (object.HasValue() && !pixyCamera->IsFrameEmpty());
+}
+
+Nullable< std::vector<int> > Gear::GetObjectData(int objectIndex) {
+	targetObject = pixyCamera->GetObjectData(objectIndex);
+	if(ObjectExists(targetObject)) {
+		return Nullable< std::vector<int> >(targetObject.GetValue());
+	}else{
+		return Nullable< std::vector<int> >();
+	}
+}
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

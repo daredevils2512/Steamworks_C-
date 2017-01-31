@@ -36,7 +36,7 @@ public:
 	bool IsRightLimitSwitchPressed();
 	void UpdateObjectData();
 	bool ObjectExists(Nullable< std::vector<int> > object);
-	Nullable< std::vector<int> > GetObjectData();
+	Nullable< std::vector<int> > GetObjectData(int objectIndex);
 };
 
 #endif  // Shooter_H

@@ -59,14 +59,14 @@ bool Shooter::IsRightLimitSwitchPressed(){
 
 void Shooter::UpdateObjectData() {
 	pixyCamera->CollectFrameData();
-	targetObject = pixyCamera->GetObjectData(0);
 }
 
 bool Shooter::ObjectExists(Nullable< std::vector<int> > object) {
 	return (object.HasValue() && !pixyCamera->IsFrameEmpty());
 }
 
-Nullable< std::vector<int> > Shooter::GetObjectData() {
+Nullable< std::vector<int> > Shooter::GetObjectData(int objectIndex) {
+	targetObject = pixyCamera->GetObjectData(objectIndex);
 	if(ObjectExists(targetObject)) {
 		return Nullable< std::vector<int> >(targetObject.GetValue());
 	}else{

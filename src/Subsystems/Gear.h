@@ -13,12 +13,17 @@ private:
 
 	std::shared_ptr<Pixy> pixyCamera;
 
+	Nullable< std::vector<int> > targetObject;
+
 public:
 	Gear();
 	void InitDefaultCommand();
 	void GetLimitSwitch();
 	void GetPhotoeye();
 	void ActuateGearIntake(DoubleSolenoid::Value dir);
+	void UpdateObjectData();
+	bool ObjectExists(Nullable< std::vector<int> > object);
+	Nullable< std::vector<int> > GetObjectData(int objectIndex);
 };
 
 #endif  // Gear_H
