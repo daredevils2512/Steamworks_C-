@@ -14,6 +14,9 @@ void Gear::InitDefaultCommand() {
 	// SetDefaultCommand(new MySpecialCommand());
 }
 
+// Put methods for controlling this subsystem
+// here. Call these from Commands.
+
 void Gear::GetLimitSwitch() {
 	limitswitch->Get();
 }
@@ -42,5 +45,7 @@ Nullable< std::vector<int> > Gear::GetObjectData(int objectIndex) {
 		return Nullable< std::vector<int> >();
 	}
 }
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+
+void VisionDrive(double targetX) {
+
+}

@@ -24,6 +24,7 @@ public:
 	void UpdateObjectData();
 	bool ObjectExists(Nullable< std::vector<int> > object);
 	Nullable< std::vector<int> > GetObjectData(int objectIndex);
+	void VisionDrive(double targetX);
 };
 
 #endif  // Gear_H
