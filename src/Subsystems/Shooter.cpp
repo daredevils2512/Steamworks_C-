@@ -16,6 +16,23 @@ Shooter::Shooter() : Subsystem("ExampleSubsystem") {
 
 }
 
+//void Shooter::SwivelVisionBased(Nullable< std::vector<int> >  object){ // move me to a command!
+//	int pixyWidth = 318;
+//	//add "acceptable range"
+//	if(object.hasValue()){
+//		if(object.GetValue() <3> pixyWidth/2) {
+//			// right of center
+//		}else if(object[3] != pixyWidth/2){
+//			// left of center
+//		}else{
+//			//centered
+//		}
+//	}else{
+//		// scan
+//
+//	}
+//}
+
 void Shooter::InitDefaultCommand() {
 	//rawr
 }
@@ -33,7 +50,7 @@ void Shooter::SetFlywheelSpeed(double speed){
 }
 
 void Shooter::SetSpinCycleFeedSpeed(double speed){
-	//Sets the speed of the shooter bottom bit thingy that makes all the stuff go vhoomph
+	//Sets the speed of the shooter ball-pusher
 	spinCycleFeed->Set(speed);
 }
 
@@ -43,7 +60,7 @@ void Shooter::SetSwivelSpeed(double speed){
 }
 
 bool Shooter::IsHoodActuated() {
-	//is it actuate thx
+	//is it actuated?
 	return hoodActuator->Get();
 }
 
@@ -53,7 +70,7 @@ bool Shooter::IsLeftLimitSwitchPressed(){
 }
 
 bool Shooter::IsRightLimitSwitchPressed(){
-	// IS PRESS???#??#!!
+	// is switch pressed?
 	return rightLimitSwitch->Get();
 }
 

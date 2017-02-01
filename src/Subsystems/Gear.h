@@ -18,8 +18,8 @@ private:
 public:
 	Gear();
 	void InitDefaultCommand();
-	void GetLimitSwitch();
-	void GetPhotoeye();
+	bool GetLimitSwitch();
+	bool GetPhotoeye();
 	void ActuateGearIntake(DoubleSolenoid::Value dir);
 	void UpdateObjectData();
 	bool ObjectExists(Nullable< std::vector<int> > object);

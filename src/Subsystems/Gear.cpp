@@ -14,15 +14,15 @@ void Gear::InitDefaultCommand() {
 	// SetDefaultCommand(new MySpecialCommand());
 }
 
-void Gear::GetLimitSwitch() {
-	limitswitch->Get();
+bool Gear::GetLimitSwitch() {
+	return limitswitch->Get();
 }
 
-void Gear::GetPhotoeye() {
-	photoeye->Get();
+bool Gear::GetPhotoeye() {
+	return photoeye->Get();
 }
 
-void Gear::ActuateGearIntake(DoubleSolenoid:: Value dir) {
+void Gear::ActuateGearIntake(frc::DoubleSolenoid:: Value dir) {
 	solenoid->Set(dir);
 }
 

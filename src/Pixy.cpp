@@ -105,6 +105,15 @@ bool Pixy::IsFrameEmpty() {
 }
 
 Nullable< std::vector<int> > Pixy::GetObjectData(int objectIndex) {
+	/*
+	 * 0 = AA55
+	 * 1 = Checksum
+	 * 2 = id
+	 * 3 = x
+	 * 4 = y
+	 * 5 = width
+	 * 6 = height
+	 */
 	if((signed)frameData.size() > objectIndex) {
 		return Nullable< std::vector<int> >(frameData[objectIndex]);
 	}
