@@ -25,6 +25,16 @@ private:
 	int emptyFrameCount = 0;
 
 public:
+
+	struct ObjectValues {
+		int checksum;
+		int signature;
+		int x;
+		int y;
+		int width;
+		int height;
+	};
+
 	Pixy(std::shared_ptr<frc::SPI> realPixy, std::shared_ptr<frc::SPI> fakePixy);
 
 	//adjusts settings of each pixy camera to the specifications required for communication
@@ -34,7 +44,7 @@ public:
 	void CollectFrameData();
 	//performs multiple tests on object in question to determine if the data is good, only
 	//returns good if object data passes all tests, otherwise it will print an error
-	bool ObjectIsGood(std::vector<int> objectVector);
+	bool ObjectIsGood(Nullable< std::vector<int> > objectVector);
 	//checks if argument is equal to the start value of 43605 in decimal or aa55 in hexadecimal
 	bool IsStartValue(int value);
 	//checks if argument is equal to zero - only possible if both of the bytes used to calculate
@@ -44,7 +54,7 @@ public:
 
 	bool IsFrameEmpty();
 
-	Nullable< std::vector<int> > GetObjectData(int objectIndex);
+	Nullable< ObjectValues > GetObjectData(int objectIndex);
 
 };
 

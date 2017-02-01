@@ -79,8 +79,8 @@ void Pixy::CollectFrameData() {
 	}
 }
 
-bool Pixy::ObjectIsGood(std::vector<int> objectVector) {
-	return (objectVector[1] - objectVector[2] - objectVector[3] - objectVector[4] - objectVector[5] - objectVector[6]) == 0;
+bool Pixy::ObjectIsGood(Nullable< std::vector<int> > objectVector) {
+	return (objectVector.GetValue()[1] - objectVector.GetValue()[2] - objectVector.GetValue()[3] - objectVector.GetValue()[4] - objectVector.GetValue()[5] - objectVector.GetValue()[6]) == 0;
 }
 
 bool Pixy::IsStartValue(int value) {
@@ -104,9 +104,16 @@ bool Pixy::IsFrameEmpty() {
 	return emptyFrameCount >= 5;
 }
 
-Nullable< std::vector<int> > Pixy::GetObjectData(int objectIndex) {
+Nullable< Pixy::ObjectValues > Pixy::GetObjectData(int objectIndex) {
 	if((signed)frameData.size() > objectIndex) {
-		return Nullable< std::vector<int> >(frameData[objectIndex]);
+		ObjectValues object;
+		object.checksum = frameData[objectIndex][1];
+		object.signature = frameData[objectIndex][2];
+		object.x = frameData[objectIndex][3];
+		object.y = frameData[objectIndex][4];
+		object.width = frameData[objectIndex][5];
+		object.height = frameData[objectIndex][6];
+		return Nullable<ObjectValues>(object);
 	}
-	return Nullable< std::vector<int> >();
+	return Nullable<ObjectValues>();
 }

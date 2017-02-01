@@ -30,16 +30,16 @@ void Gear::UpdateObjectData() {
 	pixyCamera->CollectFrameData();
 }
 
-bool Gear::ObjectExists(Nullable< std::vector<int> > object) {
+bool Gear::ObjectExists(Nullable<Pixy::ObjectValues> object) {
 	return (object.HasValue() && !pixyCamera->IsFrameEmpty());
 }
 
-Nullable< std::vector<int> > Gear::GetObjectData(int objectIndex) {
+Nullable<Pixy::ObjectValues> Gear::GetObjectData(int objectIndex) {
 	targetObject = pixyCamera->GetObjectData(objectIndex);
 	if(ObjectExists(targetObject)) {
-		return Nullable< std::vector<int> >(targetObject.GetValue());
+		return Nullable<Pixy::ObjectValues>(targetObject.GetValue());
 	}else{
-		return Nullable< std::vector<int> >();
+		return Nullable<Pixy::ObjectValues>();
 	}
 }
 // Put methods for controlling this subsystem
