@@ -17,8 +17,8 @@ void Gear::InitDefaultCommand() {
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 
-void Gear::GetLimitSwitch() {
-	limitswitch->Get();
+bool Gear::GetLimitSwitch() {
+	return limitswitch->Get();
 }
 
 bool Gear::GetPhotoeye() {
@@ -44,9 +44,4 @@ Nullable<Pixy::ObjectValues> Gear::GetObjectData(int objectIndex) {
 	}else{
 		return Nullable<Pixy::ObjectValues>();
 	}
-}
-
-
-void VisionDrive(double targetX) {
-
 }

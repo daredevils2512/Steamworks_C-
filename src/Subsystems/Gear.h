@@ -27,7 +27,6 @@ public:
 
 	bool ObjectExists(Nullable<Pixy::ObjectValues> object);
 	Nullable<Pixy::ObjectValues> GetObjectData(int objectIndex);
-	void VisionDrive(double targetX);
 };
 
 #endif  // Gear_H
