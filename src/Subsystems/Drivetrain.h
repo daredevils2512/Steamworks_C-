@@ -30,9 +30,10 @@ private:
 public:
 
 	struct Speeds {
-		double left;
-		double right;
+		double leftSpeed;
+		double rightSpeed;
 	};
+
 	enum class Direction {
 		clockwise,
 		counterClockwise,
@@ -45,11 +46,8 @@ public:
 	void Shifter (DoubleSolenoid::Value dir);
 	void GetEncoders(double distance);
 	void ResetEncoders();
-	void SetAutonomous();
-	void DriveCircle(double actualRadius, Direction direction, double distance, double outerVelocity);
-	bool GetAutonomous();
-	Speeds CircleSpeed(double radius, double outerSpeed, Direction direction);
-	void SetSpeeds(Speeds theSpeeds);
+	Speeds AutoCalcSpeeds(double radius, double outerSpeed, Direction direction);
+	void AutoSetSpeeds(Speeds theSpeeds);
 };
 
 #endif

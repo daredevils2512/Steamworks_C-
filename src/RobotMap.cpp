@@ -56,7 +56,7 @@ void RobotMap::init() {
 	drivetrainFrontRightMotor->Set(4);
 
 	drivetrainRearRightMotor.reset (new CANTalon(4));
-	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainRearRightMotor);
+	lw->AddActuator("Drivetrain" , "RearRightMotor" , drivetrainRearRightMotor);
 	//Setting up PID with the back motors since they are the Masters
 	drivetrainRearRightMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 

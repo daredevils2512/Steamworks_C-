@@ -19,7 +19,7 @@ void DrivetrainCircleDrive::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void DrivetrainCircleDrive::Execute() {
 	//Calling the function we created in the Drivetrain subsystem
-	Robot::drivetrain->DriveCircle(m_actualRadius, m_direction, m_distance, m_outerVelocity);
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -31,7 +31,6 @@ bool DrivetrainCircleDrive::IsFinished() {
 // Called once after isFinished returns true
 void DrivetrainCircleDrive::End() {
 	//Tells the robot to stop driving in circles
-	Robot::drivetrain->DriveCircle(0.0, true, 0.0, 0.0);
 }
 
 // Called when another command which requires one or more of the same
