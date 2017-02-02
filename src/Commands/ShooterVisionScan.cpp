@@ -6,25 +6,22 @@
 ShooterVisionScan::ShooterVisionScan() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
+	speed = 0.15;
 }
 
 // Called just before this Command runs the first time
 void ShooterVisionScan::Initialize() {
-
+	Robot::shooter->SetSwivelSpeed(speed);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionScan::Execute() {
-	if (Robot::shooter->IsLeftLimitSwitchPressed()) {
-		Robot::shooter->SetSwivelSpeed(0.3);
-	}
-	else if (Robot::shooter->IsRightLimitSwitchPressed()) {
-		Robot::shooter->SetSwivelSpeed(-0.3);
-	}
-	else {
-		Robot::shooter->SetSwivelSpeed(0.0);
-	}
+	if (Robot::shooter->IsLeftLimitSwitchPressed() ||
+			Robot::shooter->IsRightLimitSwitchPressed()) {
+		speed = -speed; //reverse the speed
 
+	}
+	Robot::shooter->SetSwivelSpeed(speed);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -34,7 +31,7 @@ bool ShooterVisionScan::IsFinished() {
 
 // Called once after isFinished returns true
 void ShooterVisionScan::End() {
-
+	Robot::shooter->SetCurrentCommand(new ShooterVisionTrack());
 }
 
 // Called when another command which requires one or more of the same

@@ -1,5 +1,6 @@
 #include "Shooter.h"
 #include "../RobotMap.h"
+#include <cmath>
 
 Shooter::Shooter() : Subsystem("ExampleSubsystem") {
 	//quick defines
@@ -89,4 +90,8 @@ Nullable<Pixy::ObjectValues> Shooter::GetObjectData(int objectIndex) {
 	}else{
 		return Nullable<Pixy::ObjectValues>();
 	}
+}
+
+int Shooter::GetVirtualDistance(Pixy::ObjectValues object){
+	return (0.00349450614331*(pow(object.y,2))) - (0.0873599815179*(object.y)) + 43.068903964768;
 }

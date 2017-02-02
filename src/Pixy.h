@@ -56,6 +56,8 @@ public:
 
 	Nullable< ObjectValues > GetObjectData(int objectIndex);
 
+	int GetFrameSize();
+
 };
 
 

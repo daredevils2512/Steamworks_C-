@@ -117,3 +117,6 @@ Nullable< Pixy::ObjectValues > Pixy::GetObjectData(int objectIndex) {
 	}
 	return Nullable<ObjectValues>();
 }
+int Pixy::GetFrameSize() {
+	return frameData.size();
+}

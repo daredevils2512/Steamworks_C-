@@ -1,5 +1,5 @@
-#ifndef EXAMPLE_COMMAND_H
-#define EXAMPLE_COMMAND_H
+#ifndef ShooterVisionTrack_H
+#define ShooterVisionTrack_H
 
 #include "../CommandBase.h"
 
@@ -13,4 +13,4 @@ public:
 	void Interrupted() override;
 };
 
-#endif  // EXAMPLE_COMMAND_H
+#endif  // ShooterVisionTrack_H

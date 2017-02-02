@@ -11,6 +11,8 @@ public:
 	bool IsFinished() override;
 	void End() override;
 	void Interrupted() override;
+private:
+	double speed;
 };
 
 #endif  // EXAMPLE_COMMAND_H
