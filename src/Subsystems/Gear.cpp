@@ -14,6 +14,9 @@ void Gear::InitDefaultCommand() {
 	// SetDefaultCommand(new MySpecialCommand());
 }
 
+// Put methods for controlling this subsystem
+// here. Call these from Commands.
+
 bool Gear::GetLimitSwitch() {
 	return limitswitch->Get();
 }
@@ -42,5 +45,3 @@ Nullable<Pixy::ObjectValues> Gear::GetObjectData(int objectIndex) {
 		return Nullable<Pixy::ObjectValues>();
 	}
 }
-// Put methods for controlling this subsystem
-// here. Call these from Commands.

@@ -13,15 +13,18 @@ private:
 
 	std::shared_ptr<Pixy> pixyCamera;
 
+
 	Nullable< Pixy::ObjectValues > targetObject;
 
 public:
 	Gear();
 	void InitDefaultCommand();
+
 	bool GetLimitSwitch();
 	bool GetPhotoeye();
 	void ActuateGearIntake(DoubleSolenoid::Value dir);
 	void UpdateObjectData();
+
 	bool ObjectExists(Nullable<Pixy::ObjectValues> object);
 	Nullable<Pixy::ObjectValues> GetObjectData(int objectIndex);
 };
