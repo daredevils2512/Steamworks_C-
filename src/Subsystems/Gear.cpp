@@ -21,11 +21,11 @@ void Gear::GetLimitSwitch() {
 	limitswitch->Get();
 }
 
-void Gear::GetPhotoeye() {
-	photoeye->Get();
+bool Gear::GetPhotoeye() {
+	return photoeye->Get();
 }
 
-void Gear::ActuateGearIntake(DoubleSolenoid:: Value dir) {
+void Gear::ActuateGearIntake(frc::DoubleSolenoid:: Value dir) {
 	solenoid->Set(dir);
 }
 
@@ -33,18 +33,19 @@ void Gear::UpdateObjectData() {
 	pixyCamera->CollectFrameData();
 }
 
-bool Gear::ObjectExists(Nullable< std::vector<int> > object) {
+bool Gear::ObjectExists(Nullable<Pixy::ObjectValues> object) {
 	return (object.HasValue() && !pixyCamera->IsFrameEmpty());
 }
 
-Nullable< std::vector<int> > Gear::GetObjectData(int objectIndex) {
+Nullable<Pixy::ObjectValues> Gear::GetObjectData(int objectIndex) {
 	targetObject = pixyCamera->GetObjectData(objectIndex);
 	if(ObjectExists(targetObject)) {
-		return Nullable< std::vector<int> >(targetObject.GetValue());
+		return Nullable<Pixy::ObjectValues>(targetObject.GetValue());
 	}else{
-		return Nullable< std::vector<int> >();
+		return Nullable<Pixy::ObjectValues>();
 	}
 }
+
 
 void VisionDrive(double targetX) {
 

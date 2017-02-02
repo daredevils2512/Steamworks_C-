@@ -22,7 +22,7 @@ private:
 	std::shared_ptr<frc::DigitalInput> rightLimitSwitch;
 	std::shared_ptr<frc::DoubleSolenoid> hoodActuator;
 
-	Nullable< std::vector<int> > targetObject;
+	Nullable<Pixy::ObjectValues> targetObject;
 
 public:
 	Shooter();
@@ -31,12 +31,13 @@ public:
 	void SetSpinCycleFeedSpeed(double speed);
 	void SetSwivelSpeed(double speed);
 	void ActuateHood(frc::DoubleSolenoid::Value direction);
+	void SwivelVisionBased(Nullable< std::vector<int> > object);
 	bool IsHoodActuated();
 	bool IsLeftLimitSwitchPressed();
 	bool IsRightLimitSwitchPressed();
 	void UpdateObjectData();
-	bool ObjectExists(Nullable< std::vector<int> > object);
-	Nullable< std::vector<int> > GetObjectData(int objectIndex);
+	bool ObjectExists(Nullable<Pixy::ObjectValues> object);
+	Nullable<Pixy::ObjectValues> GetObjectData(int objectIndex);
 };
 
 #endif  // Shooter_H
