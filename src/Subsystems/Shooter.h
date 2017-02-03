@@ -23,7 +23,8 @@ private:
 	std::shared_ptr<frc::DoubleSolenoid> hoodActuator;
 
 	Nullable<Pixy::ObjectValues> targetObject;
-
+	bool lastConditionRight;
+	bool lastConditionLeft;
 public:
 	Shooter();
 	void InitDefaultCommand();

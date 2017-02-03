@@ -17,8 +17,6 @@ std::shared_ptr<frc::SPI> RobotMap::shooterRealPixy;
 std::shared_ptr<frc::SPI> RobotMap::shooterFakePixy;
 std::shared_ptr<Pixy> RobotMap::shooterPixy;
 std::shared_ptr<frc::RobotDrive> RobotMap::drivetrainChassis;
-std::shared_ptr<frc::Encoder> RobotMap::drivetrainLeftEncoder;
-std::shared_ptr<frc::Encoder> RobotMap::drivetrainRightEncoder;
 std::shared_ptr<frc::Relay> RobotMap::compressorSpike;
 std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
 std::shared_ptr<frc::DigitalInput> RobotMap::shooterLeftLimitSwitch;
@@ -90,15 +88,6 @@ void RobotMap::init() {
 		drivetrainChassis ->SetExpiration(0.5);
 		drivetrainChassis ->SetSensitivity(0.5);
 		drivetrainChassis ->SetMaxOutput(1.0);
-
-	drivetrainLeftEncoder.reset (new frc::Encoder (0 , 1 , false , frc::Encoder::k4X));
-	lw ->AddSensor("Drivetrain" , "LeftEncoder" , drivetrainLeftEncoder);
-	drivetrainLeftEncoder ->SetDistancePerPulse(0.0981747704246);
-	//took wheel diameter of 4 inches and multiplied by pi to get 12.56 inch circumference
-	//then divided circumference by 128 clicks to get the distance per pulse value
-	drivetrainRightEncoder.reset (new frc::Encoder (2 , 3 , false , frc::Encoder::k4X));
-	lw ->AddSensor("Drivetrain" , "RightEncoder" , drivetrainRightEncoder);
-	drivetrainRightEncoder ->SetDistancePerPulse(0.0981747704246);
 
 	shooterHoodActuator.reset (new frc::DoubleSolenoid (1, 2, 3));
 	lw ->AddActuator("Shooter", "HoodActuator", shooterHoodActuator);

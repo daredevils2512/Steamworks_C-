@@ -21,8 +21,6 @@ private:
 	std::shared_ptr<CANTalon> Left;
 
 	std::shared_ptr<RobotDrive> Chassis;
-	std::shared_ptr<Encoder> LeftEncoder;
-	std::shared_ptr<Encoder> RightEncoder;
 	std::shared_ptr<DoubleSolenoid> DriveTrainShift;
 
 
@@ -44,7 +42,7 @@ public:
 	void InitDefaultCommand();
 	void DriveRobot(double move, double turn);
 	void Shifter (DoubleSolenoid::Value dir);
-	void GetEncoders(double distance);
+	double GetEncoders();
 	void ResetEncoders();
 	Speeds AutoCalcSpeeds(double radius, double outerSpeed, Direction direction);
 	void AutoSetSpeeds(Speeds theSpeeds);

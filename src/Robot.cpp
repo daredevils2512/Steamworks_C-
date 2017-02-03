@@ -50,8 +50,8 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
 	//prints information to the smart dashboard
-	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainLeftEncoder ->GetDistance());
-	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder ->GetDistance());
+	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainFrontLeftMotor->GetEncPosition());
+	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainFrontRightMotor ->GetEncPosition());
 	SmartDashboard::PutBoolean("limit switch" , RobotMap::gearLimitSwitch ->Get());
 	SmartDashboard::PutBoolean("gear photoeye", RobotMap::gearPhotoeye ->Get());
 }

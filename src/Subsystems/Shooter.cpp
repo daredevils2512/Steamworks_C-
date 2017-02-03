@@ -2,7 +2,7 @@
 #include "../RobotMap.h"
 #include <cmath>
 
-Shooter::Shooter() : Subsystem("ExampleSubsystem") {
+Shooter::Shooter() : Subsystem("Shooter") {
 	//quick defines
 	leftFlywheel = RobotMap::shooterLeftFlywheel;
 	rightFlywheel = RobotMap::shooterRightFlywheel;
@@ -15,6 +15,8 @@ Shooter::Shooter() : Subsystem("ExampleSubsystem") {
 	rightLimitSwitch = RobotMap::shooterRightLimitSwitch;
 	hoodActuator = RobotMap::shooterHoodActuator;
 
+	lastConditionRight = false;
+	lastConditionLeft = false;
 }
 
 //void Shooter::SwivelVisionBased(Nullable< std::vector<int> >  object){ // move me to a command!
@@ -35,7 +37,7 @@ Shooter::Shooter() : Subsystem("ExampleSubsystem") {
 //}
 
 void Shooter::InitDefaultCommand() {
-	//rawr
+
 }
 
 //Below are all of the helpful methods of this class :)
@@ -65,14 +67,26 @@ bool Shooter::IsHoodActuated() {
 	return hoodActuator->Get();
 }
 
+bool lastConditionLeft = false;
 bool Shooter::IsLeftLimitSwitchPressed(){
 	//is pressed?
-	return leftLimitSwitch->Get();
+	if(lastConditionLeft == true){
+		return false;
+	}else{
+		lastConditionLeft = leftLimitSwitch->Get();
+	}
+	return lastConditionLeft;
 }
 
+bool lastConditionRight = false;
 bool Shooter::IsRightLimitSwitchPressed(){
 	// is switch pressed?
-	return rightLimitSwitch->Get();
+	if(lastConditionRight == true){
+		return false;
+	}else{
+		lastConditionRight = rightLimitSwitch->Get();
+	}
+	return lastConditionRight;
 }
 
 void Shooter::UpdateObjectData() {
@@ -80,12 +94,14 @@ void Shooter::UpdateObjectData() {
 }
 
 bool Shooter::ObjectExists(Nullable<Pixy::ObjectValues> object) {
+	//checks to see if an object exists by verifying that there is an object value and the pixy camera is not returning an empty frame
 	return (object.HasValue() && !pixyCamera->IsFrameEmpty());
 }
 
 Nullable<Pixy::ObjectValues> Shooter::GetObjectData(int objectIndex) {
 	targetObject = pixyCamera->GetObjectData(objectIndex);
 	if(ObjectExists(targetObject)) {
+		//if an object is found then the pixy will get the target's object value
 		return Nullable<Pixy::ObjectValues>(targetObject.GetValue());
 	}else{
 		return Nullable<Pixy::ObjectValues>();
@@ -93,5 +109,6 @@ Nullable<Pixy::ObjectValues> Shooter::GetObjectData(int objectIndex) {
 }
 
 int Shooter::GetVirtualDistance(Pixy::ObjectValues object){
+	//calculates the distance from the target in inches
 	return (0.00349450614331*(pow(object.y,2))) - (0.0873599815179*(object.y)) + 43.068903964768;
 }

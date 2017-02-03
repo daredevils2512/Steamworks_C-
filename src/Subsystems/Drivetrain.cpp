@@ -8,8 +8,6 @@
 Drivetrain::Drivetrain() : Subsystem("Drivetrain") {
 
     Chassis = RobotMap::drivetrainChassis;
-    LeftEncoder = RobotMap::drivetrainLeftEncoder;
-    RightEncoder = RobotMap::drivetrainRightEncoder;
     DriveTrainShift = RobotMap::drivetrainShift;
 
     Right = RobotMap::drivetrainRearRightMotor;
@@ -37,16 +35,15 @@ void Drivetrain::Shifter(DoubleSolenoid::Value dir) {
 	DriveTrainShift->Set(dir);
 }
 
-void Drivetrain::GetEncoders(double distance) {
+double Drivetrain::GetEncoders() {
 	//gets distance moved since last reset scaled by distance per pulse
-	LeftEncoder->GetDistance();
-	RightEncoder->GetDistance();
+	return ((Left->GetEncPosition() + Right->GetEncPosition()) / 2) * 0.0981747704246;
 }
 
 void Drivetrain::ResetEncoders() {
 	//resets the drivetrain encoder values
-	LeftEncoder->Reset();
-	RightEncoder->Reset();
+	Left->Reset();
+	Right->Reset();
 }
 //distance = inches
 //speed = inches per seconds

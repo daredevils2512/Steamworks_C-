@@ -11,6 +11,8 @@ public:
 	bool IsFinished() override;
 	void End() override;
 	void Interrupted() override;
+private:
+	bool IsWithinThreshold(double setpoint, double threshold, double value);
 };
 
 #endif  // ShooterVisionTrack_H
