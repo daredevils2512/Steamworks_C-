@@ -6,7 +6,6 @@
 #include "Commands/Command.h"
 #include "LiveWindow/LiveWindow.h"
 #include "Subsystems/Drivetrain.h"
-#include "Subsystems/CompressorSubsystem.h"
 #include "Subsystems/Climber.h"
 #include "Subsystems/FloorIntake.h"
 #include "Subsystems/Gear.h"
@@ -22,11 +21,12 @@ public:
 	LiveWindow *lw = LiveWindow::GetInstance();
 
 static std::shared_ptr<Drivetrain> drivetrain;
-static std::shared_ptr<CompressorSubsystem> compressor;
 static std::shared_ptr<Climber> climber;
 static std::shared_ptr<FloorIntake> floorIntake;
 static std::shared_ptr<Gear> gear;
 static std::shared_ptr<Shooter> shooter;
+
+static std::shared_ptr<frc::Compressor> compressor;
 
 //declaration of robot class functions
 virtual void RobotInit();

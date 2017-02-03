@@ -2,23 +2,26 @@
 
 //access pointer objects declared in Robot.h
 std::shared_ptr<Drivetrain> Robot::drivetrain;
-std::shared_ptr<CompressorSubsystem> Robot::compressor;
 std::shared_ptr<Climber> Robot::climber;
 std::shared_ptr<FloorIntake> Robot::floorIntake;
 std::shared_ptr<Gear> Robot::gear;
 std::shared_ptr<Shooter> Robot::shooter;
 std::unique_ptr<OI> Robot::oi;
 
+std::shared_ptr<frc::Compressor> Robot::compressor;
+
 void Robot::RobotInit() {
 	//starts subsystems and creates new instances of them
     drivetrain.reset(new Drivetrain());
-    compressor.reset(new CompressorSubsystem());
     climber.reset(new Climber());
     floorIntake.reset(new FloorIntake());
     gear.reset(new Gear());
     shooter.reset(new Shooter());
     //starts operator interface
 	oi.reset(new OI());
+
+	compressor.reset(new frc::Compressor());
+	compressor->SetClosedLoopControl(false);
   }
 
 void Robot::DisabledInit(){
@@ -33,8 +36,6 @@ void Robot::AutonomousInit() {
 	//starts autonomous
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
-
-	Robot::drivetrain->ResetEncoders();
 }
 
 void Robot::AutonomousPeriodic() {
@@ -45,6 +46,7 @@ void Robot::TeleopInit() {
 	//stops autonomous command
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Cancel();
+	compressor->SetClosedLoopControl(true);
 }
 
 void Robot::TeleopPeriodic() {

@@ -43,7 +43,6 @@ public:
 	void DriveRobot(double move, double turn);
 	void Shifter (DoubleSolenoid::Value dir);
 	double GetEncoders();
-	void ResetEncoders();
 	Speeds AutoCalcSpeeds(double radius, double outerSpeed, Direction direction);
 	void AutoSetSpeeds(Speeds theSpeeds);
 };

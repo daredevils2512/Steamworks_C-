@@ -44,6 +44,8 @@ void RobotMap::init() {
 
 	drivetrainRearLeftMotor.reset (new CANTalon(2));
 	lw->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
+	drivetrainRearLeftMotor->SetFeedbackDevice(CANTalon::QuadEncoder);
+	drivetrainRearLeftMotor->ConfigEncoderCodesPerRev(128);
 	//Setting up PID with the back motors since they are the Masters
 	drivetrainRearLeftMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 
@@ -55,6 +57,8 @@ void RobotMap::init() {
 
 	drivetrainRearRightMotor.reset (new CANTalon(4));
 	lw->AddActuator("Drivetrain" , "RearRightMotor" , drivetrainRearRightMotor);
+	drivetrainRearRightMotor->SetFeedbackDevice(CANTalon::QuadEncoder);
+	drivetrainRearRightMotor->ConfigEncoderCodesPerRev(128);
 	//Setting up PID with the back motors since they are the Masters
 	drivetrainRearRightMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 

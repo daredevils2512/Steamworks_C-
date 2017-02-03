@@ -27,6 +27,8 @@ void Drivetrain::InitDefaultCommand() {
 
 void Drivetrain::DriveRobot(double move, double turn) {
 	//drives robot in tank mode from specified values
+	Right->SetControlMode(frc::CANSpeedController::kPercentVbus);
+	Left->SetControlMode(frc::CANSpeedController::kPercentVbus);
 	Chassis->TankDrive(move, turn, false);
 }
 
@@ -40,11 +42,6 @@ double Drivetrain::GetEncoders() {
 	return ((Left->GetEncPosition() + Right->GetEncPosition()) / 2) * 0.0981747704246;
 }
 
-void Drivetrain::ResetEncoders() {
-	//resets the drivetrain encoder values
-	Left->Reset();
-	Right->Reset();
-}
 //distance = inches
 //speed = inches per seconds
 Drivetrain::Speeds Drivetrain::AutoCalcSpeeds(double radius, double outerSpeed, Direction direction){
