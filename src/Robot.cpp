@@ -21,11 +21,10 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	compressor.reset(new frc::Compressor());
-	compressor->SetClosedLoopControl(false);
   }
 
 void Robot::DisabledInit(){
-
+	compressor->SetClosedLoopControl(false);
 }
 
 void Robot::DisabledPeriodic() {
