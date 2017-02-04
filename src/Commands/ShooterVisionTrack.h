@@ -13,6 +13,7 @@ public:
 	void Interrupted() override;
 private:
 	bool IsWithinThreshold(double setpoint, double threshold, double value);
+	bool abort;
 };
 
 #endif  // ShooterVisionTrack_H

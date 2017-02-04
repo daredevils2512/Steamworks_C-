@@ -8,6 +8,7 @@
 ShooterVisionTrack::ShooterVisionTrack() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
+	abort = false;
 }
 
 // Called just before this Command runs the first time
@@ -20,53 +21,84 @@ bool ShooterVisionTrack::IsWithinThreshold(double setpoint, double threshold, do
 }
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionTrack::Execute() {
+	if(RobotMap::shooterPixy->IsFrameEmpty()){
+		abort = true; // if we don't have anything in frame, abort vision tracking!
+		return;
+	}
 	Pixy::ObjectValues trackedObj;
 	bool trackedSet = false;
 	Pixy::ObjectValues topBar;
 	bool barsSet = false;
 	Pixy::ObjectValues bottomBar;
-	if(RobotMap::shooterPixy->GetFrameSize() == 1){
-		trackedObj = Robot::shooter->GetObjectData(0).GetValue();
+	int maxArea = 79.5 * 49.5;
+	if(RobotMap::shooterPixy->GetFrameSize() == 1){ // if we have one object
+		Pixy::ObjectValues stare = Robot::shooter->GetObjectData(0).GetValue(); // focused object
+		if(stare.width*stare.height < maxArea){// if the object is smaller than the maximum area
+			trackedObj = Robot::shooter->GetObjectData(0).GetValue();
+			trackedSet = true;
+		}
+		abort = !trackedSet; // abort if we haven't set tracked
+		if(abort){
+			return; // if not tracked, abort!
+		}
 	}else if(RobotMap::shooterPixy->GetFrameSize() > 1) {
-		int maxArea = 79.5 * 49.5;
-		//sets max area by dividing the image frame by 4
+		// we have multiple objects
+		// sets max area by dividing the image frame by 4
 		for(int i = 0; i < RobotMap::shooterPixy->GetFrameSize(); i++){
+			//iterate through all known objects
 			Pixy::ObjectValues stare = Robot::shooter->GetObjectData(i).GetValue(); //focused object
 			if(stare.width * stare.height < maxArea){
-				for(int j = 0; j < RobotMap::shooterPixy->GetFrameSize(); j++){
-					if(j != i){
-						Pixy::ObjectValues pSecBar = Robot::shooter->GetObjectData(j).GetValue();
-						if(barsSet){
-							if(topBar.y > pSecBar.y || topBar.y > stare.y){
-								//if the top object's y value is greater than the potential secondary or the top object's y is greater
-								//than the focused object, then continue
-								continue;
-							}
-						}
-						if(IsWithinThreshold(stare.x,5,pSecBar.x)){
-							//checks to see if x value of the focused object and potential interferring object's x values are similiar
-							if(stare.y > pSecBar.y){
-								topBar = stare;
-								bottomBar = pSecBar;
-							}else{
-								topBar = pSecBar;
-								bottomBar = stare;
-							}
-							barsSet = true;
+				// if this current object is within the area maximum
+				for(int j = i+1; j < RobotMap::shooterPixy->GetFrameSize(); j++){
+					// iterate through all objects that haven't been "checked"
+					Pixy::ObjectValues pSecBar = Robot::shooter->GetObjectData(j).GetValue();
+					if(pSecBar.width * pSecBar.height >= maxArea){
+						//if this object doesn't match max area checks, skip this iteration
+						continue;
+					}
+					if(barsSet){
+						//if bars have been set.
+						if(topBar.y > pSecBar.y || topBar.y > stare.y){
+							//if the top object's y value is greater than the potential secondary or the top object's y is greater
+							//than the focused object, then skip this iteration
+							continue;
 						}
 					}
+					if(IsWithinThreshold(stare.x,5,pSecBar.x)){
+						//checks to see if x value of the focused object and potential interferring object's x values are similiar
+						if(stare.y > pSecBar.y){
+							//if the top bar is stare...
+							topBar = stare;
+							bottomBar = pSecBar;
+						}else{
+							//if the top bar isn't stare...
+							topBar = pSecBar;
+							bottomBar = stare;
+						}
+						barsSet = true;
+					}
+					//}
 				}
-				if(!trackedSet){
+
+				//fallback trackedSet
+				if(!trackedSet){ // if tracked wasn't set (first iteration)
 					trackedObj = stare;
 					trackedSet = true;
-				}else{
-					if(trackedObj.y < stare.y){
-						trackedObj = stare;
+				}else{// if tracked has been set before
+					if(trackedObj.y < stare.y){ // If the last saved object is "under" this one...
+						trackedObj = stare;/// ... overwrite it with this object
 					}
 				}
 			}
 		}
 	}else{
+		//if we have zero objects somehow, abort.
+		abort = true;
+		return;
+	}
+	if(!trackedSet && !barsSet){
+		//if we don't have anything, abort!
+		abort = true;
 		return;
 	}
 	//sets the center of the image
@@ -83,10 +115,10 @@ void ShooterVisionTrack::Execute() {
 		Robot::shooter->SetSwivelSpeed(0.0);
 	}else if(trackedObj.x < middle){
 		// left of middle
-		Robot::shooter->SetSwivelSpeed(speed);
+		Robot::shooter->SetSwivelSpeed(speed); // go right
 	}else{
 		// hopefully to the right of middle
-		Robot::shooter->SetSwivelSpeed(-speed);
+		Robot::shooter->SetSwivelSpeed(-speed); // go left
 	}
 
 }
@@ -94,12 +126,15 @@ void ShooterVisionTrack::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 bool ShooterVisionTrack::IsFinished() {
 	//ends the command if the frame size is zero or if a limit switch is pressed
-	return RobotMap::shooterPixy->GetFrameSize() == 0 || RobotMap::shooterLeftLimitSwitch->Get() || RobotMap::shooterRightLimitSwitch->Get();
+	bool passedSafetyThreshold = Robot::shooter->IsLeftLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition||
+			Robot::shooter->IsRightLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition;
+	return abort || passedSafetyThreshold || RobotMap::shooterPixy->GetFrameSize() == 0;
 }
 
 // Called once after isFinished returns true
 void ShooterVisionTrack::End() {
 	//once the command is over the new command it moves to is vision scan to reaquire a target
+	Robot::shooter->SetSwivelSpeed(0);
 	Robot::shooter->SetCurrentCommand(new ShooterVisionScan());
 }
 

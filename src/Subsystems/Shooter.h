@@ -25,6 +25,7 @@ private:
 	Nullable<Pixy::ObjectValues> targetObject;
 	bool lastConditionRight;
 	bool lastConditionLeft;
+	double maxEncPosition;
 public:
 	Shooter();
 	void InitDefaultCommand();

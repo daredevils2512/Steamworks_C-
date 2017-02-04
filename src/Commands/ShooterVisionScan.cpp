@@ -16,9 +16,8 @@ void ShooterVisionScan::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionScan::Execute() {
-	int maxEncoderTurn = 4096;
-	if (Robot::shooter->IsLeftLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() < -maxEncoderTurn||
-			Robot::shooter->IsRightLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() > maxEncoderTurn) {
+	if (Robot::shooter->IsLeftLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition||
+			Robot::shooter->IsRightLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition) {
 		speed = -speed; //reverse the speed
 
 	}

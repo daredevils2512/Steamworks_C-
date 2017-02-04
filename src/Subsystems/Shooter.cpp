@@ -17,6 +17,7 @@ Shooter::Shooter() : Subsystem("Shooter") {
 
 	lastConditionRight = false;
 	lastConditionLeft = false;
+	maxEncPosition = 4096;
 }
 
 //void Shooter::SwivelVisionBased(Nullable< std::vector<int> >  object){ // move me to a command!
