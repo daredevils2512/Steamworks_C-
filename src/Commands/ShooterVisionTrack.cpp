@@ -15,10 +15,12 @@ ShooterVisionTrack::ShooterVisionTrack() {
 void ShooterVisionTrack::Initialize() {
 	Robot::shooter->SetSwivelSpeed(0);
 }
+
 bool ShooterVisionTrack::IsWithinThreshold(double setpoint, double threshold, double value){
 	double tol = threshold / 2;
 	return setpoint-tol <= value && value <= setpoint + tol;
 }
+
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionTrack::Execute() {
 	if(RobotMap::shooterPixy->IsFrameEmpty()){

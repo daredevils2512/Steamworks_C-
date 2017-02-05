@@ -65,3 +65,18 @@ void Drivetrain::AutoSetSpeeds(Drivetrain::Speeds theSpeeds){
 	Left -> Set(theSpeeds.leftSpeed);
 	Right -> Set(theSpeeds.rightSpeed);
 }
+
+void Drivetrain::TurnDirection(double m_targetX , double centerX){
+		if(centerX == m_targetX) {
+			DriveRobot(0.0 , 0.5);
+		} else if(centerX > m_targetX) {
+			DriveRobot(0.25 , 0.0);
+		} else if(centerX < m_targetX) {
+			DriveRobot(-0.25 , 0.0);
+		} else if(RobotMap::gearPixy->GetFrameSize() == 0) {
+			DriveRobot(0.25, 0.0);
+		}
+}
+
+
+

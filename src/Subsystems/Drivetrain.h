@@ -45,6 +45,8 @@ public:
 	double GetEncoders();
 	Speeds AutoCalcSpeeds(double radius, double outerSpeed, Direction direction);
 	void AutoSetSpeeds(Speeds theSpeeds);
+	void TurnDirection(double m_targetX ,double scenterX);
+
 };
 
 #endif
