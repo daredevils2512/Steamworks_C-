@@ -2,20 +2,25 @@
 #define OI_H
 
 #include "WPILib.h"
-#include "XboxController.h"
+#include "TriggerButton.h"
+#include "POVButton.h"
 
 //creates all of the inputs on the controllers
 class OI
 {
 private:
 	//declares controllers
-	XboxController driverController{0};
+	Joystick driverController{0};
 	Joystick coDriverController{1};
 
 
 	//driver controls
-	JoystickButton DRC_rightTrigger{&driverController, 3};
-	JoystickButton DRC_leftTrigger{&driverController, 2};
+	TriggerButton DRC_rightTrigger{&driverController, 3, 0.8};
+	TriggerButton DRC_leftTrigger{&driverController, 2, 0.8};
+	JoystickButton DRC_rightBumper{&driverController, 6};
+	JoystickButton DRC_leftBumper{&driverController, 5};
+	JoystickButton DRC_xButton{&driverController, 3};
+	JoystickButton DRC_yButton{&driverController, 4};
 
 	JoystickButton CDR_trigger{&coDriverController, 1};
 	JoystickButton CDR_sideJoystickButton{&coDriverController, 2};
@@ -29,11 +34,18 @@ private:
 	JoystickButton CDR_topMiddleBase{&coDriverController, 10};
 	JoystickButton CDR_bottomRightBase{&coDriverController, 11};
 	JoystickButton CDR_topRightBase{&coDriverController, 12};
+	POVButton CDR_joystickPOV{&coDriverController, 0};
+
 public:
 	OI();
 	//control related functions
 	double GetX();
 	double GetY();
+	double Desensitize(double value);
+	double GetThrottle();
+	bool InvertDriving();
+	bool POVForward();
+	int GetJoystickPOV();
 };
 
 #endif  // OI_H

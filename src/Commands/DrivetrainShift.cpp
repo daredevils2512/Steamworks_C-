@@ -15,19 +15,19 @@ void DrivetrainShift::Initialize() {
 void DrivetrainShift::Execute() {
 if (m_Direction) {
 	//waits for a small amount of time then shifts up
-	Wait (0.1);
+	Wait (0.05);
 	Robot::drivetrain->Shifter(DoubleSolenoid::kForward);
 }
 else {
 	//waits for a small amount of time then shifts down
-	Wait (0.1);
+	Wait (0.05);
 	Robot::drivetrain->Shifter(DoubleSolenoid::kReverse);
 }
 
 }
 
 bool DrivetrainShift::IsFinished() {
-	return false;
+	return IsTimedOut();
 }
 
 void DrivetrainShift::End() {

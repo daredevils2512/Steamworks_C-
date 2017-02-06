@@ -20,13 +20,12 @@ void ClimberRunMotor::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool ClimberRunMotor::IsFinished() {
-	return true;
+	return false;
 }
 
 // Called once after isFinished returns true
 void ClimberRunMotor::End() {
 	//Turns the motor off
-	Robot::climber->SetSpeed(0.0);
 }
 
 // Called when another command which requires one or more of the same
