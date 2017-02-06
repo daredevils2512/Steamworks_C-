@@ -11,12 +11,14 @@ std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<frc::Compressor> Robot::compressor;
 
 void Robot::RobotInit() {
+	RobotMap::init();
 	//starts subsystems and creates new instances of them
     drivetrain.reset(new Drivetrain());
     climber.reset(new Climber());
     floorIntake.reset(new FloorIntake());
     gear.reset(new Gear());
     shooter.reset(new Shooter());
+
     //starts operator interface
 	oi.reset(new OI());
 
@@ -38,6 +40,7 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
+	Scheduler::GetInstance()->RemoveAll();
 	Scheduler::GetInstance()->Run();
 }
 

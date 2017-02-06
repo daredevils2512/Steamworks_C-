@@ -1,6 +1,6 @@
 #include "GearVisionTurn.h"
 
-GearVisionTurn::GearVisionTurn(double targetX) {
+GearVisionTurn::GearVisionTurn(int targetX) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::gear.get());
@@ -13,19 +13,19 @@ void GearVisionTurn::Initialize() {
 
 }
 
-bool GearVisionTurn::IsWithinThreshold(double obj1X, double obj2X, double threshold){
-	double tol = threshold / 2;
-	return (obj1X - tol <= obj2X && obj1X + tol >= obj2X) && (obj2X - tol <= obj1X && obj2X + tol >= obj1X);
-}
-
 // Called repeatedly when this Command is scheduled to run
 void GearVisionTurn::Execute() {
+	Robot::gear->UpdateObjectData();
+	if(RobotMap::gearPixy->IsFrameEmpty()){
+		return;
+
+	}
 	Pixy::ObjectValues trackedObj1;
 	Pixy::ObjectValues trackedObj2;
 	Pixy::ObjectValues trackedObj3;
 	Pixy::ObjectValues combinedObj;
-	double xDiff;
-	double centerX;
+	int xDiff;
+	int centerX = 159;
 	if(RobotMap::gearPixy->GetFrameSize() == 2) {
 		trackedObj1 = Robot::gear->GetObjectData(0).GetValue();
 		trackedObj2 = Robot::gear->GetObjectData(1).GetValue();
@@ -56,12 +56,18 @@ void GearVisionTurn::Execute() {
 				trackedObj3 = Robot::gear->GetObjectData(2).GetValue();
 				if(IsWithinThreshold(trackedObj1.x, trackedObj2.x, 10)) {
 					combinedObj.x = trackedObj2.x;
+					xDiff = abs(combinedObj.x - trackedObj3.x);
+					centerX = CenterXFinder(combinedObj.x, trackedObj3.x, xDiff);
 				} else if(IsWithinThreshold(trackedObj1.x, trackedObj3.x, 10)) {
 					combinedObj.x = trackedObj3.x;
+					xDiff = abs(combinedObj.x - trackedObj2.x);
+					centerX = CenterXFinder(combinedObj.x, trackedObj2.x, xDiff);
 				} else if(IsWithinThreshold(trackedObj2.x, trackedObj3.x, 10)) {
 					combinedObj.x = trackedObj2.x;
+					xDiff = abs(combinedObj.x - trackedObj1.x);
+					centerX = CenterXFinder(combinedObj.x, trackedObj1.x, xDiff);
 				}
-
+				Robot::drivetrain->TurnDirection(m_targetX, centerX);
 			}
 		}
 	}
@@ -81,4 +87,19 @@ void GearVisionTurn::End() {
 // subsystems is scheduled to run
 void GearVisionTurn::Interrupted() {
 
+}
+
+bool GearVisionTurn::IsWithinThreshold(int obj1X, int obj2X, int threshold){
+	int tol = threshold / 2;
+	return (obj1X - tol <= obj2X && obj1X + tol >= obj2X) && (obj2X - tol <= obj1X && obj2X + tol >= obj1X);
+}
+
+int GearVisionTurn::CenterXFinder(int obj1, int obj2, int xDiff) {
+	int centerX = 159;
+	if (obj1 > obj2) {
+		centerX = obj1 - xDiff;
+	} else if (obj2 > obj1) {
+		centerX = obj2 - xDiff;
+	}
+	return centerX;
 }

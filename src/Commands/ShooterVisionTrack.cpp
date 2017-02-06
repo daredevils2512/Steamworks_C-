@@ -34,6 +34,9 @@ void ShooterVisionTrack::Execute() {
 	Pixy::ObjectValues bottomBar;
 	int maxArea = 79.5 * 49.5;
 	if(RobotMap::shooterPixy->GetFrameSize() == 1){ // if we have one object
+		if(!Robot::shooter->GetObjectData(0).HasValue()){
+			return;
+		}
 		Pixy::ObjectValues stare = Robot::shooter->GetObjectData(0).GetValue(); // focused object
 		if(stare.width*stare.height < maxArea){// if the object is smaller than the maximum area
 			trackedObj = Robot::shooter->GetObjectData(0).GetValue();
@@ -48,11 +51,17 @@ void ShooterVisionTrack::Execute() {
 		// sets max area by dividing the image frame by 4
 		for(int i = 0; i < RobotMap::shooterPixy->GetFrameSize(); i++){
 			//iterate through all known objects
+			if(!Robot::shooter->GetObjectData(i).HasValue()){
+				continue;
+			}
 			Pixy::ObjectValues stare = Robot::shooter->GetObjectData(i).GetValue(); //focused object
 			if(stare.width * stare.height < maxArea){
 				// if this current object is within the area maximum
 				for(int j = i+1; j < RobotMap::shooterPixy->GetFrameSize(); j++){
 					// iterate through all objects that haven't been "checked"
+					if(!Robot::shooter->GetObjectData(j).HasValue()){
+						continue;
+					}
 					Pixy::ObjectValues pSecBar = Robot::shooter->GetObjectData(j).GetValue();
 					if(pSecBar.width * pSecBar.height >= maxArea){
 						//if this object doesn't match max area checks, skip this iteration

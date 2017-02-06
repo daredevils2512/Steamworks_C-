@@ -29,10 +29,10 @@ void Drivetrain::DriveRobot(double move, double turn) {
 	//drives robot in tank mode from specified values
 	Right->SetControlMode(frc::CANSpeedController::kPercentVbus);
 	Left->SetControlMode(frc::CANSpeedController::kPercentVbus);
-	Chassis->TankDrive(move, turn, false);
+	Chassis->TankDrive(move, turn, false); //remove the boolean
 }
 
-void Drivetrain::Shifter(DoubleSolenoid::Value dir) {
+void Drivetrain::Shifter(frc::DoubleSolenoid::Value dir) {
 	//sets the direction of the shifter solenoid
 	DriveTrainShift->Set(dir);
 }

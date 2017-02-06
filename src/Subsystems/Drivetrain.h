@@ -41,7 +41,7 @@ public:
 	Drivetrain();
 	void InitDefaultCommand();
 	void DriveRobot(double move, double turn);
-	void Shifter (DoubleSolenoid::Value dir);
+	void Shifter (frc::DoubleSolenoid::Value dir);
 	double GetEncoders();
 	Speeds AutoCalcSpeeds(double radius, double outerSpeed, Direction direction);
 	void AutoSetSpeeds(Speeds theSpeeds);
