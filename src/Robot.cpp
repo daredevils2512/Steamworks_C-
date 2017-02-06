@@ -12,6 +12,7 @@ std::shared_ptr<frc::Compressor> Robot::compressor;
 
 void Robot::RobotInit() {
 	//starts subsystems and creates new instances of them
+	RobotMap::init();
     drivetrain.reset(new Drivetrain());
     climber.reset(new Climber());
     floorIntake.reset(new FloorIntake());

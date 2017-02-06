@@ -133,7 +133,7 @@ bool ShooterVisionTrack::IsFinished() {
 
 // Called once after isFinished returns true
 void ShooterVisionTrack::End() {
-	//once the command is over the new command it moves to is vision scan to reaquire a target
+	//once the command is over the new command it moves to is vision scan to require a target
 	Robot::shooter->SetSwivelSpeed(0);
 	Robot::shooter->SetCurrentCommand(new ShooterVisionScan());
 }

@@ -25,7 +25,6 @@ private:
 	Nullable<Pixy::ObjectValues> targetObject;
 	bool lastConditionRight;
 	bool lastConditionLeft;
-	double maxEncPosition;
 public:
 	Shooter();
 	void InitDefaultCommand();
@@ -41,6 +40,7 @@ public:
 	bool ObjectExists(Nullable<Pixy::ObjectValues> object);
 	Nullable<Pixy::ObjectValues> GetObjectData(int objectIndex);
 	int GetVirtualDistance(Pixy::ObjectValues object);
+	double maxEncPosition;
 };
 
 #endif  // Shooter_H
