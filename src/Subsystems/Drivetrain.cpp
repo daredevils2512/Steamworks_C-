@@ -25,14 +25,21 @@ void Drivetrain::InitDefaultCommand() {
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 
-void Drivetrain::DriveRobot(double move, double turn) {
-	//drives robot in tank mode from specified values
+void Drivetrain::DriveRobotArcade(double move, double turn) {
+	//drives robot in arcade mode from specified values (TELEOP)
 	Right->SetControlMode(frc::CANSpeedController::kPercentVbus);
 	Left->SetControlMode(frc::CANSpeedController::kPercentVbus);
-	Chassis->TankDrive(move, turn, false);
+	Chassis->ArcadeDrive(move, turn, false); //remove the boolean
 }
 
-void Drivetrain::Shifter(DoubleSolenoid::Value dir) {
+void Drivetrain::DriveRobotTank(double leftSide, double rightSide) {
+	//Needed for the auton driving
+	Right->SetControlMode(frc::CANSpeedController::kPercentVbus);
+	Left->SetControlMode(frc::CANSpeedController::kPercentVbus);
+	Chassis->TankDrive(leftSide, rightSide);
+}
+
+void Drivetrain::Shifter(frc::DoubleSolenoid::Value dir) {
 	//sets the direction of the shifter solenoid
 	DriveTrainShift->Set(dir);
 }
@@ -61,7 +68,20 @@ Drivetrain::Speeds Drivetrain::AutoCalcSpeeds(double radius, double outerSpeed, 
 	return theSpeeds;
 }
 
-void Drivetrain::AutoSetSpeeds(Drivetrain::Speeds theSpeeds){
-	Left -> Set(theSpeeds.leftSpeed);
-	Right -> Set(theSpeeds.rightSpeed);
+void Drivetrain::TurnDirection(double m_targetX , double centerX){
+	double error = centerX - m_targetX;
+	error = error * 0.005;
+	if (error > 0.5) {
+		error = 0.5;
+	} else if (error < -0.5){
+		error = -0.5;
+	}
+	if(IsWithinThreshold(m_targetX, centerX, 5)) {
+		DriveRobotTank(0.5, 0.0);
+	} else if(centerX != m_targetX) {
+		DriveRobotTank(0.0, error);
+	} else {
+		DriveRobotTank(0.0, 0.0);
+	}
 }
+

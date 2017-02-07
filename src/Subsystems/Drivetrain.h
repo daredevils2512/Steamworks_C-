@@ -40,11 +40,15 @@ public:
 
 	Drivetrain();
 	void InitDefaultCommand();
-	void DriveRobot(double move, double turn);
-	void Shifter (DoubleSolenoid::Value dir);
+	void DriveRobotArcade(double move, double turn);
+	void DriveRobotTank(double leftSide, double rightSide);
+	void Shifter (frc::DoubleSolenoid::Value dir);
 	double GetEncoders();
 	Speeds AutoCalcSpeeds(double radius, double outerSpeed, Direction direction);
 	void AutoSetSpeeds(Speeds theSpeeds);
+	void TurnDirection(double m_targetX ,double centerX);
+	bool IsWithinThreshold(double obj1X, double obj2X, int threshold);
+
 };
 
 #endif
