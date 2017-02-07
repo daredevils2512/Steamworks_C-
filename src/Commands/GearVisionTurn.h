@@ -12,14 +12,16 @@
 
 class GearVisionTurn : public CommandBase {
 public:
-	GearVisionTurn(int targetX);
+	GearVisionTurn(double targetX);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
-	bool IsWithinThreshold(int obj1X, int obj2X, int threshold);
-	int CenterXFinder(int obj1, int obj2, int xDiff);
+	bool IsWithinThreshold(double obj1X, double obj2X, int threshold);
+	int CenterXFinder(double obj1, double obj2, double xDiff);
+	bool IsHeightSame(double obj1, double obj2);
+	bool IsYSame(double obj1, double obj2);
 
 private:
 	double m_targetX;

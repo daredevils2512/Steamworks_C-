@@ -9,7 +9,7 @@ void DrivetrainShift::Initialize() {
 	SetInterruptible(false);
 	SetTimeout(0.1);
 	//stops the drivetrain
-	Robot::drivetrain->DriveRobot(0.0 , 0.0);
+	Robot::drivetrain->DriveRobotArcade(0.0 , 0.0);
 }
 
 void DrivetrainShift::Execute() {

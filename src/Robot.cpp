@@ -58,6 +58,7 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainFrontRightMotor ->GetEncPosition());
 	SmartDashboard::PutBoolean("limit switch" , RobotMap::gearLimitSwitch ->Get());
 	SmartDashboard::PutBoolean("gear photoeye", RobotMap::gearPhotoeye ->Get());
+	SmartDashboard::PutBoolean("object found", RobotMap::gearPixy->IsFrameEmpty());
 }
 
 void Robot::TestPeriodic() {

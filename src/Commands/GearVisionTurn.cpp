@@ -1,6 +1,6 @@
 #include "GearVisionTurn.h"
 
-GearVisionTurn::GearVisionTurn(int targetX) {
+GearVisionTurn::GearVisionTurn(double targetX) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::gear.get());
@@ -24,8 +24,9 @@ void GearVisionTurn::Execute() {
 	Pixy::ObjectValues trackedObj2;
 	Pixy::ObjectValues trackedObj3;
 	Pixy::ObjectValues combinedObj;
-	int xDiff;
-	int centerX = 159;
+	double xDiff;
+	double centerX = 159;
+	bool heightSame = false;
 	if(RobotMap::gearPixy->GetFrameSize() == 2) {
 		trackedObj1 = Robot::gear->GetObjectData(0).GetValue();
 		trackedObj2 = Robot::gear->GetObjectData(1).GetValue();
@@ -35,7 +36,10 @@ void GearVisionTurn::Execute() {
 		} else if (trackedObj2.x > trackedObj1.x) {
 			centerX = trackedObj2.x - xDiff;
 		}
-		Robot::drivetrain->TurnDirection(m_targetX, centerX);
+		heightSame = IsHeightSame(trackedObj1.height, trackedObj2.height);
+		if(heightSame == true && IsYSame(trackedObj1.y, trackedObj2.y)) {
+			Robot::drivetrain->TurnDirection(m_targetX, centerX);
+		}
 		//Add checks with the height of the objects and the y-coordinates
 		//Use the DriveRobot function instead
 
@@ -89,12 +93,12 @@ void GearVisionTurn::Interrupted() {
 
 }
 
-bool GearVisionTurn::IsWithinThreshold(int obj1X, int obj2X, int threshold){
+bool GearVisionTurn::IsWithinThreshold(double obj1X, double obj2X, int threshold){
 	int tol = threshold / 2;
 	return (obj1X - tol <= obj2X && obj1X + tol >= obj2X) && (obj2X - tol <= obj1X && obj2X + tol >= obj1X);
 }
 
-int GearVisionTurn::CenterXFinder(int obj1, int obj2, int xDiff) {
+int GearVisionTurn::CenterXFinder(double obj1, double obj2, double xDiff) {
 	int centerX = 159;
 	if (obj1 > obj2) {
 		centerX = obj1 - xDiff;
@@ -102,4 +106,12 @@ int GearVisionTurn::CenterXFinder(int obj1, int obj2, int xDiff) {
 		centerX = obj2 - xDiff;
 	}
 	return centerX;
+}
+
+bool GearVisionTurn::IsHeightSame(double obj1, double obj2) {
+	return IsWithinThreshold(obj1, obj2, 5);
+}
+
+bool GearVisionTurn::IsYSame(double obj1, double obj2) {
+	return IsWithinThreshold(obj1, obj2, 5);
 }
