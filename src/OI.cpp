@@ -10,6 +10,7 @@
 #include "Commands/ShooterRunFlywheel.h"
 #include "Commands/ShooterRunSpinCycleFeed.h"
 #include "Commands/ShooterSwivelTurret.h"
+#include "Commands/ShooterVisionTrack.h"
 
 
 OI::OI()
@@ -23,6 +24,21 @@ OI::OI()
 	DRC_xButton.WhenReleased(new ClimberRunMotor(0.0));
 	DRC_yButton.WhileHeld(new ClimberRunMotor(-0.8));
 	DRC_yButton.WhenReleased(new ClimberRunMotor(0.0));
+
+	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack());
+	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(0.8));
+	CDR_bottomLeftJoystick.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
+	CDR_bottomLeftJoystick.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+	CDR_topRightJoystick.WhileHeld(new ClimberRunMotor(0.8));
+	CDR_topRightJoystick.WhenReleased(new ClimberRunMotor(0.0));
+	CDR_bottomRightJoystick.WhileHeld(new ClimberRunMotor(-0.8));
+	CDR_bottomRightJoystick.WhenReleased(new ClimberRunMotor(0.0));
+	CDR_bottomRightBase.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kReverse));
+	CDR_topRightBase.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kForward));
+	CDR_bottomLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.8));
+	CDR_topLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.0));
+	CDR_topMiddleBase.WhenPressed(new ShooterRunFlywheel(0.0));
+
 
 }
 

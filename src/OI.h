@@ -12,6 +12,7 @@ private:
 	//declares controllers
 	Joystick driverController{0};
 	Joystick coDriverController{1};
+	Joystick coDriverBox{2};
 
 
 	//driver controls
