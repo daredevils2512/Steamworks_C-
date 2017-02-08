@@ -93,7 +93,7 @@ void RobotMap::init() {
 		drivetrainChassis ->SetSensitivity(0.5);
 		drivetrainChassis ->SetMaxOutput(1.0);
 
-	shooterHoodActuator.reset (new frc::DoubleSolenoid (1, 2, 3));
+	shooterHoodActuator.reset (new frc::DoubleSolenoid (0, 2, 3));
 	lw ->AddActuator("Shooter", "HoodActuator", shooterHoodActuator);
 
 	compressorSpike.reset(new frc::Relay(1));
@@ -102,7 +102,7 @@ void RobotMap::init() {
 	compressorPressureSwitch.reset(new frc::DigitalInput(0));
 	lw ->AddSensor("Compressor", "CompressorPressureSwitch", compressorPressureSwitch);
 
-	drivetrainShift.reset (new frc::DoubleSolenoid (1, 0, 1));
+	drivetrainShift.reset (new frc::DoubleSolenoid (0, 0, 1));
 	lw ->AddActuator("Drivetrain" , "DoubleSolenoid" , drivetrainShift);
 
 	shooterLeftLimitSwitch.reset(new frc::DigitalInput(1));
@@ -122,7 +122,7 @@ void RobotMap::init() {
 	gearPhotoeye.reset (new frc::DigitalInput(4));
 	lw ->AddSensor("Gear" , "GearPhotoeye" , gearPhotoeye);
 
-	gearSolenoid.reset (new frc::DoubleSolenoid(2, 3, 4));
+	gearSolenoid.reset (new frc::DoubleSolenoid(0, 4, 5));
 	lw ->AddActuator("Gear" , "GearSolenoid" , gearSolenoid);
 
 }
