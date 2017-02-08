@@ -25,7 +25,6 @@ public:
 
 private:
 	double m_targetX;
-	double threshold;
 };
 
 #endif  // GearVisionTurn_H
