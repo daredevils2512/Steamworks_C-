@@ -10,6 +10,7 @@
 #include "Commands/ShooterRunFlywheel.h"
 #include "Commands/ShooterRunSpinCycleFeed.h"
 #include "Commands/ShooterSwivelTurret.h"
+#include "Commands/ShooterVisionScan.h"
 #include "Commands/ShooterVisionTrack.h"
 
 
@@ -26,35 +27,51 @@ OI::OI()
 	DRC_yButton.WhenReleased(new ClimberRunMotor(0.0));
 
 	CDR_joystickPOV.WhenPressed(new ShooterMoveHood(POVHoodControl()));
-	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack());
+	CDR_sideJoystickButton.WhileHeld(new ShooterVisionScan());
 	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(0.8));
+	CDR_topLeftJoystick.WhenReleased(new FloorIntakeRunMotor(0.0));
 	CDR_bottomLeftJoystick.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
 	CDR_bottomLeftJoystick.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 	CDR_topRightJoystick.WhileHeld(new ClimberRunMotor(0.8));
 	CDR_topRightJoystick.WhenReleased(new ClimberRunMotor(0.0));
 	CDR_bottomRightJoystick.WhileHeld(new ClimberRunMotor(-0.8));
 	CDR_bottomRightJoystick.WhenReleased(new ClimberRunMotor(0.0));
-	CDR_bottomRightBase.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kReverse));
-	CDR_topRightBase.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kForward));
+	CDR_bottomRightBase.WhenPressed(new ShooterRunFlywheel(0.6));
+	CDR_topRightBase.WhenPressed(new ShooterRunFlywheel(0.8));
 	CDR_bottomLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.8));
 	CDR_topLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.0));
 	CDR_topMiddleBase.WhenPressed(new ShooterRunFlywheel(0.0));
+	CDR_zPositiveAxis.WhenPressed(new ShooterSwivelTurret(GetManualShooterSwivel()));
+	CDR_zNegativeAxis.WhenPressed(new ShooterSwivelTurret(GetManualShooterSwivel()));
+	CDR_throttle.WhileHeld(new ShooterRunFlywheel(GetTranslatedThrottle()));
+	CDR_throttle.WhenReleased(new ShooterRunFlywheel(0.0));
 
-
+	CDB_bigWhite.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kForward));
+	CDB_bigRed.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kReverse));
+	CDB_green.WhileHeld(new FloorIntakeRunMotor(0.8));
+	CDB_green.WhenReleased(new FloorIntakeRunMotor(0.0));
+	CDB_yellow.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
+	CDB_yellow.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(0.8));
+	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));
+	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-0.8));
+	CDB_bottomRed.WhenReleased(new ClimberRunMotor(0.0));
+	CDB_topWhite.WhenPressed(new ShooterRunFlywheel(0.6));
+	CDB_topRed.WhenPressed(new ShooterRunFlywheel(0.8));
 }
 
 double OI::GetX() {
 	//gets forward/backward values
 	if(InvertDriving()) {
-		return Desensitize(driverController.GetRawAxis(1));
+		return Desensitize(driverController.GetRawAxis(4));
 	}else{
-		return Desensitize(-driverController.GetRawAxis(1));
+		return Desensitize(-driverController.GetRawAxis(4));
 	}
 
 }
 double OI::GetY() {
 	//gets turning values
-	return driverController.GetRawAxis(4);
+	return Desensitize(-driverController.GetRawAxis(1));
 }
 
 double OI::Desensitize(double value) {
@@ -62,11 +79,6 @@ double OI::Desensitize(double value) {
 	//sometimes resting value of joystick is not 0
 	if (fabs(value) < 0.2) value = 0;
 	return value;
-}
-
-double OI::GetThrottle() {
-	//get value of throttle axis
-	return coDriverController.GetRawAxis(3);
 }
 
 bool OI::InvertDriving() {
@@ -93,5 +105,13 @@ frc::DoubleSolenoid::Value OI::POVHoodControl() {
 int OI::GetJoystickPOV() {
 	//accesses the POV hat value
 	return coDriverController.GetPOV();
+}
+
+double OI::GetManualShooterSwivel() {
+	return coDriverController.GetRawAxis(2) / 4;
+}
+
+double OI::GetTranslatedThrottle() {
+		return (coDriverController.GetRawAxis(3) + 1) / 2;
 }
 

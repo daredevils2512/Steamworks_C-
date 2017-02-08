@@ -4,6 +4,7 @@
 #include "WPILib.h"
 #include "TriggerButton.h"
 #include "POVButton.h"
+#include "ThrottleButton.h"
 
 //creates all of the inputs on the controllers
 class OI
@@ -36,6 +37,9 @@ private:
 	JoystickButton CDR_bottomRightBase{&coDriverController, 11};
 	JoystickButton CDR_topRightBase{&coDriverController, 12};
 	POVButton CDR_joystickPOV{&coDriverController, 0};
+	TriggerButton CDR_zPositiveAxis{&coDriverController, 2, 0.2};
+	TriggerButton CDR_zNegativeAxis{&coDriverController, 2, -0.2};
+	ThrottleButton CDR_throttle{&coDriverController, 3};
 
 	JoystickButton CDB_topWhite{&coDriverBox, 2};
 	JoystickButton CDB_topRed{&coDriverBox, 6};
@@ -54,10 +58,11 @@ public:
 	double GetX();
 	double GetY();
 	double Desensitize(double value);
-	double GetThrottle();
 	bool InvertDriving();
 	frc::DoubleSolenoid::Value POVHoodControl();
 	int GetJoystickPOV();
+	double GetManualShooterSwivel();
+	double GetTranslatedThrottle();
 };
 
 #endif  // OI_H
