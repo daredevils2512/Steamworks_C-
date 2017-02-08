@@ -55,8 +55,8 @@ private:
 public:
 	OI();
 	//control related functions
-	double GetX();
-	double GetY();
+	double GetTurn();
+	double GetMove();
 	double Desensitize(double value);
 	bool InvertDriving();
 	frc::DoubleSolenoid::Value POVHoodControl();

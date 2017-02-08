@@ -60,7 +60,7 @@ OI::OI()
 	CDB_topRed.WhenPressed(new ShooterRunFlywheel(0.8));
 }
 
-double OI::GetX() {
+double OI::GetTurn() {
 	//gets forward/backward values
 	if(InvertDriving()) {
 		return Desensitize(driverController.GetRawAxis(4));
@@ -69,7 +69,7 @@ double OI::GetX() {
 	}
 
 }
-double OI::GetY() {
+double OI::GetMove() {
 	//gets turning values
 	return Desensitize(-driverController.GetRawAxis(1));
 }
