@@ -25,6 +25,7 @@ OI::OI()
 	DRC_yButton.WhileHeld(new ClimberRunMotor(-0.8));
 	DRC_yButton.WhenReleased(new ClimberRunMotor(0.0));
 
+	CDR_joystickPOV.WhenPressed(new ShooterMoveHood(POVHoodControl()));
 	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack());
 	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(0.8));
 	CDR_bottomLeftJoystick.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
@@ -80,12 +81,12 @@ bool OI::InvertDriving() {
 		return false;
 	}
 }
-bool OI::POVForward() {
+frc::DoubleSolenoid::Value OI::POVHoodControl() {
 	//detects if the POV hat is pushed forward or not
 	if((coDriverController.GetPOV() >= 270) || (coDriverController.GetPOV() <= 90)) {
-		return true;
+		return frc::DoubleSolenoid::kForward;
 	}else{
-		return false;
+		return frc::DoubleSolenoid::kReverse;
 	}
 }
 

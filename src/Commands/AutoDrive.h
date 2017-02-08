@@ -18,6 +18,8 @@ private:
 	double m_radius;
 	double m_outerSpeed;
 	Drivetrain::Direction m_direction;
+	double m_leftSpeed;
+	double m_rightSpeed;
 };
 
 #endif  // AutoDrive_H

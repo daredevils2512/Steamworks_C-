@@ -18,13 +18,14 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
-	bool IsWithinThreshold(double obj1X, double obj2X, int threshold);
 	int CenterXFinder(double obj1, double obj2, double xDiff);
-	bool IsHeightSame(double obj1, double obj2);
-	bool IsYSame(double obj1, double obj2);
+	bool IsHeightSame(double obj1, double obj2, double threshold);
+	bool IsYSame(double obj1, double obj2, double threshold);
+	void TurnDirection(double m_targetX , double centerX);
 
 private:
 	double m_targetX;
+	double threshold;
 };
 
 #endif  // GearVisionTurn_H

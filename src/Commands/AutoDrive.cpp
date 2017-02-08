@@ -7,16 +7,19 @@ AutoDrive::AutoDrive(double radius, double outerSpeed, Drivetrain::Direction dir
 	m_radius = radius;
 	m_outerSpeed = outerSpeed;
 	m_direction = direction;
+	m_leftSpeed = 0.0;
+	m_rightSpeed = 0.0;
 }
 
 // Called just before this Command runs the first time
 void AutoDrive::Initialize() {
-
+	m_leftSpeed = Robot::drivetrain->AutoCalcSpeeds(m_radius, m_outerSpeed, m_direction).leftSpeed;
+	m_rightSpeed = m_leftSpeed = Robot::drivetrain->AutoCalcSpeeds(m_radius, m_outerSpeed, m_direction).rightSpeed;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AutoDrive::Execute() {
-	Robot::drivetrain->AutoSetSpeeds(Robot::drivetrain->AutoCalcSpeeds(m_radius, m_outerSpeed, m_direction));
+	Robot::drivetrain->DriveRobotTank(m_leftSpeed, m_rightSpeed);
 }
 
 // Make this return true when this Command no longer needs to run execute()

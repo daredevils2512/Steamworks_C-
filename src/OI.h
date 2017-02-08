@@ -37,6 +37,17 @@ private:
 	JoystickButton CDR_topRightBase{&coDriverController, 12};
 	POVButton CDR_joystickPOV{&coDriverController, 0};
 
+	JoystickButton CDB_topWhite{&coDriverBox, 2};
+	JoystickButton CDB_topRed{&coDriverBox, 6};
+	JoystickButton CDB_middleWhite{&coDriverBox, 8};
+	JoystickButton CDB_middleRed{&coDriverBox, 4};
+	JoystickButton CDB_bottomWhite{&coDriverBox, 5};
+	JoystickButton CDB_bottomRed{&coDriverBox, 16};
+	JoystickButton CDB_green{&coDriverBox, 7};
+	JoystickButton CDB_yellow{&coDriverBox, 15};
+	JoystickButton CDB_bigWhite{&coDriverBox, 3};
+	JoystickButton CDB_bigRed{&coDriverBox, 14};
+
 public:
 	OI();
 	//control related functions
@@ -45,7 +56,7 @@ public:
 	double Desensitize(double value);
 	double GetThrottle();
 	bool InvertDriving();
-	bool POVForward();
+	frc::DoubleSolenoid::Value POVHoodControl();
 	int GetJoystickPOV();
 };
 
