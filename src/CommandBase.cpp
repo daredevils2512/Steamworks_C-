@@ -9,7 +9,7 @@
 std::unique_ptr<ExampleSubsystem> CommandBase::exampleSubsystem =
 		std::make_unique<ExampleSubsystem>();
 
-std::unique_ptr<OI> CommandBase::oi = std::make_unique<OI>();
+//std::unique_ptr<OI> CommandBase::oi = std::make_unique<OI>();
 
 CommandBase::CommandBase(const std::string &name) :
 		frc::Command(name) {
