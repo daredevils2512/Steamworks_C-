@@ -1,6 +1,7 @@
 #include "RobotMap.h"
 #include "LiveWindow/LiveWindow.h"
 #include "WPILib.h"
+#include "CANTAlon.h"
 
 //access pointer objects declared in RobotMap.h
 std::shared_ptr<CANTalon> RobotMap::drivetrainFrontLeftMotor;

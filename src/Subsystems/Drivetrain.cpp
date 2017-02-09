@@ -67,6 +67,23 @@ Drivetrain::Speeds Drivetrain::AutoCalcSpeeds(double radius, double outerSpeed, 
 	return theSpeeds;
 }
 
+void Drivetrain::TurnDirection(double m_targetX , double centerX){
+	double error = centerX - m_targetX;
+	error = error * 0.005;
+	if (error > 0.5) {
+		error = 0.5;
+	} else if (error < -0.5){
+		error = -0.5;
+	}
+	if(IsWithinThreshold(m_targetX, centerX, 5)) {
+		DriveRobotTank(0.5, 0.0);
+	} else if(centerX != m_targetX) {
+		DriveRobotTank(0.0, error);
+	} else {
+		DriveRobotTank(0.0, 0.0);
+	}
+}
+
 bool Drivetrain::IsWithinThreshold(double obj1X, double obj2X, int threshold){
 	int tol = threshold / 2;
 	return (obj1X - tol <= obj2X && obj1X + tol >= obj2X) && (obj2X - tol <= obj1X && obj2X + tol >= obj1X);

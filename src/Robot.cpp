@@ -35,6 +35,7 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	//starts autonomous
+	std::string autoString = FileIO::getFileAsString("auto.txt");
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
 }

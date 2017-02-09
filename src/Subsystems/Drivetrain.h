@@ -46,6 +46,7 @@ public:
 	double GetEncoders();
 	Speeds AutoCalcSpeeds(double radius, double outerSpeed, Direction direction);
 	void AutoSetSpeeds(Speeds theSpeeds);
+	void TurnDirection(double m_targetX , double centerX);
 	bool IsWithinThreshold(double obj1X, double obj2X, int threshold);
 
 };
