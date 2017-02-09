@@ -1,0 +1,36 @@
+#include "GearVisionScan.h"
+#include "GearVisionTurn.h"
+#include "../Robot.h"
+#include "../Subsystems/Shooter.h"
+
+GearVisionScan::GearVisionScan(double targetX) {
+	GearVisionScan::targetX = targetX;
+	// Use Requires() here to declare subsystem dependencies
+	// eg. Requires(Robot::chassis.get());
+	//speed = 0.15;
+}
+
+// Called just before this Command runs the first time
+void GearVisionScan::Initialize() {
+	//Robot::shooter->SetSwivelSpeed(speed);
+}
+
+// Called repeatedly when this Command is scheduled to run
+void GearVisionScan::Execute() {
+}
+
+// Make this return true when this Command no longer needs to run execute()
+bool GearVisionScan::IsFinished() {
+	return Robot::gear->GetObjectData(0).HasValue();
+}
+
+// Called once after isFinished returns true
+void GearVisionScan::End() {
+	Robot::shooter->SetCurrentCommand(new GearVisionTurn(targetX));
+}
+
+// Called when another command which requires one or more of the same
+// subsystems is scheduled to run
+void GearVisionScan::Interrupted() {
+
+}

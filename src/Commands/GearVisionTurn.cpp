@@ -1,6 +1,7 @@
 #include "GearVisionTurn.h"
 
 GearVisionTurn::GearVisionTurn(double targetX) {
+	isFinished = false;
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::gear.get());
@@ -18,6 +19,8 @@ void GearVisionTurn::Execute() {
 	//Gets the frame data from the GearPixy so we can use it
 	Robot::gear->UpdateObjectData();
 	if(RobotMap::gearPixy->IsFrameEmpty()){
+		isFinished = true;
+		Robot::gear->SetCurrentCommand(new GearVisionScan(m_targetX));
 		return;
 	}
 	//Creates the empty objects we will use to store object data
@@ -93,7 +96,7 @@ void GearVisionTurn::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool GearVisionTurn::IsFinished() {
-	return true;
+	return isFinished;
 }
 
 // Called once after isFinished returns true
@@ -108,7 +111,7 @@ void GearVisionTurn::Interrupted() {
 }
 
 int GearVisionTurn::CenterXFinder(double obj1, double obj2) {
-	int centerX = 159;
+	int centerX = obj1;
 	int xDiff = abs(obj1 - obj2);
 	if (obj1 > obj2) {
 		centerX = obj1 - xDiff;
@@ -119,7 +122,7 @@ int GearVisionTurn::CenterXFinder(double obj1, double obj2) {
 }
 
 int GearVisionTurn::CenterYFinder(double obj1, double obj2) {
-	int centerY = 99;
+	int centerY = obj1;
 	int yDiff = abs(obj1 - obj2);
 	if (obj1 > obj2) {
 		centerY = obj1 - yDiff;
@@ -152,6 +155,7 @@ void GearVisionTurn::TurnDirection(double m_targetX , double centerX){
 	} else if(centerX != m_targetX) {
 		Robot::drivetrain->DriveRobotTank(0.0, error);
 	} else {
+		isFinished = true;
 		Robot::drivetrain->DriveRobotTank(0.0, 0.0);
 	}
 }
