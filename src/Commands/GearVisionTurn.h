@@ -18,7 +18,8 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
-	int CenterXFinder(double obj1, double obj2, double xDiff);
+	int CenterXFinder(double obj1, double obj2);
+	int CenterYFinder(double obj1, double obj2);
 	bool IsHeightSame(double obj1, double obj2, double threshold);
 	bool IsYSame(double obj1, double obj2, double threshold);
 	void TurnDirection(double m_targetX , double centerX);

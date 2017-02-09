@@ -26,21 +26,22 @@ void GearVisionTurn::Execute() {
 	Pixy::ObjectValues trackedObj3;
 	Pixy::ObjectValues combinedObj;
 	//Creating the empty doubles for different values
-	//xDiff is the difference between the two objects found
-	//centerX is the centerX pixel between the two objects
-	//centerX defaults to 159 because it is the centerX pixel of the image
 	//heightSame is the check to see if the objects have the relatively same height in pixels
 	//heightSame defaults to false so that it won't drive unless it becomes true
-	double xDiff;
-	double centerX = 159;
 	bool heightSame = false;
+	//ySame is the check to see if the objects have the relatively same center y-coordinate in pixels
+	//ySame defaults to false so that it won't drive unless it becomes true
+	bool ySame = false;
+	//centerX is the centerX pixel between the two objects
+	//centerX defaults to 159 because it is the centerX pixel of the image
+	double centerX = 159;
 	if(RobotMap::gearPixy->GetFrameSize() == 2) {
 		trackedObj1 = Robot::gear->GetObjectData(0).GetValue();
 		trackedObj2 = Robot::gear->GetObjectData(1).GetValue();
-		xDiff = abs(trackedObj1.x - trackedObj2.x);
-		centerX = CenterXFinder(trackedObj1.x, trackedObj2.x, xDiff);
+		centerX = CenterXFinder(trackedObj1.x, trackedObj2.x);
 		heightSame = IsHeightSame(trackedObj1.height, trackedObj2.height, 5);
-		if(heightSame == true && IsYSame(trackedObj1.y, trackedObj2.y, 5)) {
+		ySame = IsYSame(trackedObj1.y, trackedObj2.y, 5);
+		if(heightSame == true && ySame == true) {
 			TurnDirection(m_targetX, centerX);
 		}
 	} else if(RobotMap::gearPixy->GetFrameSize() > 2) {
@@ -49,30 +50,41 @@ void GearVisionTurn::Execute() {
 				trackedObj1 = Robot::gear->GetObjectData(0).GetValue();
 			} else if(i == 1) {
 				trackedObj2 = Robot::gear->GetObjectData(1).GetValue();
-				xDiff = abs(trackedObj1.x - trackedObj2.x);
-				centerX = CenterXFinder(trackedObj1.x, trackedObj2.x, xDiff);
+				centerX = CenterXFinder(trackedObj1.x, trackedObj2.x);
 				heightSame = IsHeightSame(trackedObj1.height, trackedObj2.height, 5);
-				if(heightSame == true && IsYSame(trackedObj1.y, trackedObj2.y, 5)) {
+				ySame = IsYSame(trackedObj1.y, trackedObj2.y, 5);
+				if(heightSame == true && ySame == true) {
 					TurnDirection(m_targetX, centerX);
 				}
 			} else if(i == 2) {
 				trackedObj3 = Robot::gear->GetObjectData(2).GetValue();
 				if(Robot::drivetrain->IsWithinThreshold(trackedObj1.x, trackedObj2.x, 10)) {
 					combinedObj.x = trackedObj2.x;
-					xDiff = abs(combinedObj.x - trackedObj3.x);
-					centerX = CenterXFinder(combinedObj.x, trackedObj3.x, xDiff);
+					centerX = CenterXFinder(combinedObj.x, trackedObj3.x);
+					combinedObj.height = trackedObj1.height + trackedObj2.height;
+					heightSame = IsHeightSame(combinedObj.height, trackedObj3.height, 5);
+					ySame = IsYSame(trackedObj1.y, trackedObj2.y, 5);
+					if(heightSame == true && ySame == true) {
+						TurnDirection(m_targetX, centerX);
+					}
 				} else if(Robot::drivetrain->IsWithinThreshold(trackedObj1.x, trackedObj3.x, 10)) {
 					combinedObj.x = trackedObj3.x;
-					xDiff = abs(combinedObj.x - trackedObj2.x);
-					centerX = CenterXFinder(combinedObj.x, trackedObj2.x, xDiff);
+					centerX = CenterXFinder(combinedObj.x, trackedObj2.x);
+					combinedObj.height = trackedObj1.height + trackedObj3.height;
+					heightSame = IsHeightSame(combinedObj.height, trackedObj2.height, 5);
+					ySame = IsYSame(trackedObj1.y, trackedObj3.y, 5);
+					if(heightSame == true && ySame == true) {
+						TurnDirection(m_targetX, centerX);
+					}
 				} else if(Robot::drivetrain->IsWithinThreshold(trackedObj2.x, trackedObj3.x, 10)) {
 					combinedObj.x = trackedObj2.x;
-					xDiff = abs(combinedObj.x - trackedObj1.x);
-					centerX = CenterXFinder(combinedObj.x, trackedObj1.x, xDiff);
-				}
-				heightSame = IsHeightSame(trackedObj1.height, trackedObj2.height, 10);
-				if(heightSame == true && IsYSame(trackedObj1.y, trackedObj2.y, 10)) {
-					TurnDirection(m_targetX, centerX);
+					centerX = CenterXFinder(combinedObj.x, trackedObj1.x);
+					combinedObj.height = trackedObj2.height + trackedObj3.height;
+					heightSame = IsHeightSame(combinedObj.height, trackedObj1.height, 5);
+					ySame = IsYSame(trackedObj2.y, trackedObj3.y, 5);
+					if(heightSame == true && ySame == true) {
+						TurnDirection(m_targetX, centerX);
+					}
 				}
 			}
 		}
@@ -81,7 +93,7 @@ void GearVisionTurn::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool GearVisionTurn::IsFinished() {
-	return false;
+	return true;
 }
 
 // Called once after isFinished returns true
@@ -95,8 +107,9 @@ void GearVisionTurn::Interrupted() {
 
 }
 
-int GearVisionTurn::CenterXFinder(double obj1, double obj2, double xDiff) {
+int GearVisionTurn::CenterXFinder(double obj1, double obj2) {
 	int centerX = 159;
+	int xDiff = abs(obj1 - obj2);
 	if (obj1 > obj2) {
 		centerX = obj1 - xDiff;
 	} else if (obj2 > obj1) {
@@ -105,11 +118,24 @@ int GearVisionTurn::CenterXFinder(double obj1, double obj2, double xDiff) {
 	return centerX;
 }
 
+int GearVisionTurn::CenterYFinder(double obj1, double obj2) {
+	int centerY = 99;
+	int yDiff = abs(obj1 - obj2);
+	if (obj1 > obj2) {
+		centerY = obj1 - yDiff;
+	} else if (obj2 > obj1) {
+		centerY = obj2 - yDiff;
+	}
+	return centerY;
+}
+
 bool GearVisionTurn::IsHeightSame(double obj1, double obj2, double threshold) {
+	//Checks if the two objects inputed have relatively same height in pixels
 	return Robot::drivetrain->IsWithinThreshold(obj1, obj2, threshold);
 }
 
 bool GearVisionTurn::IsYSame(double obj1, double obj2, double threshold) {
+	//Checks if the two objects inputed have relatively same y-coordinate
 	return Robot::drivetrain->IsWithinThreshold(obj1, obj2, threshold);
 }
 

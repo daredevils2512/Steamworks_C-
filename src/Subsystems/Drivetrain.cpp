@@ -3,7 +3,6 @@
 #include "Drivetrain.h"
 #include "../RobotMap.h"
 #include "../Commands/Drive.h"
-#include "CANTalon.h"
 
 Drivetrain::Drivetrain() : Subsystem("Drivetrain") {
 
