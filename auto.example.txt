@@ -1,0 +1,4 @@
+#This is an example illustrating how the robot auto text file works.
+gear left # go to left gear peg and place gear
+hopper # move to hopper and spill
+shoot # enable vision tracking & attempt to shoot high goal

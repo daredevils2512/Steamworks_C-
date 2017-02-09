@@ -11,6 +11,8 @@
 #include "Subsystems/Gear.h"
 #include "Subsystems/Shooter.h"
 #include "OI.h"
+#include "FileIO.h"
+
 //class declaration of the robot
 class Robot : public IterativeRobot {
 public:
