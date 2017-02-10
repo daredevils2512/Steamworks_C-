@@ -15,7 +15,6 @@ std::shared_ptr<CANTalon> RobotMap::shooterTurretSwivel;
 std::shared_ptr<CANTalon> RobotMap::shooterSpinCycleFeed;
 std::shared_ptr<frc::SPI> RobotMap::shooterRealPixy;
 std::shared_ptr<frc::SPI> RobotMap::shooterFakePixy;
-std::shared_ptr<Pixy> RobotMap::shooterPixy;
 std::shared_ptr<frc::RobotDrive> RobotMap::drivetrainChassis;
 std::shared_ptr<frc::Relay> RobotMap::compressorSpike;
 std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
@@ -26,7 +25,6 @@ std::shared_ptr<frc::DigitalInput> RobotMap::gearLimitSwitch;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearPhotoeye;
 std::shared_ptr<frc::SPI> RobotMap::gearRealPixy;
 std::shared_ptr<frc::SPI> RobotMap::gearFakePixy;
-std::shared_ptr<Pixy> RobotMap::gearPixy;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearSolenoid;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::shooterHoodActuator;
 
@@ -83,8 +81,6 @@ void RobotMap::init() {
 	shooterRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS0));
 	shooterFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS2));
 
-	shooterPixy.reset (new Pixy(shooterRealPixy, shooterFakePixy));
-
 	//creating a new chassis consisting of all the drivetrain motors
 	drivetrainChassis.reset (new frc::RobotDrive (drivetrainFrontLeftMotor , drivetrainRearLeftMotor , drivetrainFrontRightMotor , drivetrainRearRightMotor));
 
@@ -116,8 +112,6 @@ void RobotMap::init() {
 
 	gearRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS1));
 	gearFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS3));
-
-	gearPixy.reset (new Pixy(gearRealPixy, gearFakePixy));
 
 	gearPhotoeye.reset (new frc::DigitalInput(4));
 	lw ->AddSensor("Gear" , "GearPhotoeye" , gearPhotoeye);

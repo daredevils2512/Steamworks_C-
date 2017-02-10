@@ -10,6 +10,7 @@
 #include "Subsystems/FloorIntake.h"
 #include "Subsystems/Gear.h"
 #include "Subsystems/Shooter.h"
+#include "Subsystems/PixySubsystem.h"
 #include "OI.h"
 //class declaration of the robot
 class Robot : public IterativeRobot {
@@ -25,6 +26,7 @@ static std::shared_ptr<Climber> climber;
 static std::shared_ptr<FloorIntake> floorIntake;
 static std::shared_ptr<Gear> gear;
 static std::shared_ptr<Shooter> shooter;
+static std::shared_ptr<PixySubsystem> pixySubsystem;
 
 static std::shared_ptr<frc::Compressor> compressor;
 

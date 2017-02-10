@@ -6,6 +6,7 @@ std::shared_ptr<Climber> Robot::climber;
 std::shared_ptr<FloorIntake> Robot::floorIntake;
 std::shared_ptr<Gear> Robot::gear;
 std::shared_ptr<Shooter> Robot::shooter;
+std::shared_ptr<PixySubsystem> Robot::pixySubsystem;
 std::unique_ptr<OI> Robot::oi;
 
 std::shared_ptr<frc::Compressor> Robot::compressor;
@@ -18,6 +19,7 @@ void Robot::RobotInit() {
     floorIntake.reset(new FloorIntake());
     gear.reset(new Gear());
     shooter.reset(new Shooter());
+    pixySubsystem.reset(new PixySubsystem());
 
     //starts operator interface
 	oi.reset(new OI());
@@ -58,7 +60,6 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainFrontRightMotor ->GetEncPosition());
 	SmartDashboard::PutBoolean("limit switch" , RobotMap::gearLimitSwitch ->Get());
 	SmartDashboard::PutBoolean("gear photoeye", RobotMap::gearPhotoeye ->Get());
-	SmartDashboard::PutBoolean("object found", RobotMap::gearPixy->IsFrameEmpty());
 }
 
 void Robot::TestPeriodic() {

@@ -5,8 +5,6 @@ Gear::Gear() : Subsystem("Gear") {
 	limitswitch = RobotMap::gearLimitSwitch;
 	photoeye = RobotMap::gearPhotoeye;
 	solenoid = RobotMap::gearSolenoid;
-
-	pixyCamera = RobotMap::gearPixy;
 }
 
 void Gear::InitDefaultCommand() {
@@ -27,21 +25,4 @@ bool Gear::GetPhotoeye() {
 
 void Gear::ActuateGearIntake(frc::DoubleSolenoid:: Value dir) {
 	solenoid->Set(dir);
-}
-
-void Gear::UpdateObjectData() {
-	pixyCamera->CollectFrameData();
-}
-
-bool Gear::ObjectExists(Nullable<Pixy::ObjectValues> object) {
-	return (object.HasValue() && !pixyCamera->IsFrameEmpty());
-}
-
-Nullable<Pixy::ObjectValues> Gear::GetObjectData(int objectIndex) {
-	targetObject = pixyCamera->GetObjectData(objectIndex);
-	if(ObjectExists(targetObject)) {
-		return Nullable<Pixy::ObjectValues>(targetObject.GetValue());
-	}else{
-		return Nullable<Pixy::ObjectValues>();
-	}
 }

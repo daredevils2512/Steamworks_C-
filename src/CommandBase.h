@@ -22,7 +22,7 @@ public:
 
 	// Create a single static instance of all of your subsystems
 	static std::unique_ptr<ExampleSubsystem> exampleSubsystem;
-	static std::unique_ptr<OI> oi;
+	//static std::unique_ptr<OI> oi;
 };
 
 #endif  // COMMAND_BASE_H

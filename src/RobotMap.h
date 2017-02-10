@@ -3,7 +3,6 @@
 #include "WPILib.h"
 #include "CANTalon.h"
 #include "SPI.h"
-#include "Pixy.h"
 
 class RobotMap {
 public:
@@ -23,7 +22,6 @@ public:
 	static std::shared_ptr<CANTalon> shooterSpinCycleFeed;
 	static std::shared_ptr<frc::SPI> shooterRealPixy;
 	static std::shared_ptr<frc::SPI> shooterFakePixy;
-	static std::shared_ptr<Pixy> shooterPixy;
 
 	//robot drivetrain
 	static std::shared_ptr<frc::RobotDrive> drivetrainChassis;
@@ -41,7 +39,6 @@ public:
 
 	static std::shared_ptr<frc::SPI> gearRealPixy;
 	static std::shared_ptr<frc::SPI> gearFakePixy;
-	static std::shared_ptr<Pixy> gearPixy;
 
 	static std::shared_ptr<frc::DoubleSolenoid> gearSolenoid;
 	static std::shared_ptr<frc::DoubleSolenoid> shooterHoodActuator;

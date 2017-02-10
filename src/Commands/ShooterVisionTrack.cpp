@@ -4,6 +4,7 @@
 #include "../Robot.h"
 #include "../Pixy.h"
 #include "../Subsystems/Shooter.h"
+#include "../Subsystems/PixySubsystem.h"
 
 ShooterVisionTrack::ShooterVisionTrack() {
 	// Use Requires() here to declare subsystem dependencies
@@ -23,7 +24,7 @@ bool ShooterVisionTrack::IsWithinThreshold(double setpoint, double threshold, do
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionTrack::Execute() {
-	if(RobotMap::shooterPixy->IsFrameEmpty()){
+	if(Robot::pixySubsystem->IsFrameEmpty()){
 		abort = true; // if we don't have anything in frame, abort vision tracking!
 		return;
 	}
