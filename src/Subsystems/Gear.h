@@ -3,6 +3,7 @@
 
 #include <Commands/Subsystem.h>
 #include "WPILib.h"
+#include "PixySubsystem.h"
 
 class Gear : public Subsystem {
 private:

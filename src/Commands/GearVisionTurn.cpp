@@ -16,8 +16,8 @@ void GearVisionTurn::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void GearVisionTurn::Execute() {
 	//Gets the frame data from the GearPixy so we can use it
-	Robot::gear->UpdateObjectData();
-	if(RobotMap::gearPixy->IsFrameEmpty()){
+	Robot::pixySubsystem->GetGearPixyData()();
+	if(Robot::pixySubsystem->IsFrameEmpty()){
 		return;
 	}
 	//Creates the empty objects we will use to store object data
@@ -34,21 +34,21 @@ void GearVisionTurn::Execute() {
 	double xDiff;
 	double centerX = 159;
 	bool heightSame = false;
-	if(RobotMap::gearPixy->GetFrameSize() == 2) {
-		trackedObj1 = Robot::gear->GetObjectData(0).GetValue();
-		trackedObj2 = Robot::gear->GetObjectData(1).GetValue();
+	if(Robot::pixySubsystem->GetFrameSize() == 2) {
+		trackedObj1 = Robot::pixySubsystem->GetGearPixyData().size[0];
+		trackedObj2 = Robot::pixySubsystem->GetGearPixyData().size[1];
 		xDiff = abs(trackedObj1.x - trackedObj2.x);
 		centerX = CenterXFinder(trackedObj1.x, trackedObj2.x, xDiff);
 		heightSame = IsHeightSame(trackedObj1.height, trackedObj2.height, 5);
 		if(heightSame == true && IsYSame(trackedObj1.y, trackedObj2.y, 5)) {
 			TurnDirection(m_targetX, centerX);
 		}
-	} else if(RobotMap::gearPixy->GetFrameSize() > 2) {
-		for(int i = 0; i < RobotMap::gearPixy->GetFrameSize(); i++) {
+	} else if(Robot::pixySubsystem->GetFrameSize() > 2) {
+		for(int i = 0; i < Robot::pixySubsystem->GetFrameSize(); i++) {
 			if(i == 0) {
-				trackedObj1 = Robot::gear->GetObjectData(0).GetValue();
+				trackedObj1 = Robot::pixySubsystem->GetGearPixyData().size[0];
 			} else if(i == 1) {
-				trackedObj2 = Robot::gear->GetObjectData(1).GetValue();
+				trackedObj2 = Robot::pixySubsystem->GetGearPixyData().size[1];
 				xDiff = abs(trackedObj1.x - trackedObj2.x);
 				centerX = CenterXFinder(trackedObj1.x, trackedObj2.x, xDiff);
 				heightSame = IsHeightSame(trackedObj1.height, trackedObj2.height, 5);
@@ -56,7 +56,7 @@ void GearVisionTurn::Execute() {
 					TurnDirection(m_targetX, centerX);
 				}
 			} else if(i == 2) {
-				trackedObj3 = Robot::gear->GetObjectData(2).GetValue();
+				trackedObj3 = Robot::pixySubsystem->GetGearPixyData().size[2];
 				if(Robot::drivetrain->IsWithinThreshold(trackedObj1.x, trackedObj2.x, 10)) {
 					combinedObj.x = trackedObj2.x;
 					xDiff = abs(combinedObj.x - trackedObj3.x);
