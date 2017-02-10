@@ -6,13 +6,12 @@
 GearVisionScan::GearVisionScan(double targetX) {
 	GearVisionScan::targetX = targetX;
 	// Use Requires() here to declare subsystem dependencies
-	// eg. Requires(Robot::chassis.get());
-	//speed = 0.15;
+	Requires(Robot::gear.get());
 }
 
 // Called just before this Command runs the first time
 void GearVisionScan::Initialize() {
-	//Robot::shooter->SetSwivelSpeed(speed);
+
 }
 
 // Called repeatedly when this Command is scheduled to run

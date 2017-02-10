@@ -19,6 +19,6 @@ _CMG_ShootBall::_CMG_ShootBall() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
-		AddParallel(new ShooterRunSpinCycleFeed(0.8));
-		AddSequential(new ShooterRunFlywheel(800));
+	AddParallel(new ShooterRunSpinCycleFeed(0.8));
+	AddSequential(new ShooterRunFlywheel(800));
 }

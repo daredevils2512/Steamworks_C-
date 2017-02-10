@@ -2,6 +2,7 @@
 #include "Robot.h"
 
 DrivetrainShift::DrivetrainShift(bool Direction) {
+	Requires(Robot::drivetrain.get());
 	m_Direction = Direction;
 }
 

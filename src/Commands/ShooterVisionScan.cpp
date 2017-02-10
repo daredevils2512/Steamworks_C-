@@ -4,6 +4,7 @@
 #include "../Subsystems/Shooter.h"
 
 ShooterVisionScan::ShooterVisionScan() {
+	Requires(Robot::shooter.get());
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	speed = 0.15;

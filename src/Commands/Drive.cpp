@@ -14,9 +14,9 @@ void Drive::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void Drive::Execute() {
-		//moves drivetrain based off of values from operator interface
-		Robot::drivetrain->DriveRobotArcade(Robot::oi->GetY() , Robot::oi->GetX());
-	}
+	//moves drivetrain based off of values from operator interface
+	Robot::drivetrain->DriveRobotArcade(Robot::oi->GetY() , Robot::oi->GetX());
+}
 
 
 // Make this return true when this Command no longer needs to run execute()

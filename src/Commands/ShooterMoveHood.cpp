@@ -2,14 +2,13 @@
 
 ShooterMoveHood::ShooterMoveHood(frc::DoubleSolenoid::Value direction) {
 	// Use Requires() here to declare subsystem dependencies
-	// eg. Requires(Robot::chassis.get());
+	Requires(Robot::shooter.get());
 	m_direction = direction;
 }
 
 // Called just before this Command runs the first time
 void ShooterMoveHood::Initialize() {
 	//fancy double solenoid off mode
-	//Robot::shooter->ActuateHood(frc::DoubleSolenoid::Value::kOff);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -26,7 +25,6 @@ bool ShooterMoveHood::IsFinished() {
 // Called once after isFinished returns true
 void ShooterMoveHood::End() {
 	//reset to off
-	//Robot::shooter->ActuateHood(frc::DoubleSolenoid::Value::kOff);
 }
 
 // Called when another command which requires one or more of the same

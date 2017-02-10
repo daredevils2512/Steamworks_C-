@@ -23,6 +23,7 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	compressor.reset(new frc::Compressor());
+	previousGearSwitchState = gear->GetLimitSwitch();
   }
 
 void Robot::DisabledInit(){
@@ -33,6 +34,13 @@ void Robot::DisabledPeriodic() {
 	Scheduler::GetInstance()->Run();
 }
 
+void Robot::UpdateGearActuator() {
+	if(gear->GetLimitSwitch() != previousGearSwitchState){
+		gear->SetCurrentCommand(new GearIntakeActuate(!gear->GetLimitSwitch()));
+	}
+	previousGearSwitchState = gear->GetLimitSwitch();
+}
+
 void Robot::AutonomousInit() {
 	//starts autonomous
 	std::string autoString = FileIO::getFileAsString("auto.txt");
@@ -41,6 +49,7 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
+	UpdateGearActuator();
 	Scheduler::GetInstance()->RemoveAll();
 	Scheduler::GetInstance()->Run();
 }
@@ -53,6 +62,7 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+	UpdateGearActuator();
 	Scheduler::GetInstance()->Run();
 	//prints information to the smart dashboard
 	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainFrontLeftMotor->GetEncPosition());
