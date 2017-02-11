@@ -4,7 +4,6 @@
 #include <Commands/Subsystem.h>
 #include "../RobotMap.h"
 #include "CANTalon.h"
-#include "../Subsystems/PixySubsystem.h"
 #include "../Nullable.h"
 
 
@@ -17,8 +16,6 @@ private:
 	std::shared_ptr<CANTalon> turretSwivel;
 	std::shared_ptr<CANTalon> spinCycleFeed;
 
-	std::shared_ptr<frc::DigitalInput> leftLimitSwitch;
-	std::shared_ptr<frc::DigitalInput> rightLimitSwitch;
 	std::shared_ptr<frc::DoubleSolenoid> hoodActuator;
 
 	bool lastConditionRight;
@@ -32,9 +29,7 @@ public:
 	void ActuateHood(frc::DoubleSolenoid::Value direction);
 	void SwivelVisionBased(Nullable< std::vector<int> > object);
 	bool IsHoodActuated();
-	bool IsLeftLimitSwitchPressed();
-	bool IsRightLimitSwitchPressed();
-	int GetVirtualDistance(PixySubsystem::ObjectValues object);
+	int GetVirtualDistance(Pixy::ObjectValues object);
 	//int GetVirtualDistance(Pixy::ObjectValues object);
 	double maxEncPosition;
 };

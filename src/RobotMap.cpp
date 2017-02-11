@@ -74,6 +74,8 @@ void RobotMap::init() {
 
 	shooterTurretSwivel.reset (new CANTalon(9));
 	lw->AddActuator("Shooter" , "TurretSwivel" , shooterTurretSwivel);
+	shooterTurretSwivel->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+	shooterTurretSwivel->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SwitchInputsOnly);
 
 	shooterSpinCycleFeed.reset (new CANTalon(10));
 	lw->AddActuator("Shooter" , "SpinCycleFeed" , shooterSpinCycleFeed);
@@ -100,12 +102,6 @@ void RobotMap::init() {
 
 	drivetrainShift.reset (new frc::DoubleSolenoid (0, 0, 1));
 	lw ->AddActuator("Drivetrain" , "DoubleSolenoid" , drivetrainShift);
-
-	shooterLeftLimitSwitch.reset(new frc::DigitalInput(1));
-	lw ->AddSensor("Shooter", "LeftLimitSwitch", shooterLeftLimitSwitch);
-
-	shooterRightLimitSwitch.reset(new frc::DigitalInput(2));
-	lw ->AddSensor ("Shooter" , "RightLimitSwitch" , shooterRightLimitSwitch);
 
 	gearLimitSwitch.reset (new frc::DigitalInput(3));
 	lw ->AddSensor("Gear" , "GearLimitSwitch" , gearLimitSwitch);

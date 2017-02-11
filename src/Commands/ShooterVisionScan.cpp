@@ -16,10 +16,9 @@ void ShooterVisionScan::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionScan::Execute() {
-	if (Robot::shooter->IsLeftLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition||
-			Robot::shooter->IsRightLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition) {
+	if (RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed() || RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition||
+			RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed() || RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition) {
 		speed = -speed; //reverse the speed
-
 	}
 	Robot::shooter->SetSwivelSpeed(speed);
 }
