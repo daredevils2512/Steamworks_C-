@@ -3,7 +3,6 @@
 #include "WPILib.h"
 #include "CANTalon.h"
 #include "SPI.h"
-#include "Pixy.h"
 
 class RobotMap {
 public:
@@ -23,15 +22,12 @@ public:
 	static std::shared_ptr<CANTalon> shooterSpinCycleFeed;
 	static std::shared_ptr<frc::SPI> shooterRealPixy;
 	static std::shared_ptr<frc::SPI> shooterFakePixy;
-	static std::shared_ptr<Pixy> shooterPixy;
 
 	//robot drivetrain
 	static std::shared_ptr<frc::RobotDrive> drivetrainChassis;
 	//compressor switch and sensor to regulate compressor when connected to robot
 	static std::shared_ptr<frc::Relay> compressorSpike;
 	static std::shared_ptr<frc::DigitalInput> compressorPressureSwitch;
-	static std::shared_ptr<frc::DigitalInput> shooterLeftLimitSwitch;
-	static std::shared_ptr<frc::DigitalInput> shooterRightLimitSwitch;
 	//1 pneumatic actuator for shifting gears on drivetrain
 	static std::shared_ptr<frc::DoubleSolenoid> drivetrainShift;
 	//1 limit switch to notify once gear is in the slot
@@ -41,7 +37,6 @@ public:
 
 	static std::shared_ptr<frc::SPI> gearRealPixy;
 	static std::shared_ptr<frc::SPI> gearFakePixy;
-	static std::shared_ptr<Pixy> gearPixy;
 
 	static std::shared_ptr<frc::DoubleSolenoid> gearSolenoid;
 	static std::shared_ptr<frc::DoubleSolenoid> shooterHoodActuator;

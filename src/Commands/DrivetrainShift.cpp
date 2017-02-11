@@ -36,5 +36,5 @@ void DrivetrainShift::End() {
 }
 
 void DrivetrainShift::Interrupted() {
-
+	End();
 }

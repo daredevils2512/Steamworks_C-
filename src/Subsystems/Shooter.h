@@ -4,8 +4,9 @@
 #include <Commands/Subsystem.h>
 #include "../RobotMap.h"
 #include "CANTalon.h"
-#include "../Pixy.h"
 #include "../Nullable.h"
+#include "../Subsystems/PixySubsystem.h"
+
 
 class Shooter : public Subsystem {
 private:
@@ -16,13 +17,10 @@ private:
 	std::shared_ptr<CANTalon> turretSwivel;
 	std::shared_ptr<CANTalon> spinCycleFeed;
 
-	std::shared_ptr<Pixy> pixyCamera;
-
 	std::shared_ptr<frc::DigitalInput> leftLimitSwitch;
 	std::shared_ptr<frc::DigitalInput> rightLimitSwitch;
 	std::shared_ptr<frc::DoubleSolenoid> hoodActuator;
 
-	Nullable<Pixy::ObjectValues> targetObject;
 	bool lastConditionRight;
 	bool lastConditionLeft;
 public:
@@ -36,10 +34,8 @@ public:
 	bool IsHoodActuated();
 	bool IsLeftLimitSwitchPressed();
 	bool IsRightLimitSwitchPressed();
-	void UpdateObjectData();
-	bool ObjectExists(Nullable<Pixy::ObjectValues> object);
-	Nullable<Pixy::ObjectValues> GetObjectData(int objectIndex);
-	int GetVirtualDistance(Pixy::ObjectValues object);
+	int GetVirtualDistance(PixySubsystem::ObjectValues object);
+	//int GetVirtualDistance(Pixy::ObjectValues object);
 	double maxEncPosition;
 };
 

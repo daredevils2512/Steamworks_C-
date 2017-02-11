@@ -9,8 +9,6 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	spinCycleFeed = RobotMap::shooterSpinCycleFeed;
 	turretSwivel = RobotMap::shooterTurretSwivel;
 
-	pixyCamera = RobotMap::shooterPixy;
-
 	leftLimitSwitch = RobotMap::shooterLeftLimitSwitch;
 	rightLimitSwitch = RobotMap::shooterRightLimitSwitch;
 	hoodActuator = RobotMap::shooterHoodActuator;
@@ -90,26 +88,7 @@ bool Shooter::IsRightLimitSwitchPressed(){
 	return lastConditionRight;
 }
 
-void Shooter::UpdateObjectData() {
-	pixyCamera->CollectFrameData();
-}
-
-bool Shooter::ObjectExists(Nullable<Pixy::ObjectValues> object) {
-	//checks to see if an object exists by verifying that there is an object value and the pixy camera is not returning an empty frame
-	return (object.HasValue() && !pixyCamera->IsFrameEmpty());
-}
-
-Nullable<Pixy::ObjectValues> Shooter::GetObjectData(int objectIndex) {
-	targetObject = pixyCamera->GetObjectData(objectIndex);
-	if(ObjectExists(targetObject)) {
-		//if an object is found then the pixy will get the target's object value
-		return Nullable<Pixy::ObjectValues>(targetObject.GetValue());
-	}else{
-		return Nullable<Pixy::ObjectValues>();
-	}
-}
-
-int Shooter::GetVirtualDistance(Pixy::ObjectValues object){
+int Shooter::GetVirtualDistance(PixySubsystem::ObjectValues object){
 	//calculates the distance from the target in inches
 	return (0.00349450614331*(pow(object.y,2))) - (0.0873599815179*(object.y)) + 43.068903964768;
 }
