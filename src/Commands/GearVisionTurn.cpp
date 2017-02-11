@@ -16,15 +16,16 @@ void GearVisionTurn::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void GearVisionTurn::Execute() {
 	//Gets the frame data from the GearPixy so we can use it
-	Robot::pixySubsystem->GetGearPixyData()();
 	if(Robot::pixySubsystem->IsFrameEmpty()){
 		return;
 	}
+	std::vector<PixySubsystem::ObjectValues> objectsFound;
+	objectsFound = Robot::pixySubsystem->GetGearPixyData();
 	//Creates the empty objects we will use to store object data
-	Pixy::ObjectValues trackedObj1;
-	Pixy::ObjectValues trackedObj2;
-	Pixy::ObjectValues trackedObj3;
-	Pixy::ObjectValues combinedObj;
+	PixySubsystem::ObjectValues trackedObj1;
+	PixySubsystem::ObjectValues trackedObj2;
+	PixySubsystem::ObjectValues trackedObj3;
+	PixySubsystem::ObjectValues combinedObj;
 	//Creating the empty doubles for different values
 	//xDiff is the difference between the two objects found
 	//centerX is the centerX pixel between the two objects
@@ -35,8 +36,8 @@ void GearVisionTurn::Execute() {
 	double centerX = 159;
 	bool heightSame = false;
 	if(Robot::pixySubsystem->GetFrameSize() == 2) {
-		trackedObj1 = Robot::pixySubsystem->GetGearPixyData().size[0];
-		trackedObj2 = Robot::pixySubsystem->GetGearPixyData().size[1];
+		trackedObj1 = objectsFound[0];
+		trackedObj2 = objectsFound[1];
 		xDiff = abs(trackedObj1.x - trackedObj2.x);
 		centerX = CenterXFinder(trackedObj1.x, trackedObj2.x, xDiff);
 		heightSame = IsHeightSame(trackedObj1.height, trackedObj2.height, 5);
@@ -46,9 +47,9 @@ void GearVisionTurn::Execute() {
 	} else if(Robot::pixySubsystem->GetFrameSize() > 2) {
 		for(int i = 0; i < Robot::pixySubsystem->GetFrameSize(); i++) {
 			if(i == 0) {
-				trackedObj1 = Robot::pixySubsystem->GetGearPixyData().size[0];
+				trackedObj1 = objectsFound[0];
 			} else if(i == 1) {
-				trackedObj2 = Robot::pixySubsystem->GetGearPixyData().size[1];
+				trackedObj2 = objectsFound[1];
 				xDiff = abs(trackedObj1.x - trackedObj2.x);
 				centerX = CenterXFinder(trackedObj1.x, trackedObj2.x, xDiff);
 				heightSame = IsHeightSame(trackedObj1.height, trackedObj2.height, 5);
@@ -56,7 +57,7 @@ void GearVisionTurn::Execute() {
 					TurnDirection(m_targetX, centerX);
 				}
 			} else if(i == 2) {
-				trackedObj3 = Robot::pixySubsystem->GetGearPixyData().size[2];
+				trackedObj3 = objectsFound[2];
 				if(Robot::drivetrain->IsWithinThreshold(trackedObj1.x, trackedObj2.x, 10)) {
 					combinedObj.x = trackedObj2.x;
 					xDiff = abs(combinedObj.x - trackedObj3.x);

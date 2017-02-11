@@ -33,7 +33,6 @@ public:
 	bool IsHoodActuated();
 	bool IsLeftLimitSwitchPressed();
 	bool IsRightLimitSwitchPressed();
-	int GetVirtualDistance(Pixy::ObjectValues object);
 	//int GetVirtualDistance(Pixy::ObjectValues object);
 	double maxEncPosition;
 };

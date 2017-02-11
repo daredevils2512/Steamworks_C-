@@ -6,9 +6,9 @@
 #include "../CommandBase.h"
 #include "../RobotMap.h"
 #include "../Robot.h"
-#include "../Pixy.h"
 #include "../Subsystems/Gear.h"
 #include "../Subsystems/Drivetrain.h"
+#include "../Subsystems/PixySubsystem.h"
 
 class GearVisionTurn : public CommandBase {
 public:
