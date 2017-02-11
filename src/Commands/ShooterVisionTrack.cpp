@@ -124,14 +124,13 @@ void ShooterVisionTrack::Execute() {
 	if(middle-(tolerance/2) <= trackedObj.x && trackedObj.x <= middle + (tolerance/2)){
 		//if the difference between the center and the tolerance is less than or equal to the middle added to the tolerance
 		//then stop the shooter from swiveling
-		std::cout<<"centered enough"<< std::endl;
+		Robot::shooter->SetSwivelSpeed(0);
 	}else if(trackedObj.x < middle){
 		// left of middle
-		std::cout<<"left of mid : "<<speed<< std::endl;
-
+		Robot::shooter->SetSwivelSpeed(speed);
 	}else{
 		// hopefully to the right of middle
-		std::cout<<"right of mid : " << speed<< std::endl;
+		Robot::shooter->SetSwivelSpeed(-speed);
 	}
 
 }
@@ -149,7 +148,8 @@ bool ShooterVisionTrack::IsFinished() {
 void ShooterVisionTrack::End() {
 	//once the command is over the new command it moves to is vision scan to require a target
 	//Robot::shooter->SetSwivelSpeed(0);
-	//(new ShooterVisionScan())->Start();
+	//TODO: add some way to manually stop shooter vision tracking, ask for driver preference
+	(new ShooterVisionScan())->Start();
 }
 
 // Called when another command which requires one or more of the same
