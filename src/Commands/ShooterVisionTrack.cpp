@@ -50,12 +50,12 @@ void ShooterVisionTrack::Execute() {
 	}else if(frame.size() > 1) {
 		// we have multiple objects
 		// sets max area by dividing the image frame by 4
-		for(int i = 0; i < frame.size(); i++){
+		for(unsigned i = 0; i < frame.size(); i++){
 			//iterate through all known objects
 			PixySubsystem::ObjectValues stare = frame[i]; //focused object
 			if(stare.width * stare.height < maxArea){
 				// if this current object is within the area maximum
-				for(int j = i+1; j < frame.size(); j++){
+				for(unsigned j = i+1; j < frame.size(); j++){
 					// iterate through all objects that haven't been "checked"
 					PixySubsystem::ObjectValues pSecBar = frame[j];
 					if(pSecBar.width * pSecBar.height >= maxArea){
@@ -136,11 +136,11 @@ void ShooterVisionTrack::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool ShooterVisionTrack::IsFinished() {
-	//ends the command if the frame size is zero or if a limit switch is pressed
-	bool passedSafetyThreshold = false;//Robot::shooter->IsLeftLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition||
-			//Robot::shooter->IsRightLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition;
+	//ends the command if the frame size is zer or if a limit switch is pressed
+	bool passedSafetyThreshold = RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed() || RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition||
+			RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed()|| RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition;
 	std::cout << "abort: " << abort << std::endl;
-	return true;//abort || passedSafetyThreshold;
+	return abort || passedSafetyThreshold;//abort || passedSafetyThreshold;
 }
 
 // Called once after isFinished returns true
