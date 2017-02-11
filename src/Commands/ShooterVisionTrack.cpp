@@ -2,7 +2,6 @@
 #include "ShooterVisionScan.h"
 #include "../RobotMap.h"
 #include "../Robot.h"
-#include "../Pixy.h"
 #include "../Subsystems/Shooter.h"
 #include "../Subsystems/PixySubsystem.h"
 
@@ -30,14 +29,14 @@ void ShooterVisionTrack::Execute() {
 		return;
 	}
 
-	Pixy::ObjectValues trackedObj;
+	PixySubsystem::ObjectValues trackedObj;
 	bool trackedSet = false;
-	Pixy::ObjectValues topBar;
+	PixySubsystem::ObjectValues topBar;
 	bool barsSet = false;
-	Pixy::ObjectValues bottomBar;
+	PixySubsystem::ObjectValues bottomBar;
 	int maxArea = 79.5 * 49.5;
 	if(frame.size() == 1){ // if we have one object
-		Pixy::ObjectValues stare = frame[0]; // focused object
+		PixySubsystem::ObjectValues stare = frame[0]; // focused object
 		if(stare.width*stare.height < maxArea){// if the object is smaller than the maximum area
 			trackedObj = stare;
 			trackedSet = true;
@@ -51,12 +50,12 @@ void ShooterVisionTrack::Execute() {
 		// sets max area by dividing the image frame by 4
 		for(int i = 0; i < frame.size(); i++){
 			//iterate through all known objects
-			Pixy::ObjectValues stare = frame[i]; //focused object
+			PixySubsystem::ObjectValues stare = frame[i]; //focused object
 			if(stare.width * stare.height < maxArea){
 				// if this current object is within the area maximum
 				for(int j = i+1; j < frame.size(); j++){
 					// iterate through all objects that haven't been "checked"
-					Pixy::ObjectValues pSecBar = frame[j];
+					PixySubsystem::ObjectValues pSecBar = frame[j];
 					if(pSecBar.width * pSecBar.height >= maxArea){
 						//if this object doesn't match max area checks, skip this iteration
 						continue;
@@ -101,7 +100,7 @@ void ShooterVisionTrack::Execute() {
 		abort = true;
 		return;
 	}
-	if(!trackedSet && !barsSet || frame.size()){
+	if((!trackedSet && !barsSet) || frame.size()){
 		//if we don't have anything, abort!
 		abort = true;
 		return;

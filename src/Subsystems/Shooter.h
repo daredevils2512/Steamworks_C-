@@ -4,6 +4,7 @@
 #include <Commands/Subsystem.h>
 #include "../RobotMap.h"
 #include "CANTalon.h"
+#include "../Subsystems/PixySubsystem.h"
 #include "../Nullable.h"
 
 
@@ -33,6 +34,7 @@ public:
 	bool IsHoodActuated();
 	bool IsLeftLimitSwitchPressed();
 	bool IsRightLimitSwitchPressed();
+	int GetVirtualDistance(PixySubsystem::ObjectValues object);
 	//int GetVirtualDistance(Pixy::ObjectValues object);
 	double maxEncPosition;
 };
