@@ -41,8 +41,8 @@ OI::OI()
 	CDR_bottomLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.8));
 	CDR_topLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.0));
 	CDR_topMiddleBase.WhenPressed(new ShooterRunFlywheel(0.0));
-	CDR_zPositiveAxis.WhenPressed(new ShooterSwivelTurret(GetManualShooterSwivel()));
-	CDR_zNegativeAxis.WhenPressed(new ShooterSwivelTurret(GetManualShooterSwivel()));
+	CDR_zPositiveAxis.WhileHeld(new ShooterSwivelTurret(GetManualShooterSwivel()));
+	CDR_zNegativeAxis.WhileHeld(new ShooterSwivelTurret(GetManualShooterSwivel()));
 	CDR_throttle.WhileHeld(new ShooterRunFlywheel(GetTranslatedThrottle()));
 	CDR_throttle.WhenReleased(new ShooterRunFlywheel(0.0));
 

@@ -46,7 +46,5 @@ virtual void TestPeriodic();
 private:
 	// true if using the autonomous chooser
 	bool chooser;
-	bool previousGearSwitchState;
-	void UpdateGearActuator();
 };
 #endif

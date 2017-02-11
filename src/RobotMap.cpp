@@ -37,6 +37,7 @@ void RobotMap::init() {
 	lw->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
 	//Setting the control mode of the front motors to slaves
 	drivetrainFrontLeftMotor->SetControlMode(frc::CANSpeedController::kFollower);
+	drivetrainFrontLeftMotor->SetInverted(true);
 	drivetrainFrontLeftMotor->Set(4);
 
 	drivetrainRearLeftMotor.reset (new CANTalon(4));
@@ -50,6 +51,7 @@ void RobotMap::init() {
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
 	//Setting the control mode of the front motors to slaves
 	drivetrainFrontRightMotor->SetControlMode(frc::CANSpeedController::kFollower);
+	drivetrainFrontRightMotor->SetInverted(true);
 	drivetrainFrontRightMotor->Set(2);
 
 	drivetrainRearRightMotor.reset (new CANTalon(2));
@@ -72,6 +74,7 @@ void RobotMap::init() {
 	lw->AddActuator("Shooter" , "RightFlywheel" , shooterRightFlywheel);
 
 	shooterTurretSwivel.reset (new CANTalon(9));
+
 	lw->AddActuator("Shooter" , "TurretSwivel" , shooterTurretSwivel);
 	shooterTurretSwivel->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	shooterTurretSwivel->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SwitchInputsOnly);

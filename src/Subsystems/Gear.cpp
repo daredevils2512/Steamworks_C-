@@ -1,10 +1,12 @@
 #include "Gear.h"
 #include "../RobotMap.h"
+#include "../Commands/GearIntakeActuate.h"
 
 Gear::Gear() : Subsystem("Gear") {
 	limitswitch = RobotMap::gearLimitSwitch;
 	photoeye = RobotMap::gearPhotoeye;
 	solenoid = RobotMap::gearSolenoid;
+	previousGearSwitchState = GetLimitSwitch();
 }
 
 void Gear::InitDefaultCommand() {
@@ -25,4 +27,11 @@ bool Gear::GetPhotoeye() {
 
 void Gear::ActuateGearIntake(frc::DoubleSolenoid:: Value dir) {
 	solenoid->Set(dir);
+}
+
+void Gear::UpdateGearActuator() {
+	if(GetLimitSwitch() != previousGearSwitchState){
+		SetCurrentCommand(new GearIntakeActuate(!GetLimitSwitch()));
+	}
+	previousGearSwitchState = GetLimitSwitch();
 }
