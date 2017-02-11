@@ -20,7 +20,7 @@ void GearVisionScan::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool GearVisionScan::IsFinished() {
-	return Robot::gear->GetObjectData(0).HasValue();
+	return Robot::pixySubsystem->GetGearPixyData().size() > 0;
 }
 
 // Called once after isFinished returns true

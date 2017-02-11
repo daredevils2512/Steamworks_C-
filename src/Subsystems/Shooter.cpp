@@ -9,8 +9,6 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	spinCycleFeed = RobotMap::shooterSpinCycleFeed;
 	turretSwivel = RobotMap::shooterTurretSwivel;
 
-	leftLimitSwitch = RobotMap::shooterLeftLimitSwitch;
-	rightLimitSwitch = RobotMap::shooterRightLimitSwitch;
 	hoodActuator = RobotMap::shooterHoodActuator;
 
 	lastConditionRight = false;
