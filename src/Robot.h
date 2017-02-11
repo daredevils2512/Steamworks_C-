@@ -11,6 +11,7 @@
 #include "Subsystems/Gear.h"
 #include "Subsystems/Shooter.h"
 #include "Subsystems/PixySubsystem.h"
+#include "Commands/GearIntakeActuate.h"
 #include "OI.h"
 #include "FileIO.h"
 
