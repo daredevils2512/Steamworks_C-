@@ -18,8 +18,6 @@ std::shared_ptr<frc::SPI> RobotMap::shooterFakePixy;
 std::shared_ptr<frc::RobotDrive> RobotMap::drivetrainChassis;
 std::shared_ptr<frc::Relay> RobotMap::compressorSpike;
 std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
-std::shared_ptr<frc::DigitalInput> RobotMap::shooterLeftLimitSwitch;
-std::shared_ptr<frc::DigitalInput> RobotMap::shooterRightLimitSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearLimitSwitch;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearPhotoeye;
