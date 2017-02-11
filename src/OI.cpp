@@ -1,6 +1,7 @@
 #include "OI.h"
 #include "SmartDashboard/SmartDashboard.h"
 #include "WPILib.h"
+#include "Commands/_CMG_ShootBall.h"
 #include "Commands/ClimberRunMotor.h"
 #include "Commands/Drive.h"
 #include "Commands/DrivetrainShift.h"
@@ -26,6 +27,7 @@ OI::OI()
 	DRC_yButton.WhileHeld(new ClimberRunMotor(-0.8));
 	DRC_yButton.WhenReleased(new ClimberRunMotor(0.0));
 
+	CDR_trigger.WhileHeld(new _CMG_ShootBall());
 	CDR_joystickPOV.WhenPressed(new ShooterMoveHood(POVHoodControl()));
 	CDR_sideJoystickButton.WhileHeld(new ShooterVisionScan());
 	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(0.8));
