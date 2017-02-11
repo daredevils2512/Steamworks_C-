@@ -9,8 +9,6 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	spinCycleFeed = RobotMap::shooterSpinCycleFeed;
 	turretSwivel = RobotMap::shooterTurretSwivel;
 
-	leftLimitSwitch = RobotMap::shooterLeftLimitSwitch;
-	rightLimitSwitch = RobotMap::shooterRightLimitSwitch;
 	hoodActuator = RobotMap::shooterHoodActuator;
 
 	lastConditionRight = false;
@@ -66,27 +64,6 @@ bool Shooter::IsHoodActuated() {
 	return hoodActuator->Get();
 }
 
-bool lastConditionLeft = false;
-bool Shooter::IsLeftLimitSwitchPressed(){
-	//is pressed?
-	if(lastConditionLeft == true){
-		return false;
-	}else{
-		lastConditionLeft = leftLimitSwitch->Get();
-	}
-	return lastConditionLeft;
-}
-
-bool lastConditionRight = false;
-bool Shooter::IsRightLimitSwitchPressed(){
-	// is switch pressed?
-	if(lastConditionRight == true){
-		return false;
-	}else{
-		lastConditionRight = rightLimitSwitch->Get();
-	}
-	return lastConditionRight;
-}
 
 int Shooter::GetVirtualDistance(PixySubsystem::ObjectValues object){
 	//calculates the distance from the target in inches
