@@ -18,7 +18,7 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
-	int CenterXFinder(double obj1, double obj2);
+	int CenterXFinder(double obj1, double obj2, double xDiff);
 	int CenterYFinder(double obj1, double obj2);
 	bool IsHeightSame(double obj1, double obj2, double threshold);
 	bool IsYSame(double obj1, double obj2, double threshold);
