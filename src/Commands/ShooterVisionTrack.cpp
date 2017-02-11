@@ -2,7 +2,6 @@
 #include "ShooterVisionScan.h"
 #include "../RobotMap.h"
 #include "../Robot.h"
-#include "../Pixy.h"
 #include "../Subsystems/Shooter.h"
 #include "../Subsystems/PixySubsystem.h"
 
@@ -14,7 +13,7 @@ ShooterVisionTrack::ShooterVisionTrack() {
 
 // Called just before this Command runs the first time
 void ShooterVisionTrack::Initialize() {
-	Robot::shooter->SetSwivelSpeed(0);
+//	Robot::shooter->SetSwivelSpeed(0);
 }
 
 bool ShooterVisionTrack::IsWithinThreshold(double setpoint, double threshold, double value){
@@ -24,20 +23,21 @@ bool ShooterVisionTrack::IsWithinThreshold(double setpoint, double threshold, do
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionTrack::Execute() {
+	std::cout << "---------" << std::endl;
 	std::vector<PixySubsystem::ObjectValues> frame = Robot::pixySubsystem->GetShooterPixyData();
 	if(frame.size() == 0){
 		abort = true; // if we don't have anything in frame, abort vision tracking!
 		return;
 	}
 
-	Pixy::ObjectValues trackedObj;
+	PixySubsystem::ObjectValues trackedObj;
 	bool trackedSet = false;
-	Pixy::ObjectValues topBar;
+	PixySubsystem::ObjectValues topBar;
 	bool barsSet = false;
-	Pixy::ObjectValues bottomBar;
+	PixySubsystem::ObjectValues bottomBar;
 	int maxArea = 79.5 * 49.5;
 	if(frame.size() == 1){ // if we have one object
-		Pixy::ObjectValues stare = frame[0]; // focused object
+		PixySubsystem::ObjectValues stare = frame[0]; // focused object
 		if(stare.width*stare.height < maxArea){// if the object is smaller than the maximum area
 			trackedObj = stare;
 			trackedSet = true;
@@ -51,12 +51,12 @@ void ShooterVisionTrack::Execute() {
 		// sets max area by dividing the image frame by 4
 		for(int i = 0; i < frame.size(); i++){
 			//iterate through all known objects
-			Pixy::ObjectValues stare = frame[i]; //focused object
+			PixySubsystem::ObjectValues stare = frame[i]; //focused object
 			if(stare.width * stare.height < maxArea){
 				// if this current object is within the area maximum
 				for(int j = i+1; j < frame.size(); j++){
 					// iterate through all objects that haven't been "checked"
-					Pixy::ObjectValues pSecBar = frame[j];
+					PixySubsystem::ObjectValues pSecBar = frame[j];
 					if(pSecBar.width * pSecBar.height >= maxArea){
 						//if this object doesn't match max area checks, skip this iteration
 						continue;
@@ -101,7 +101,7 @@ void ShooterVisionTrack::Execute() {
 		abort = true;
 		return;
 	}
-	if(!trackedSet && !barsSet || frame.size()){
+	if((!trackedSet && !barsSet) || frame.size() < 1){
 		//if we don't have anything, abort!
 		abort = true;
 		return;
@@ -113,17 +113,22 @@ void ShooterVisionTrack::Execute() {
 	//sets the minimum and maximum speeds of the turret swivel
 	double minspeed = 0.1;
 	double maxspeed = 0.5;
-	double speed = minspeed+((Robot::shooter->GetVirtualDistance(trackedObj)/120) * (maxspeed - minspeed));
+	int dist = Robot::shooter->GetVirtualDistance(trackedObj);
+	int dCenter = middle - trackedObj.x;
+	std::cout<<"distance: " << dist << std::endl;
+	std::cout<<"centerDist: " << dCenter << std::endl;
+	double speed = minspeed+((dist/120) * (maxspeed - minspeed));
 	if(middle-tolerance <= trackedObj.x && trackedObj.x <= middle + tolerance){
 		//if the difference between the center and the tolerance is less than or equal to the middle added to the tolerance
 		//then stop the shooter from swiveling
-		Robot::shooter->SetSwivelSpeed(0.0);
+		std::cout<<"centered enough"<< std::endl;
 	}else if(trackedObj.x < middle){
 		// left of middle
-		Robot::shooter->SetSwivelSpeed(speed); // go right
+		std::cout<<"left of mid : "<<speed<< std::endl;
+
 	}else{
 		// hopefully to the right of middle
-		Robot::shooter->SetSwivelSpeed(-speed); // go left
+		std::cout<<"right of mid : " << speed<< std::endl;
 	}
 
 }
@@ -131,16 +136,17 @@ void ShooterVisionTrack::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 bool ShooterVisionTrack::IsFinished() {
 	//ends the command if the frame size is zero or if a limit switch is pressed
-	bool passedSafetyThreshold = Robot::shooter->IsLeftLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition||
-			Robot::shooter->IsRightLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition;
-	return abort || passedSafetyThreshold;
+	bool passedSafetyThreshold = false;//Robot::shooter->IsLeftLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition||
+			//Robot::shooter->IsRightLimitSwitchPressed() || RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition;
+	std::cout << "abort: " << abort << std::endl;
+	return true;//abort || passedSafetyThreshold;
 }
 
 // Called once after isFinished returns true
 void ShooterVisionTrack::End() {
 	//once the command is over the new command it moves to is vision scan to require a target
-	Robot::shooter->SetSwivelSpeed(0);
-	Robot::shooter->SetCurrentCommand(new ShooterVisionScan());
+	//Robot::shooter->SetSwivelSpeed(0);
+	//(new ShooterVisionScan())->Start();
 }
 
 // Called when another command which requires one or more of the same

@@ -11,28 +11,32 @@ ShooterVisionScan::ShooterVisionScan() {
 
 // Called just before this Command runs the first time
 void ShooterVisionScan::Initialize() {
-	Robot::shooter->SetSwivelSpeed(speed);
+	//Robot::shooter->SetSwivelSpeed(speed);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionScan::Execute() {
-	if (RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed() || RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition||
-			RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed() || RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition) {
+	/*if (Robot::shooter->IsLeftLimitSwitchPressed() || RobotMap::shooterTurretSwivelEncoder->GetDistance() < -Robot::shooter->maxEncPosition||
+			Robot::shooter->IsRightLimitSwitchPressed() || RobotMap::shooterTurretSwivelEncoder->GetDistance() > Robot::shooter->maxEncPosition) {
 		speed = -speed; //reverse the speed
-	}
-	Robot::shooter->SetSwivelSpeed(speed);
+
+	}*/
+	std::cout << "nothing is on screen, scanning" << std::endl;
+	//Robot::shooter->SetSwivelSpeed(speed);
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool ShooterVisionScan::IsFinished() {
-	std::vector<PixySubsystem::ObjectValues> frameInfo;
-	frameInfo= Robot::pixySubsystem->GetShooterPixyData();
-	return frameInfo.size() > 0;
+	std::vector<PixySubsystem::ObjectValues> ob = Robot::pixySubsystem->GetShooterPixyData();
+	std::cout << ob.size() << " . " << ob[0].signature << " true:" << (ob.size() > 0) << std::endl;
+	return ob.size() > 0;
 }
 
 // Called once after isFinished returns true
 void ShooterVisionScan::End() {
-	Robot::shooter->SetCurrentCommand(new ShooterVisionTrack());
+	std::cout << "ended" << std::endl;
+	(new ShooterVisionTrack)->Start();
 }
 
 // Called when another command which requires one or more of the same
