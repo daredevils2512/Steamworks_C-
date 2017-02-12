@@ -198,10 +198,7 @@ bool ShooterVisionTrack::RevEncPassedThisTime() {
 // Make this return true when this Command no longer needs to run execute()
 bool ShooterVisionTrack::IsFinished() {
 	//ends the command if the frame size is zer or if a limit switch is pressed
-	bool passedSafetyThreshold = RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed() || RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition||
-			RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed()|| RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition;
-	std::cout << "abort: " << abort << std::endl;
-	return abort || passedSafetyThreshold;//abort || passedSafetyThreshold;
+	return false;//abort || passedSafetyThreshold;
 }
 
 // Called once after isFinished returns true
