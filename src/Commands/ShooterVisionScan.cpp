@@ -9,6 +9,7 @@ ShooterVisionScan::ShooterVisionScan() {
 	// Use Requires() here to declare subsystem dependencies
 	speed = 0.15;
 	fwdLastPressed = false;
+	revLastPressed = false;
 }
 
 // Called just before this Command runs the first time
@@ -21,8 +22,11 @@ bool ShooterVisionScan::FwdPressedThisTime() {
 	if(RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed()){
 		if(fwdLastPressed)
 			return false;
-		else
+		else{
+			fwdLastPressed = true;
 			return true;
+		}
+
 	}else{
 		fwdLastPressed = false;
 		return true;
@@ -32,16 +36,45 @@ bool ShooterVisionScan::RevPressedThisTime() {
 	if(RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed()){
 		if(revLastPressed)
 			return false;
-		else
+		else{
+			revLastPressed = true;
 			return true;
+		}
 	}else{
 		revLastPressed = false;
 		return true;
 	}
 }
+bool ShooterVisionScan::FwdEncPassedThisTime() {
+	if(RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed()){
+		if(fwdLastPassed)
+			return false;
+		else{
+			fwdLastPassed = true;
+			return true;
+		}
+
+	}else{
+		fwdLastPassed = false;
+		return true;
+	}
+}
+bool ShooterVisionScan::RevEncPassedThisTime() {
+	if(RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed()){
+		if(revLastPassed)
+			return false;
+		else{
+			revLastPassed = true;
+			return true;
+		}
+	}else{
+		revLastPassed = false;
+		return true;
+	}
+}
 void ShooterVisionScan::Execute() {
-	if ( FwdPressedThisTime() || RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition||
-			RevPressedThisTime() || RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition) {
+	if ( FwdPressedThisTime() || FwdEncPassedThisTime()||
+			RevPressedThisTime() || RevEncPassedThisTime()) {
 		speed = -speed; //reverse the speed
 
 	}

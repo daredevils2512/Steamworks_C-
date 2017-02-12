@@ -17,6 +17,10 @@ private:
 	bool revLastPressed;
 	bool FwdPressedThisTime();
 	bool RevPressedThisTime();
+	bool fwdLastPassed;
+	bool revLastPassed;
+	bool FwdEncPassedThisTime();
+	bool RevEncPassedThisTime();
 };
 
 #endif  // EXAMPLE_COMMAND_H
