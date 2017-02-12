@@ -37,7 +37,7 @@ private:
 	JoystickButton CDR_bottomRightBase{&coDriverController, 11};
 	JoystickButton CDR_topRightBase{&coDriverController, 12};
 	POVButton CDR_joystickPOV{&coDriverController, 0};
-	TriggerButton CDR_zPositiveAxis{&coDriverController, 2, 0.2};
+	//TriggerButton CDR_zPositiveAxis{&coDriverController, 2, 0.2};
 	TriggerButton CDR_zNegativeAxis{&coDriverController, 2, -0.2};
 	ThrottleButton CDR_throttle{&coDriverController, 3};
 
@@ -55,6 +55,7 @@ private:
 public:
 	OI();
 	//control related functions
+	TriggerButton CDR_zPositiveAxis{&coDriverController, 2, 0.2};
 	double GetTurn();
 	double GetMove();
 	double Desensitize(double value);

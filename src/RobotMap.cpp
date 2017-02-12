@@ -33,24 +33,24 @@ void RobotMap::init() {
 	//Creating new instances of the subsystems
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
 
-	drivetrainFrontLeftMotor.reset (new CANTalon(1));
+	drivetrainFrontLeftMotor.reset (new CANTalon(4));
 	lw->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
 	//Setting the control mode of the front motors to slaves
-	drivetrainFrontLeftMotor->SetControlMode(frc::CANSpeedController::kFollower);
-	drivetrainFrontLeftMotor->Set(4);
+	//drivetrainFrontLeftMotor->SetControlMode(frc::CANSpeedController::kFollower);
+	//drivetrainFrontLeftMotor->Set(4);
 
-	drivetrainRearLeftMotor.reset (new CANTalon(4));
+	drivetrainRearLeftMotor.reset (new CANTalon(1));
 	lw->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
 	drivetrainRearLeftMotor->SetFeedbackDevice(CANTalon::QuadEncoder);
 	drivetrainRearLeftMotor->ConfigEncoderCodesPerRev(128);
 	//Setting up PID with the back motors since they are the Masters
 	drivetrainRearLeftMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 
-	drivetrainFrontRightMotor.reset (new CANTalon(3));
+	drivetrainFrontRightMotor.reset (new CANTalon(9));
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
 	//Setting the control mode of the front motors to slaves
-	drivetrainFrontRightMotor->SetControlMode(frc::CANSpeedController::kFollower);
-	drivetrainFrontRightMotor->Set(2);
+	//drivetrainFrontRightMotor->SetControlMode(frc::CANSpeedController::kFollower);
+	//drivetrainFrontRightMotor->Set(2);
 
 	drivetrainRearRightMotor.reset (new CANTalon(2));
 	lw->AddActuator("Drivetrain" , "RearRightMotor" , drivetrainRearRightMotor);
@@ -59,24 +59,24 @@ void RobotMap::init() {
 	//Setting up PID with the back motors since they are the Masters
 	drivetrainRearRightMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 
-	climberMotor.reset (new CANTalon(5));
+	climberMotor.reset (new CANTalon(8));
 	lw->AddActuator("Climber" , "ClimberMotor" , climberMotor);
 
-	intakeMotor.reset (new CANTalon(6));
+	intakeMotor.reset (new CANTalon(3));
 	lw->AddActuator("FloorIntake" , "IntakeMotor" , intakeMotor);
 
-	shooterLeftFlywheel.reset (new CANTalon(7));
+	shooterLeftFlywheel.reset (new CANTalon(5));
 	lw->AddActuator("Shooter" , "LeftFlywheel" , shooterLeftFlywheel);
 
-	shooterRightFlywheel.reset (new CANTalon(8));
+	shooterRightFlywheel.reset (new CANTalon(7));
 	lw->AddActuator("Shooter" , "RightFlywheel" , shooterRightFlywheel);
 
-	shooterTurretSwivel.reset (new CANTalon(9));
+	shooterTurretSwivel.reset (new CANTalon(6));
 	lw->AddActuator("Shooter" , "TurretSwivel" , shooterTurretSwivel);
 	shooterTurretSwivel->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	shooterTurretSwivel->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SwitchInputsOnly);
 
-	shooterSpinCycleFeed.reset (new CANTalon(10));
+	shooterSpinCycleFeed.reset (new CANTalon(0));
 	lw->AddActuator("Shooter" , "SpinCycleFeed" , shooterSpinCycleFeed);
 
 	shooterRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS0));
@@ -90,7 +90,7 @@ void RobotMap::init() {
 		drivetrainChassis ->SetSensitivity(0.5);
 		drivetrainChassis ->SetMaxOutput(1.0);
 
-	shooterHoodActuator.reset (new frc::DoubleSolenoid (0, 2, 3));
+	shooterHoodActuator.reset (new frc::DoubleSolenoid (0, 1, 0));
 	lw ->AddActuator("Shooter", "HoodActuator", shooterHoodActuator);
 
 	compressorSpike.reset(new frc::Relay(1));
@@ -99,7 +99,7 @@ void RobotMap::init() {
 	compressorPressureSwitch.reset(new frc::DigitalInput(0));
 	lw ->AddSensor("Compressor", "CompressorPressureSwitch", compressorPressureSwitch);
 
-	drivetrainShift.reset (new frc::DoubleSolenoid (0, 0, 1));
+	drivetrainShift.reset (new frc::DoubleSolenoid (0, 4, 5));
 	lw ->AddActuator("Drivetrain" , "DoubleSolenoid" , drivetrainShift);
 
 	gearLimitSwitch.reset (new frc::DigitalInput(3));
@@ -111,7 +111,7 @@ void RobotMap::init() {
 	gearPhotoeye.reset (new frc::DigitalInput(4));
 	lw ->AddSensor("Gear" , "GearPhotoeye" , gearPhotoeye);
 
-	gearSolenoid.reset (new frc::DoubleSolenoid(0, 4, 5));
+	gearSolenoid.reset (new frc::DoubleSolenoid(0, 2, 3));
 	lw ->AddActuator("Gear" , "GearSolenoid" , gearSolenoid);
 
 }

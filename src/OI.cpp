@@ -20,17 +20,19 @@ OI::OI()
 	// activates commands here based off of operator input
 	DRC_rightTrigger.WhenPressed(new DrivetrainShift(true));
 	DRC_rightTrigger.WhenReleased(new DrivetrainShift(false));
-	DRC_rightBumper.WhenPressed(new FloorIntakeRunMotor(0.8));
+	DRC_rightBumper.WhenPressed(new FloorIntakeRunMotor(-0.9));
 	DRC_leftBumper.WhenPressed(new FloorIntakeRunMotor(0.0));
-	DRC_xButton.WhileHeld(new ClimberRunMotor(0.8));
+	DRC_xButton.WhileHeld(new ClimberRunMotor(-0.8));
 	DRC_xButton.WhenReleased(new ClimberRunMotor(0.0));
-	DRC_yButton.WhileHeld(new ClimberRunMotor(-0.8));
+	DRC_yButton.WhileHeld(new ClimberRunMotor(0.8));
 	DRC_yButton.WhenReleased(new ClimberRunMotor(0.0));
 
 	CDR_trigger.WhileHeld(new _CMG_ShootBall());
+	CDR_trigger.WhenReleased(new ShooterRunFlywheel(0.0));
+	CDR_trigger.WhenReleased(new ShooterRunSpinCycleFeed(0.0));
 	CDR_joystickPOV.WhenPressed(new ShooterMoveHood(POVHoodControl()));
 	CDR_sideJoystickButton.WhileHeld(new ShooterVisionScan());
-	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(0.8));
+	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(-0.9));
 	CDR_topLeftJoystick.WhenReleased(new FloorIntakeRunMotor(0.0));
 	CDR_bottomLeftJoystick.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
 	CDR_bottomLeftJoystick.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
@@ -38,13 +40,13 @@ OI::OI()
 	CDR_topRightJoystick.WhenReleased(new ClimberRunMotor(0.0));
 	CDR_bottomRightJoystick.WhileHeld(new ClimberRunMotor(-0.8));
 	CDR_bottomRightJoystick.WhenReleased(new ClimberRunMotor(0.0));
-	CDR_bottomRightBase.WhenPressed(new ShooterRunFlywheel(0.6));
-	CDR_topRightBase.WhenPressed(new ShooterRunFlywheel(0.8));
+	CDR_bottomRightBase.WhenPressed(new ShooterRunFlywheel(0.4));
+	CDR_topRightBase.WhenPressed(new ShooterRunFlywheel(0.5));
 	CDR_bottomLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.8));
 	CDR_topLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.0));
 	CDR_topMiddleBase.WhenPressed(new ShooterRunFlywheel(0.0));
-	CDR_zPositiveAxis.WhenPressed(new ShooterSwivelTurret(GetManualShooterSwivel()));
-	CDR_zNegativeAxis.WhenPressed(new ShooterSwivelTurret(GetManualShooterSwivel()));
+	CDR_zPositiveAxis.WhileHeld(new ShooterSwivelTurret(GetManualShooterSwivel()));
+	CDR_zNegativeAxis.WhileHeld(new ShooterSwivelTurret(GetManualShooterSwivel()));
 	CDR_throttle.WhileHeld(new ShooterRunFlywheel(GetTranslatedThrottle()));
 	CDR_throttle.WhenReleased(new ShooterRunFlywheel(0.0));
 
@@ -60,6 +62,10 @@ OI::OI()
 	CDB_bottomRed.WhenReleased(new ClimberRunMotor(0.0));
 	CDB_topWhite.WhenPressed(new ShooterRunFlywheel(0.6));
 	CDB_topRed.WhenPressed(new ShooterRunFlywheel(0.8));
+	CDB_middleWhite.WhileHeld(new ShooterSwivelTurret(1.0));
+	CDB_middleWhite.WhenReleased(new ShooterSwivelTurret(0.0));
+	CDB_middleRed.WhileHeld(new ShooterSwivelTurret(-1.0));
+	CDB_middleRed.WhenReleased(new ShooterSwivelTurret(0.0));
 }
 
 double OI::GetTurn() {
@@ -79,7 +85,7 @@ double OI::GetMove() {
 double OI::Desensitize(double value) {
 	//set threshold so tiny values on the joystick don't register,
 	//sometimes resting value of joystick is not 0
-	if (fabs(value) < 0.2) value = 0;
+	if (fabs(value) < 0.3) value = 0;
 	return value;
 }
 
@@ -110,7 +116,7 @@ int OI::GetJoystickPOV() {
 }
 
 double OI::GetManualShooterSwivel() {
-	return coDriverController.GetRawAxis(2) / 4;
+	return coDriverController.GetRawAxis(2);
 }
 
 double OI::GetTranslatedThrottle() {

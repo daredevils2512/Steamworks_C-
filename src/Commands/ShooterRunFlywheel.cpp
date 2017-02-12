@@ -3,7 +3,7 @@
 ShooterRunFlywheel::ShooterRunFlywheel(double speed) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
-	Requires(Robot::shooter.get());
+	//Requires(Robot::shooter.get());
 	m_speed = speed;
 }
 
@@ -19,12 +19,12 @@ void ShooterRunFlywheel::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool ShooterRunFlywheel::IsFinished() {
-	return false;
+	return true;
 }
 
 // Called once after isFinished returns true
 void ShooterRunFlywheel::End() {
-	Robot::shooter->SetFlywheelSpeed(0);
+	//Robot::shooter->SetFlywheelSpeed(0);
 }
 
 // Called when another command which requires one or more of the same

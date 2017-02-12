@@ -2,7 +2,7 @@
 
 ShooterMoveHood::ShooterMoveHood(frc::DoubleSolenoid::Value direction) {
 	// Use Requires() here to declare subsystem dependencies
-	Requires(Robot::shooter.get());
+	//Requires(Robot::shooter.get());
 	m_direction = direction;
 }
 

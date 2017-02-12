@@ -46,7 +46,7 @@ void Shooter::ActuateHood(frc::DoubleSolenoid::Value direction){
 void Shooter::SetFlywheelSpeed(double speed){
 	//Set the flywheels to the appropriate speeds
 	leftFlywheel->Set(speed);
-	rightFlywheel->Set(speed);
+	rightFlywheel->Set(-speed);
 }
 
 void Shooter::SetSpinCycleFeedSpeed(double speed){

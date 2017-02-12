@@ -1,6 +1,7 @@
 #include "_CMG_ShootBall.h"
 #include "ShooterRunSpinCycleFeed.h"
 #include "ShooterRunFlywheel.h"
+#include "PauseCommand.h"
 
 _CMG_ShootBall::_CMG_ShootBall() {
 	// Add Commands here:
@@ -19,6 +20,8 @@ _CMG_ShootBall::_CMG_ShootBall() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
-	AddParallel(new ShooterRunSpinCycleFeed(0.8));
-	AddSequential(new ShooterRunFlywheel(800));
+	AddSequential(new ShooterRunFlywheel(0.5));
+	AddSequential(new PauseCommand(0.5));
+	AddSequential(new ShooterRunSpinCycleFeed(0.8));
+
 }

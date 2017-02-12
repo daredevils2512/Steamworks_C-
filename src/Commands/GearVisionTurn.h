@@ -25,7 +25,6 @@ public:
 	void TurnDirection(double m_targetX , double centerX);
 
 private:
-	bool isFinished;
 	double m_targetX;
 };
 

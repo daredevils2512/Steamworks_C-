@@ -6,6 +6,7 @@ GearVisionTurn::GearVisionTurn(double targetX) {
 	Requires(Robot::gear.get());
 	Requires(Robot::drivetrain.get());
 	m_targetX = targetX;
+
 }
 
 // Called just before this Command runs the first time

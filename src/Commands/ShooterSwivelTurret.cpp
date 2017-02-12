@@ -1,14 +1,14 @@
 #include "ShooterSwivelTurret.h"
 
 ShooterSwivelTurret::ShooterSwivelTurret(double speed) {
-	Requires(Robot::shooter.get());
+	//Requires(Robot::shooter.get());
 	m_speed = speed;
 }
 
 // Called just before this Command runs the first time
 void ShooterSwivelTurret::Initialize() {
 	//stop swivel to prevent weird spinnyness
-	Robot::shooter->SetSwivelSpeed(0);
+	//Robot::shooter->SetSwivelSpeed(0);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -19,13 +19,13 @@ void ShooterSwivelTurret::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool ShooterSwivelTurret::IsFinished() {
-	return false;
+	return true;
 }
 
 // Called once after isFinished returns true
 void ShooterSwivelTurret::End() {
 	//stop
-	Robot::shooter->SetSwivelSpeed(0);
+	//Robot::shooter->SetSwivelSpeed(0);
 }
 
 // Called when another command which requires one or more of the same

@@ -3,7 +3,7 @@
 ShooterRunSpinCycleFeed::ShooterRunSpinCycleFeed(double speed) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
-	Requires(Robot::shooter.get());
+	//Requires(Robot::shooter.get());
 	m_speed = speed;
 }
 
@@ -21,13 +21,13 @@ void ShooterRunSpinCycleFeed::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool ShooterRunSpinCycleFeed::IsFinished() {
-	return false;
+	return true;
 }
 
 // Called once after isFinished returns true
 void ShooterRunSpinCycleFeed::End() {
 	//stop
-	Robot::shooter->SetSpinCycleFeedSpeed(0);
+	//Robot::shooter->SetSpinCycleFeedSpeed(0);
 }
 
 // Called when another command which requires one or more of the same

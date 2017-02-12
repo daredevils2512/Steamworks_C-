@@ -71,6 +71,9 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainFrontRightMotor ->GetEncPosition());
 	SmartDashboard::PutBoolean("limit switch" , RobotMap::gearLimitSwitch ->Get());
 	SmartDashboard::PutBoolean("gear photoeye", RobotMap::gearPhotoeye ->Get());
+	SmartDashboard::PutNumber("joystickz", Robot::oi->GetManualShooterSwivel());
+	SmartDashboard::PutBoolean("joystick zbutton", Robot::oi->CDR_zPositiveAxis.Get());
+	SmartDashboard::PutNumber("throttle adjustment", Robot::oi->GetTranslatedThrottle());
 }
 
 void Robot::TestPeriodic() {
