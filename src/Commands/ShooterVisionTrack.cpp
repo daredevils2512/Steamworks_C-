@@ -23,7 +23,6 @@ bool ShooterVisionTrack::IsWithinThreshold(double setpoint, double threshold, do
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionTrack::Execute() {
-	std::cout << "---------" << std::endl;
 	std::vector<PixySubsystem::ObjectValues> frame = Robot::pixySubsystem->GetShooterPixyData();
 	if(frame.size() == 0){
 		abort = true; // if we don't have anything in frame, abort vision tracking!
@@ -114,8 +113,6 @@ void ShooterVisionTrack::Execute() {
 
 	int dist = Robot::shooter->GetVirtualDistance(trackedObj);
 	int dCenter = middle - trackedObj.x;
-	std::cout<<"distance: " << dist << std::endl;
-	std::cout<<"centerDist: " << dCenter << std::endl;
 	//double minspeed = 0.1;
 	//double maxspeed = 0.5;
 	//double speed = minspeed+((dist/120) * (maxspeed - minspeed));

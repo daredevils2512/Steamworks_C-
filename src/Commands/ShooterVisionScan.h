@@ -13,6 +13,10 @@ public:
 	void Interrupted() override;
 private:
 	double speed;
+	bool fwdLastPressed;
+	bool revLastPressed;
+	bool FwdPressedThisTime();
+	bool RevPressedThisTime();
 };
 
 #endif  // EXAMPLE_COMMAND_H
