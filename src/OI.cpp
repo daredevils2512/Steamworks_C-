@@ -11,7 +11,6 @@
 #include "Commands/ShooterRunFlywheel.h"
 #include "Commands/ShooterRunSpinCycleFeed.h"
 #include "Commands/ShooterSwivelTurret.h"
-#include "Commands/ShooterVisionScan.h"
 #include "Commands/ShooterVisionTrack.h"
 #include "Commands/ShooterManualSwivel.h"
 #include "Commands/ShooterManualRunFlywheel.h"
@@ -33,39 +32,39 @@ OI::OI()
 	CDR_trigger.WhenReleased(new ShooterRunFlywheel(0.0));//working
 	CDR_trigger.WhenReleased(new ShooterRunSpinCycleFeed(0.0));//working
 	CDR_joystickPOV.WhenPressed(new ShooterMoveHood(POVHoodControl()));//actuates one direction (forward)
-	CDR_sideJoystickButton.WhenPressed(new ShooterVisionScan());
+	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack());
 	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(-0.9));//working
 	CDR_topLeftJoystick.WhenReleased(new FloorIntakeRunMotor(0.0));//working
 	CDR_bottomLeftJoystick.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
 	CDR_bottomLeftJoystick.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
-	CDR_topRightJoystick.WhileHeld(new ClimberRunMotor(0.8));//working
-	CDR_topRightJoystick.WhenReleased(new ClimberRunMotor(0.0));//working
-	CDR_bottomRightJoystick.WhileHeld(new ClimberRunMotor(-0.8));//working
-	CDR_bottomRightJoystick.WhenReleased(new ClimberRunMotor(0.0));//working
+	CDR_topRightJoystick.WhileHeld(new ClimberRunMotor(0.8));
+	CDR_topRightJoystick.WhenReleased(new ClimberRunMotor(0.0));
+	CDR_bottomRightJoystick.WhileHeld(new ClimberRunMotor(-0.8));
+	CDR_bottomRightJoystick.WhenReleased(new ClimberRunMotor(0.0));
 	CDR_bottomRightBase.WhenPressed(new ShooterRunFlywheel(0.4));//working
 	CDR_topRightBase.WhenPressed(new ShooterRunFlywheel(0.5));//working
 	CDR_bottomLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.8));//working
 	CDR_topLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.0));//working
 	CDR_topMiddleBase.WhenPressed(new ShooterRunFlywheel(0.0));//working, sometimes wheels spurt randomly
-	CDR_zPositiveAxis.WhileHeld(new ShooterManualSwivel());//working
-	CDR_zPositiveAxis.WhenReleased(new ShooterSwivelTurret(0.0));//working
-	CDR_zNegativeAxis.WhileHeld(new ShooterManualSwivel());//working
-	CDR_zNegativeAxis.WhenReleased(new ShooterSwivelTurret(0.0));//working
+	CDR_zPositiveAxis.WhileHeld(new ShooterManualSwivel());
+	CDR_zPositiveAxis.WhenReleased(new ShooterSwivelTurret(0.0));
+	CDR_zNegativeAxis.WhileHeld(new ShooterManualSwivel());
+	CDR_zNegativeAxis.WhenReleased(new ShooterSwivelTurret(0.0));
 	CDR_throttle.WhileHeld(new ShooterManualRunFlywheel());
 	CDR_throttle.WhenReleased(new ShooterRunFlywheel(0.0));
 
 	CDB_bigWhite.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kForward));//working
 	CDB_bigRed.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kReverse));//working
-	CDB_green.WhileHeld(new FloorIntakeRunMotor(-0.8));//working
-	CDB_green.WhenReleased(new FloorIntakeRunMotor(0.0));//working
+	CDB_green.WhileHeld(new FloorIntakeRunMotor(0.8));
+	CDB_green.WhenReleased(new FloorIntakeRunMotor(0.0));
 	CDB_yellow.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
 	CDB_yellow.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
-	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(0.8));//working
-	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
-	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-0.8));//working
-	CDB_bottomRed.WhenReleased(new ClimberRunMotor(0.0));//working
-	CDB_topWhite.WhenPressed(new ShooterRunFlywheel(0.6));//working
-	CDB_topRed.WhenPressed(new ShooterRunFlywheel(0.8));//working
+	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(0.8));
+	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));
+	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-0.8));
+	CDB_bottomRed.WhenReleased(new ClimberRunMotor(0.0));
+	CDB_topWhite.WhenPressed(new ShooterRunFlywheel(0.6));
+	CDB_topRed.WhenPressed(new ShooterRunFlywheel(0.8));
 	CDB_middleWhite.WhileHeld(new ShooterSwivelTurret(1.0));//working
 	CDB_middleWhite.WhenReleased(new ShooterSwivelTurret(0.0));//working
 	CDB_middleRed.WhileHeld(new ShooterSwivelTurret(-1.0));//working
