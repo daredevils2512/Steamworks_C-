@@ -110,26 +110,27 @@ void ShooterVisionTrack::Execute() {
 	//sets the center of the image
 	int middle = 318/2;
 	//sets the acceptable tolerance of the target
-	int tolerance = trackedObj.width/2;
+	int tolerance = 6;
 	//sets the minimum and maximum speeds of the turret swivel
-	double minspeed = 0.1;
-	double maxspeed = 0.5;
+
 	int dist = Robot::shooter->GetVirtualDistance(trackedObj);
 	int dCenter = middle - trackedObj.x;
 	std::cout<<"distance: " << dist << std::endl;
 	std::cout<<"centerDist: " << dCenter << std::endl;
-	double speed = minspeed+((dist/120) * (maxspeed - minspeed));
-	if(middle-tolerance <= trackedObj.x && trackedObj.x <= middle + tolerance){
+	//double minspeed = 0.1;
+	//double maxspeed = 0.5;
+	//double speed = minspeed+((dist/120) * (maxspeed - minspeed));
+	double speed = 0.25;
+	if(middle-(tolerance/2) <= trackedObj.x && trackedObj.x <= middle + (tolerance/2)){
 		//if the difference between the center and the tolerance is less than or equal to the middle added to the tolerance
 		//then stop the shooter from swiveling
-		std::cout<<"centered enough"<< std::endl;
+		Robot::shooter->SetSwivelSpeed(0);
 	}else if(trackedObj.x < middle){
 		// left of middle
-		std::cout<<"left of mid : "<<speed<< std::endl;
-
+		Robot::shooter->SetSwivelSpeed(speed);
 	}else{
 		// hopefully to the right of middle
-		std::cout<<"right of mid : " << speed<< std::endl;
+		Robot::shooter->SetSwivelSpeed(-speed);
 	}
 
 }
@@ -147,7 +148,8 @@ bool ShooterVisionTrack::IsFinished() {
 void ShooterVisionTrack::End() {
 	//once the command is over the new command it moves to is vision scan to require a target
 	//Robot::shooter->SetSwivelSpeed(0);
-	//(new ShooterVisionScan())->Start();
+	//TODO: add some way to manually stop shooter vision tracking, ask for driver preference
+	(new ShooterVisionScan())->Start();
 }
 
 // Called when another command which requires one or more of the same

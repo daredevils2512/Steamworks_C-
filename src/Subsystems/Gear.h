@@ -18,6 +18,9 @@ public:
 	bool GetLimitSwitch();
 	bool GetPhotoeye();
 	void ActuateGearIntake(DoubleSolenoid::Value dir);
+	void UpdateGearActuator();
+private:
+	bool previousGearSwitchState;
 };
 
 #endif  // Gear_H
