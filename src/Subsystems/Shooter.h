@@ -27,10 +27,7 @@ public:
 	void SetSpinCycleFeedSpeed(double speed);
 	void SetSwivelSpeed(double speed);
 	void ActuateHood(frc::DoubleSolenoid::Value direction);
-	void SwivelVisionBased(Nullable< std::vector<int> > object);
 	bool IsHoodActuated();
-	bool IsLeftLimitSwitchPressed();
-	bool IsRightLimitSwitchPressed();
 	int GetVirtualDistance(PixySubsystem::ObjectValues object);
 	//int GetVirtualDistance(Pixy::ObjectValues object);
 	double maxEncPosition;

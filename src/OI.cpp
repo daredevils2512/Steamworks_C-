@@ -13,6 +13,8 @@
 #include "Commands/ShooterSwivelTurret.h"
 #include "Commands/ShooterVisionScan.h"
 #include "Commands/ShooterVisionTrack.h"
+#include "Commands/ShooterManualSwivel.h"
+#include "Commands/ShooterManualRunFlywheel.h"
 
 
 OI::OI()
@@ -45,9 +47,11 @@ OI::OI()
 	CDR_bottomLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.8));//working
 	CDR_topLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.0));//working
 	CDR_topMiddleBase.WhenPressed(new ShooterRunFlywheel(0.0));//working, sometimes wheels spurt randomly
-	CDR_zPositiveAxis.WhileHeld(new ShooterSwivelTurret(GetManualShooterSwivel()));
-	CDR_zNegativeAxis.WhileHeld(new ShooterSwivelTurret(GetManualShooterSwivel()));
-	CDR_throttle.WhileHeld(new ShooterRunFlywheel(GetTranslatedThrottle()));
+	CDR_zPositiveAxis.WhileHeld(new ShooterManualSwivel());
+	CDR_zPositiveAxis.WhenReleased(new ShooterSwivelTurret(0.0));
+	CDR_zNegativeAxis.WhileHeld(new ShooterManualSwivel());
+	CDR_zNegativeAxis.WhenReleased(new ShooterSwivelTurret(0.0));
+	CDR_throttle.WhileHeld(new ShooterManualRunFlywheel());
 	CDR_throttle.WhenReleased(new ShooterRunFlywheel(0.0));
 
 	CDB_bigWhite.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kForward));//working

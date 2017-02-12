@@ -16,23 +16,6 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	maxEncPosition = 4096;
 }
 
-//void Shooter::SwivelVisionBased(Nullable< std::vector<int> >  object){ // move me to a command!
-//	int pixyWidth = 318;
-//	//add "acceptable range"
-//	if(object.hasValue()){
-//		if(object.GetValue() <3> pixyWidth/2) {
-//			// right of center
-//		}else if(object[3] != pixyWidth/2){
-//			// left of center
-//		}else{
-//			//centered
-//		}
-//	}else{
-//		// scan
-//
-//	}
-//}
-
 void Shooter::InitDefaultCommand() {
 
 }
