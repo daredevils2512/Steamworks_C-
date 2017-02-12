@@ -46,7 +46,7 @@ bool ShooterVisionScan::RevPressedThisTime() {
 	}
 }
 bool ShooterVisionScan::FwdEncPassedThisTime() {
-	if(RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed()){
+	if(RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition){
 		if(fwdLastPassed)
 			return false;
 		else{
@@ -60,7 +60,7 @@ bool ShooterVisionScan::FwdEncPassedThisTime() {
 	}
 }
 bool ShooterVisionScan::RevEncPassedThisTime() {
-	if(RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed()){
+	if(RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition){
 		if(revLastPassed)
 			return false;
 		else{
