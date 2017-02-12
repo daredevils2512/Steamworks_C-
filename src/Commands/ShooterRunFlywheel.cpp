@@ -3,7 +3,6 @@
 ShooterRunFlywheel::ShooterRunFlywheel(double speed) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
-	//Requires(Robot::shooter.get());
 	m_speed = speed;
 }
 

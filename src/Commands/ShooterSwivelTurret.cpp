@@ -1,7 +1,6 @@
 #include "ShooterSwivelTurret.h"
 
 ShooterSwivelTurret::ShooterSwivelTurret(double speed) {
-	//Requires(Robot::shooter.get());
 	m_speed = speed;
 }
 
