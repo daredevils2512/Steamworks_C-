@@ -10,6 +10,8 @@ ShooterVisionScan::ShooterVisionScan() {
 	speed = 0.15;
 	fwdLastPressed = false;
 	revLastPressed = false;
+	fwdLastPassed = false;
+	revLastPassed = false;
 }
 
 // Called just before this Command runs the first time
