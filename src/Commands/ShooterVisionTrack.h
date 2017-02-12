@@ -14,6 +14,15 @@ public:
 private:
 	bool IsWithinThreshold(double setpoint, double threshold, double value);
 	bool abort;
+	double speed;
+	bool fwdLastPressed;
+	bool revLastPressed;
+	bool FwdPressedThisTime();
+	bool RevPressedThisTime();
+	bool fwdLastPassed;
+	bool revLastPassed;
+	bool FwdEncPassedThisTime();
+	bool RevEncPassedThisTime();
 };
 
 #endif  // ShooterVisionTrack_H

@@ -11,7 +11,6 @@
 #include "Commands/ShooterRunFlywheel.h"
 #include "Commands/ShooterRunSpinCycleFeed.h"
 #include "Commands/ShooterSwivelTurret.h"
-#include "Commands/ShooterVisionScan.h"
 #include "Commands/ShooterVisionTrack.h"
 #include "Commands/ShooterManualSwivel.h"
 #include "Commands/ShooterManualRunFlywheel.h"
@@ -33,7 +32,7 @@ OI::OI()
 	CDR_trigger.WhenReleased(new ShooterRunFlywheel(0.0));//working
 	CDR_trigger.WhenReleased(new ShooterRunSpinCycleFeed(0.0));//working
 	CDR_joystickPOV.WhenPressed(new ShooterMoveHood(POVHoodControl()));
-	CDR_sideJoystickButton.WhileHeld(new ShooterVisionScan());
+	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack());
 	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(-0.9));
 	CDR_topLeftJoystick.WhenReleased(new FloorIntakeRunMotor(0.0));
 	CDR_bottomLeftJoystick.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
