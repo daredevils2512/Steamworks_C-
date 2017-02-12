@@ -36,26 +36,22 @@ void RobotMap::init() {
 	drivetrainFrontLeftMotor.reset (new CANTalon(4));
 	lw->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
 	//Setting the control mode of the front motors to slaves
-	//drivetrainFrontLeftMotor->SetControlMode(frc::CANSpeedController::kFollower);
-	//drivetrainFrontLeftMotor->Set(4);
 
 	drivetrainRearLeftMotor.reset (new CANTalon(1));
 	lw->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
 	drivetrainRearLeftMotor->SetFeedbackDevice(CANTalon::QuadEncoder);
-	drivetrainRearLeftMotor->ConfigEncoderCodesPerRev(128);
+	drivetrainRearLeftMotor->ConfigEncoderCodesPerRev(256);
 	//Setting up PID with the back motors since they are the Masters
 	drivetrainRearLeftMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 
 	drivetrainFrontRightMotor.reset (new CANTalon(9));
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
 	//Setting the control mode of the front motors to slaves
-	//drivetrainFrontRightMotor->SetControlMode(frc::CANSpeedController::kFollower);
-	//drivetrainFrontRightMotor->Set(2);
 
 	drivetrainRearRightMotor.reset (new CANTalon(2));
 	lw->AddActuator("Drivetrain" , "RearRightMotor" , drivetrainRearRightMotor);
 	drivetrainRearRightMotor->SetFeedbackDevice(CANTalon::QuadEncoder);
-	drivetrainRearRightMotor->ConfigEncoderCodesPerRev(128);
+	drivetrainRearRightMotor->ConfigEncoderCodesPerRev(256);
 	//Setting up PID with the back motors since they are the Masters
 	drivetrainRearRightMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 
@@ -74,7 +70,7 @@ void RobotMap::init() {
 	shooterTurretSwivel.reset (new CANTalon(6));
 	lw->AddActuator("Shooter" , "TurretSwivel" , shooterTurretSwivel);
 	shooterTurretSwivel->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
-	shooterTurretSwivel->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SwitchInputsOnly);
+	//shooterTurretSwivel->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SwitchInputsOnly);
 
 	shooterSpinCycleFeed.reset (new CANTalon(0));
 	lw->AddActuator("Shooter" , "SpinCycleFeed" , shooterSpinCycleFeed);
