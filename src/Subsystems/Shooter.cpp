@@ -28,6 +28,13 @@ void Shooter::ActuateHood(frc::DoubleSolenoid::Value direction){
 
 void Shooter::SetFlywheelSpeed(double speed){
 	//Set the flywheels to the appropriate speeds
+	if((speed <= 1) && (speed >=-1)) {
+		leftFlywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+		rightFlywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+	}else{
+		leftFlywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
+		rightFlywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
+	}
 	leftFlywheel->Set(speed);
 	rightFlywheel->Set(-speed);
 }

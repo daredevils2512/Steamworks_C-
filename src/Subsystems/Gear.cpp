@@ -25,13 +25,21 @@ bool Gear::GetPhotoeye() {
 	return photoeye->Get();
 }
 
+frc::DoubleSolenoid::Value Gear::GetIntakeDirection() {
+	return solenoid->Get();
+}
+
 void Gear::ActuateGearIntake(frc::DoubleSolenoid:: Value dir) {
 	solenoid->Set(dir);
 }
 
 void Gear::UpdateGearActuator() {
 	if(GetLimitSwitch() != previousGearSwitchState){
-		SetCurrentCommand(new GearIntakeActuate(!GetLimitSwitch()));
+		if(GetIntakeDirection() == frc::DoubleSolenoid::kForward) {
+			SetCurrentCommand(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+		}else{
+			SetCurrentCommand(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
+		}
 	}
 	previousGearSwitchState = GetLimitSwitch();
 }
