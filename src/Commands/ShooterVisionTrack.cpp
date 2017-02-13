@@ -121,8 +121,6 @@ void ShooterVisionTrack::Execute() {
 	int tolerance = 6;
 	//sets the minimum and maximum speeds of the turret swivel
 
-	int dist = Robot::shooter->GetVirtualDistance(trackedObj);
-	int dCenter = middle - trackedObj.x;
 	//double minspeed = 0.1;
 	//double maxspeed = 0.5;
 	//double speed = minspeed+((dist/120) * (maxspeed - minspeed));
