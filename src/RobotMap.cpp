@@ -63,12 +63,12 @@ void RobotMap::init() {
 
 	shooterLeftFlywheel.reset (new CANTalon(5));
 	shooterLeftFlywheel->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-	shooterLeftFlywheel->SetPID(0.15, 0.0003, 1.5, 0.0285);
+	shooterLeftFlywheel->SetPID(0.08 , 0.000065, 2, 0.0285);
 	lw->AddActuator("Shooter" , "LeftFlywheel" , shooterLeftFlywheel);
 
 	shooterRightFlywheel.reset (new CANTalon(7));
 	shooterRightFlywheel->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-	shooterRightFlywheel->SetPID(0.15, 0.0003, 1.5, 0.0285);
+	shooterRightFlywheel->SetPID(0.08, 0.000065, 2, 0.0285);
 	lw->AddActuator("Shooter" , "RightFlywheel" , shooterRightFlywheel);
 
 	shooterTurretSwivel.reset (new CANTalon(6));
@@ -102,7 +102,7 @@ void RobotMap::init() {
 	drivetrainShift.reset (new frc::DoubleSolenoid (0, 4, 5));
 	lw ->AddActuator("Drivetrain" , "DoubleSolenoid" , drivetrainShift);
 
-	gearLimitSwitch.reset (new frc::DigitalInput(3));
+	gearLimitSwitch.reset (new frc::DigitalInput(0));
 	lw ->AddSensor("Gear" , "GearLimitSwitch" , gearLimitSwitch);
 
 	gearRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS1));

@@ -21,6 +21,8 @@ private:
 	TriggerButton DRC_leftTrigger{&driverController, 2, 0.8};
 	JoystickButton DRC_rightBumper{&driverController, 6};
 	JoystickButton DRC_leftBumper{&driverController, 5};
+	JoystickButton DRC_aButton{&driverController, 1};
+	JoystickButton DRC_bButton{&driverController, 2};
 	JoystickButton DRC_xButton{&driverController, 3};
 	JoystickButton DRC_yButton{&driverController, 4};
 
