@@ -43,28 +43,25 @@ void Drivetrain::Shifter(frc::DoubleSolenoid::Value dir) {
 	DriveTrainShift->Set(dir);
 }
 
-double Drivetrain::GetEncoders() {
+double Drivetrain::GetLeftEncoder() {
 	//gets distance moved since last reset scaled by distance per pulse
-	return ((Left->GetEncPosition() + Right->GetEncPosition()) / 2) * 0.0981747704246;
+	return Left->GetEncPosition() * distancePerPulse;
 }
 
-//distance = inches
-//speed = inches per seconds
-Drivetrain::Speeds Drivetrain::AutoCalcSpeeds(double radius, double outerSpeed, Direction direction){
-	Speeds theSpeeds;
-	int width = 27;
-	double innerSpeed = ((radius - width / 2) / (radius + width/2) * outerSpeed);
-	if(direction == Direction::clockwise){
-		theSpeeds.leftSpeed = outerSpeed;
-		theSpeeds.rightSpeed = innerSpeed;
-	}else if(direction == Direction::counterClockwise){
-		theSpeeds.leftSpeed = innerSpeed;
-		theSpeeds.rightSpeed = outerSpeed;
-	}else{
-		theSpeeds.leftSpeed = outerSpeed;
-		theSpeeds.rightSpeed = outerSpeed;
-	}
-	return theSpeeds;
+double Drivetrain::GetRightEncoder() {
+	//gets distance moved since last reset scaled by distance per pulse
+	return Right->GetEncPosition() * distancePerPulse;
+}
+
+double Drivetrain::GetEncoders() {
+	//gets distance moved since last reset scaled by distance per pulse
+	return ((GetLeftEncoder() + GetRightEncoder()) / 2);
+}
+
+void Drivetrain::ResetEncoders() {
+	//resets the drivetrain encoder values
+	Left->Reset();
+	Right->Reset();
 }
 
 void Drivetrain::TurnDirection(double m_targetX , double centerX){
@@ -72,12 +69,12 @@ void Drivetrain::TurnDirection(double m_targetX , double centerX){
 	error = error * 0.005;
 	if (error > 0.5) {
 		error = 0.5;
-	} else if (error < -0.5){
+	} else if (error < -0.5) {
 		error = -0.5;
 	}
-	if(IsWithinThreshold(m_targetX, centerX, 5)) {
+	if (IsWithinThreshold(m_targetX, centerX, 5)) {
 		DriveRobotTank(0.5, 0.0);
-	} else if(centerX != m_targetX) {
+	} else if (centerX != m_targetX) {
 		DriveRobotTank(0.0, error);
 	} else {
 		DriveRobotTank(0.0, 0.0);
