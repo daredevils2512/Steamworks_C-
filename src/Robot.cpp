@@ -62,8 +62,8 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainFrontLeftMotor->GetEncPosition());
 	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainFrontRightMotor ->GetEncPosition());
 	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
-	SmartDashboard::PutNumber("left flywheel encoder", RobotMap::shooterLeftFlywheel->GetEncVel());
-	SmartDashboard::PutNumber("right flywheel encoder", RobotMap::shooterRightFlywheel->GetEncVel());
+	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterLeftFlywheel->GetSpeed());
+	SmartDashboard::PutNumber("right flywheel speed", RobotMap::shooterRightFlywheel->GetSpeed());
 	SmartDashboard::PutBoolean("gear limit switch" , RobotMap::gearLimitSwitch ->Get());
 	SmartDashboard::PutBoolean("gear photoeye", RobotMap::gearPhotoeye ->Get());
 	SmartDashboard::PutNumber("joystickz", Robot::oi->GetManualShooterSwivel());

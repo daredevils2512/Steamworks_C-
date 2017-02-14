@@ -1,5 +1,5 @@
 #include "ShooterVisionTrack.h"
-#include "ShooterVisionScan.h"
+#include "ShooterVisionTrack.h"
 #include "../RobotMap.h"
 #include "../Robot.h"
 #include "../Subsystems/Shooter.h"
@@ -9,6 +9,11 @@ ShooterVisionTrack::ShooterVisionTrack() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	abort = false;
+	speed = 1;
+	fwdLastPressed = false;
+	revLastPressed = false;
+	fwdLastPassed = false;
+	revLastPassed = false;
 }
 
 // Called just before this Command runs the first time
@@ -23,10 +28,14 @@ bool ShooterVisionTrack::IsWithinThreshold(double setpoint, double threshold, do
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionTrack::Execute() {
-	std::cout << "---------" << std::endl;
 	std::vector<PixySubsystem::ObjectValues> frame = Robot::pixySubsystem->GetShooterPixyData();
 	if(frame.size() == 0){
-		abort = true; // if we don't have anything in frame, abort vision tracking!
+		if ( FwdPressedThisTime() || FwdEncPassedThisTime()||
+				RevPressedThisTime() || RevEncPassedThisTime()) {
+			speed = -speed; //reverse the speed
+
+		}
+		Robot::shooter->SetSwivelSpeed(speed);
 		return;
 	}
 
@@ -112,10 +121,6 @@ void ShooterVisionTrack::Execute() {
 	int tolerance = 6;
 	//sets the minimum and maximum speeds of the turret swivel
 
-	int dist = Robot::shooter->GetVirtualDistance(trackedObj);
-	int dCenter = middle - trackedObj.x;
-	std::cout<<"distance: " << dist << std::endl;
-	std::cout<<"centerDist: " << dCenter << std::endl;
 	//double minspeed = 0.1;
 	//double maxspeed = 0.5;
 	//double speed = minspeed+((dist/120) * (maxspeed - minspeed));
@@ -133,22 +138,71 @@ void ShooterVisionTrack::Execute() {
 	}
 
 }
+bool ShooterVisionTrack::FwdPressedThisTime() {
+	if(RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed()){
+		if(fwdLastPressed)
+			return false;
+		else{
+			fwdLastPressed = true;
+			return true;
+		}
+
+	}else{
+		fwdLastPressed = false;
+		return true;
+	}
+}
+bool ShooterVisionTrack::RevPressedThisTime() {
+	if(RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed()){
+		if(revLastPressed)
+			return false;
+		else{
+			revLastPressed = true;
+			return true;
+		}
+	}else{
+		revLastPressed = false;
+		return true;
+	}
+}
+bool ShooterVisionTrack::FwdEncPassedThisTime() {
+	if(RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition){
+		if(fwdLastPassed)
+			return false;
+		else{
+			fwdLastPassed = true;
+			return true;
+		}
+
+	}else{
+		fwdLastPassed = false;
+		return true;
+	}
+}
+bool ShooterVisionTrack::RevEncPassedThisTime() {
+	if(RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition){
+		if(revLastPassed)
+			return false;
+		else{
+			revLastPassed = true;
+			return true;
+		}
+	}else{
+		revLastPassed = false;
+		return true;
+	}
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool ShooterVisionTrack::IsFinished() {
 	//ends the command if the frame size is zer or if a limit switch is pressed
-	bool passedSafetyThreshold = RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed() || RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition||
-			RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed()|| RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition;
-	std::cout << "abort: " << abort << std::endl;
-	return abort || passedSafetyThreshold;//abort || passedSafetyThreshold;
+	return false;//abort || passedSafetyThreshold;
 }
 
 // Called once after isFinished returns true
 void ShooterVisionTrack::End() {
 	//once the command is over the new command it moves to is vision scan to require a target
-	//Robot::shooter->SetSwivelSpeed(0);
-	//TODO: add some way to manually stop shooter vision tracking, ask for driver preference
-	(new ShooterVisionScan())->Start();
+	Robot::shooter->SetSwivelSpeed(0);
 }
 
 // Called when another command which requires one or more of the same

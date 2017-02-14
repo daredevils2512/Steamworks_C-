@@ -1,7 +1,7 @@
 #include "GearIntakeActuate.h"
 #include "Robot.h"
 
-GearIntakeActuate::GearIntakeActuate(bool SolenoidDirection) {
+GearIntakeActuate::GearIntakeActuate(frc::DoubleSolenoid::Value SolenoidDirection) {
 	// Use Requires() here to declare subsystem dependencies
 	Requires(Robot::gear.get());
 	m_SolenoidDirection = SolenoidDirection;
@@ -14,13 +14,7 @@ void GearIntakeActuate::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void GearIntakeActuate::Execute() {
-	if(m_SolenoidDirection) {
-		Robot::gear->ActuateGearIntake(DoubleSolenoid::kForward);
-	}
-	else {
-		Robot::gear->ActuateGearIntake(DoubleSolenoid::kReverse);
-	}
-
+		Robot::gear->ActuateGearIntake(m_SolenoidDirection);
 }
 
 // Make this return true when this Command no longer needs to run execute()

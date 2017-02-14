@@ -5,14 +5,14 @@
 #include "Robot.h"
 class GearIntakeActuate : public CommandBase {
 public:
-	GearIntakeActuate(bool SolenoidDirection);
+	GearIntakeActuate(frc::DoubleSolenoid::Value SolenoidDirection);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
 private:
-	bool m_SolenoidDirection;
+	frc::DoubleSolenoid::Value m_SolenoidDirection;
 };
 
 #endif  // GearIntakeActuate_H

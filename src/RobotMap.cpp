@@ -62,9 +62,13 @@ void RobotMap::init() {
 	lw->AddActuator("FloorIntake" , "IntakeMotor" , intakeMotor);
 
 	shooterLeftFlywheel.reset (new CANTalon(5));
+	shooterLeftFlywheel->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+	shooterLeftFlywheel->SetPID(0.15, 0.0003, 1.5, 0.0285);
 	lw->AddActuator("Shooter" , "LeftFlywheel" , shooterLeftFlywheel);
 
 	shooterRightFlywheel.reset (new CANTalon(7));
+	shooterRightFlywheel->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+	shooterRightFlywheel->SetPID(0.15, 0.0003, 1.5, 0.0285);
 	lw->AddActuator("Shooter" , "RightFlywheel" , shooterRightFlywheel);
 
 	shooterTurretSwivel.reset (new CANTalon(6));

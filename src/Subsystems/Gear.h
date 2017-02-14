@@ -17,6 +17,7 @@ public:
 
 	bool GetLimitSwitch();
 	bool GetPhotoeye();
+	frc::DoubleSolenoid::Value GetIntakeDirection();
 	void ActuateGearIntake(DoubleSolenoid::Value dir);
 	void UpdateGearActuator();
 private:
