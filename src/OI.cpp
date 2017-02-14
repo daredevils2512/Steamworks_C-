@@ -14,6 +14,7 @@
 #include "Commands/ShooterVisionTrack.h"
 #include "Commands/ShooterManualSwivel.h"
 #include "Commands/ShooterManualRunFlywheel.h"
+#include "Commands/ShooterPOVHoodControl.h"
 
 
 OI::OI()
@@ -35,7 +36,7 @@ OI::OI()
 	CDR_trigger.WhileHeld(new _CMG_ShootBall());//working
 	CDR_trigger.WhenReleased(new ShooterRunFlywheel(0.0));//working
 	CDR_trigger.WhenReleased(new ShooterRunSpinCycleFeed(0.0));//working
-	CDR_joystickPOV.WhenPressed(new ShooterMoveHood(POVHoodControl()));//actuates one direction (forward)
+	CDR_joystickPOV.WhenPressed(new ShooterPOVHoodControl());
 	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack());
 	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(-0.9));//working
 	CDR_topLeftJoystick.WhenReleased(new FloorIntakeRunMotor(0.0));//working
@@ -123,7 +124,7 @@ int OI::GetJoystickPOV() {
 }
 
 double OI::GetManualShooterSwivel() {
-	return coDriverController.GetRawAxis(2);
+	return Desensitize(coDriverController.GetRawAxis(2));
 }
 
 double OI::GetTranslatedThrottle() {
