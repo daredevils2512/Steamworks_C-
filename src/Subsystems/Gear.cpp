@@ -17,7 +17,11 @@ void Gear::InitDefaultCommand() {
 // here. Call these from Commands.
 
 bool Gear::GetLimitSwitch() {
-	return limitswitch->Get();
+	if(limitswitch->Get()) {
+		return false;
+	}else{
+		return true;
+	}
 }
 
 frc::DoubleSolenoid::Value Gear::GetIntakeDirection() {
