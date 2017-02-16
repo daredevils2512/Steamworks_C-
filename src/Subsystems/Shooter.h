@@ -28,7 +28,7 @@ public:
 	void SetSwivelSpeed(double speed);
 	void ActuateHood(frc::DoubleSolenoid::Value direction);
 	bool IsHoodActuated();
-	int GetVirtualDistance(PixySubsystem::ObjectValues object);
+	double GetVirtualDistance(PixySubsystem::ObjectValues object);
 	//int GetVirtualDistance(Pixy::ObjectValues object);
 	double maxEncPosition;
 };

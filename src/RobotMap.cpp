@@ -21,7 +21,6 @@ std::shared_ptr<frc::Relay> RobotMap::compressorSpike;
 std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearLimitSwitch;
-std::shared_ptr<frc::DigitalInput> RobotMap::gearPhotoeye;
 std::shared_ptr<frc::SPI> RobotMap::gearRealPixy;
 std::shared_ptr<frc::SPI> RobotMap::gearFakePixy;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearSolenoid;
@@ -107,9 +106,6 @@ void RobotMap::init() {
 
 	gearRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS1));
 	gearFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS3));
-
-	gearPhotoeye.reset (new frc::DigitalInput(4));
-	lw ->AddSensor("Gear" , "GearPhotoeye" , gearPhotoeye);
 
 	gearSolenoid.reset (new frc::DoubleSolenoid(0, 2, 3));
 	lw ->AddActuator("Gear" , "GearSolenoid" , gearSolenoid);
