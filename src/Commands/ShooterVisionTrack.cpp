@@ -32,10 +32,16 @@ void ShooterVisionTrack::Execute() {
 	if(frame.size() == 0){
 		if ( FwdPressedThisTime() || FwdEncPassedThisTime()||
 				RevPressedThisTime() || RevEncPassedThisTime()) {
+			std::cout << "reverse pressed this time: " << RevPressedThisTime() << std::endl;
+			std::cout << "forward pressed this time: " << FwdPressedThisTime() << std::endl;
+			std::cout << "forward encoder passed this time: " << FwdEncPassedThisTime() << std::endl;
+			std::cout << "reverse encoder passed this time: " << RevEncPassedThisTime() << std::endl;
 			speed = -speed; //reverse the speed
 
 		}
 		Robot::shooter->SetSwivelSpeed(speed);
+		std::cout << "speed: " << speed << std::endl;
+		std::cout << "still scanning" << std::endl;
 		return;
 	}
 
@@ -53,6 +59,7 @@ void ShooterVisionTrack::Execute() {
 		}
 		abort = !trackedSet; // abort if we haven't set tracked
 		if(abort){
+			std::cout << "aborted 1 object" << std::endl;
 			return; // if not tracked, abort!
 		}
 	}else if(frame.size() > 1) {
@@ -107,11 +114,13 @@ void ShooterVisionTrack::Execute() {
 		}
 	}else{
 		//if we have zero objects somehow, abort.
+		std::cout << "aborted zero objects" << std::endl;
 		abort = true;
 		return;
 	}
 	if((!trackedSet && !barsSet) || frame.size() < 1){
 		//if we don't have anything, abort!
+		std::cout << "aborted we have nothing" << std::endl;
 		abort = true;
 		return;
 	}
@@ -144,11 +153,13 @@ bool ShooterVisionTrack::FwdPressedThisTime() {
 			return false;
 		else{
 			fwdLastPressed = true;
+			//std::cout << "FwdPressedThisTime = true" << std::endl;
 			return true;
 		}
 
 	}else{
 		fwdLastPressed = false;
+		//std::cout << "FwdPressedThisTime = false" << std::endl;
 		return true;
 	}
 }
@@ -158,10 +169,12 @@ bool ShooterVisionTrack::RevPressedThisTime() {
 			return false;
 		else{
 			revLastPressed = true;
+			//std::cout << "RevPressedThisTime = true" << std::endl;
 			return true;
 		}
 	}else{
 		revLastPressed = false;
+		//std::cout << "RevPressedThisTime = false" << std::endl;
 		return true;
 	}
 }
@@ -171,11 +184,13 @@ bool ShooterVisionTrack::FwdEncPassedThisTime() {
 			return false;
 		else{
 			fwdLastPassed = true;
+			//std::cout << "FwdEncPassedThisTime = true" << std::endl;
 			return true;
 		}
 
 	}else{
 		fwdLastPassed = false;
+		//std::cout << "FwdEncPassedThisTime = false" << std::endl;
 		return true;
 	}
 }
@@ -185,11 +200,13 @@ bool ShooterVisionTrack::RevEncPassedThisTime() {
 			return false;
 		else{
 			revLastPassed = true;
+			//std::cout << "RevEncPassedThisTime = true" << std::endl;
 			return true;
 		}
 	}else{
 		revLastPassed = false;
-		return true;
+		//std::cout << "RevEncPassedThisTime = false" << std::endl;
+		return false;
 	}
 }
 
@@ -208,5 +225,5 @@ void ShooterVisionTrack::End() {
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void ShooterVisionTrack::Interrupted() {
-
+	End();
 }

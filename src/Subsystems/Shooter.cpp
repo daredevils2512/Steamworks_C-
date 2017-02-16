@@ -55,7 +55,7 @@ bool Shooter::IsHoodActuated() {
 }
 
 
-int Shooter::GetVirtualDistance(PixySubsystem::ObjectValues object){
+double Shooter::GetVirtualDistance(PixySubsystem::ObjectValues object){
 	//calculates the distance from the target in inches
 	return (0.00349450614331*(pow(object.y,2))) - (0.0873599815179*(object.y)) + 43.068903964768;
 }

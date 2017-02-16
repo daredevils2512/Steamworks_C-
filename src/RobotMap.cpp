@@ -21,7 +21,6 @@ std::shared_ptr<frc::Relay> RobotMap::compressorSpike;
 std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearLimitSwitch;
-std::shared_ptr<frc::DigitalInput> RobotMap::gearPhotoeye;
 std::shared_ptr<frc::SPI> RobotMap::gearRealPixy;
 std::shared_ptr<frc::SPI> RobotMap::gearFakePixy;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearSolenoid;
@@ -34,26 +33,24 @@ void RobotMap::init() {
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
 
 	drivetrainFrontLeftMotor.reset (new CANTalon(4));
+	drivetrainFrontLeftMotor->SetFeedbackDevice(CANTalon::QuadEncoder);
+	drivetrainFrontLeftMotor->ConfigEncoderCodesPerRev(256);
 	lw->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
 	//Setting the control mode of the front motors to slaves
 
 	drivetrainRearLeftMotor.reset (new CANTalon(1));
 	lw->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
-	drivetrainRearLeftMotor->SetFeedbackDevice(CANTalon::QuadEncoder);
-	drivetrainRearLeftMotor->ConfigEncoderCodesPerRev(256);
 	//Setting up PID with the back motors since they are the Masters
-	drivetrainRearLeftMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 
 	drivetrainFrontRightMotor.reset (new CANTalon(9));
+	drivetrainFrontRightMotor->SetFeedbackDevice(CANTalon::QuadEncoder);
+	drivetrainFrontRightMotor->ConfigEncoderCodesPerRev(256);
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
 	//Setting the control mode of the front motors to slaves
 
 	drivetrainRearRightMotor.reset (new CANTalon(2));
 	lw->AddActuator("Drivetrain" , "RearRightMotor" , drivetrainRearRightMotor);
-	drivetrainRearRightMotor->SetFeedbackDevice(CANTalon::QuadEncoder);
-	drivetrainRearRightMotor->ConfigEncoderCodesPerRev(256);
 	//Setting up PID with the back motors since they are the Masters
-	drivetrainRearRightMotor->SetPID(0.0, 0.0, 0.0, 0.0);
 
 	climberMotor.reset (new CANTalon(8));
 	lw->AddActuator("Climber" , "ClimberMotor" , climberMotor);
@@ -93,12 +90,6 @@ void RobotMap::init() {
 	shooterHoodActuator.reset (new frc::DoubleSolenoid (0, 1, 0));
 	lw ->AddActuator("Shooter", "HoodActuator", shooterHoodActuator);
 
-	compressorSpike.reset(new frc::Relay(1));
-	lw ->AddActuator("Compressor", "CompressorSpike", compressorSpike);
-
-	compressorPressureSwitch.reset(new frc::DigitalInput(0));
-	lw ->AddSensor("Compressor", "CompressorPressureSwitch", compressorPressureSwitch);
-
 	drivetrainShift.reset (new frc::DoubleSolenoid (0, 4, 5));
 	lw ->AddActuator("Drivetrain" , "DoubleSolenoid" , drivetrainShift);
 
@@ -107,9 +98,6 @@ void RobotMap::init() {
 
 	gearRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS1));
 	gearFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS3));
-
-	gearPhotoeye.reset (new frc::DigitalInput(4));
-	lw ->AddSensor("Gear" , "GearPhotoeye" , gearPhotoeye);
 
 	gearSolenoid.reset (new frc::DoubleSolenoid(0, 2, 3));
 	lw ->AddActuator("Gear" , "GearSolenoid" , gearSolenoid);

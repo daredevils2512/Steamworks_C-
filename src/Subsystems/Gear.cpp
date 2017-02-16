@@ -4,7 +4,6 @@
 
 Gear::Gear() : Subsystem("Gear") {
 	limitswitch = RobotMap::gearLimitSwitch;
-	photoeye = RobotMap::gearPhotoeye;
 	solenoid = RobotMap::gearSolenoid;
 	previousGearSwitchState = GetLimitSwitch();
 }
@@ -18,11 +17,11 @@ void Gear::InitDefaultCommand() {
 // here. Call these from Commands.
 
 bool Gear::GetLimitSwitch() {
-	return limitswitch->Get();
-}
-
-bool Gear::GetPhotoeye() {
-	return photoeye->Get();
+	if(limitswitch->Get()) {
+		return false;
+	}else{
+		return true;
+	}
 }
 
 frc::DoubleSolenoid::Value Gear::GetIntakeDirection() {
