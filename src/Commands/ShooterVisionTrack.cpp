@@ -30,7 +30,7 @@ bool ShooterVisionTrack::IsWithinThreshold(double setpoint, double threshold, do
 void ShooterVisionTrack::Execute() {
 	std::vector<PixySubsystem::ObjectValues> frame = Robot::pixySubsystem->GetShooterPixyData();
 	if(frame.size() == 0){
-		if ( FwdPressedThisTime() || FwdEncPassedThisTime()||
+		if (FwdPressedThisTime() || FwdEncPassedThisTime()||
 				RevPressedThisTime() || RevEncPassedThisTime()) {
 			std::cout << "reverse pressed this time: " << RevPressedThisTime() << std::endl;
 			std::cout << "forward pressed this time: " << FwdPressedThisTime() << std::endl;
@@ -52,6 +52,7 @@ void ShooterVisionTrack::Execute() {
 	PixySubsystem::ObjectValues bottomBar;
 	int maxArea = 79.5 * 49.5;
 	if(frame.size() == 1){ // if we have one object
+		std::cout << "found one object" << std::endl;
 		PixySubsystem::ObjectValues stare = frame[0]; // focused object
 		if(stare.width*stare.height < maxArea){// if the object is smaller than the maximum area
 			trackedObj = stare;
@@ -65,6 +66,7 @@ void ShooterVisionTrack::Execute() {
 	}else if(frame.size() > 1) {
 		// we have multiple objects
 		// sets max area by dividing the image frame by 4
+		std::cout << "found multiple objects" << std::endl;
 		for(unsigned i = 0; i < frame.size(); i++){
 			//iterate through all known objects
 			PixySubsystem::ObjectValues stare = frame[i]; //focused object
@@ -149,9 +151,9 @@ void ShooterVisionTrack::Execute() {
 }
 bool ShooterVisionTrack::FwdPressedThisTime() {
 	if(RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed()){
-		if(fwdLastPressed)
+		if(fwdLastPressed){
 			return false;
-		else{
+		}else{
 			fwdLastPressed = true;
 			//std::cout << "FwdPressedThisTime = true" << std::endl;
 			return true;
@@ -160,14 +162,14 @@ bool ShooterVisionTrack::FwdPressedThisTime() {
 	}else{
 		fwdLastPressed = false;
 		//std::cout << "FwdPressedThisTime = false" << std::endl;
-		return true;
+		return false;
 	}
 }
 bool ShooterVisionTrack::RevPressedThisTime() {
 	if(RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed()){
-		if(revLastPressed)
+		if(revLastPressed){
 			return false;
-		else{
+		}else{
 			revLastPressed = true;
 			//std::cout << "RevPressedThisTime = true" << std::endl;
 			return true;
@@ -175,7 +177,7 @@ bool ShooterVisionTrack::RevPressedThisTime() {
 	}else{
 		revLastPressed = false;
 		//std::cout << "RevPressedThisTime = false" << std::endl;
-		return true;
+		return false;
 	}
 }
 bool ShooterVisionTrack::FwdEncPassedThisTime() {
@@ -191,7 +193,7 @@ bool ShooterVisionTrack::FwdEncPassedThisTime() {
 	}else{
 		fwdLastPassed = false;
 		//std::cout << "FwdEncPassedThisTime = false" << std::endl;
-		return true;
+		return false;
 	}
 }
 bool ShooterVisionTrack::RevEncPassedThisTime() {

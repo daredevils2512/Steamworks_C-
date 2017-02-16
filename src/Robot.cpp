@@ -56,11 +56,13 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-	gear->UpdateGearActuator();
+	//gear->UpdateGearActuator();
 	Scheduler::GetInstance()->Run();
 	//prints information to the smart dashboard
-	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainFrontLeftMotor->GetEncPosition());
-	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainFrontRightMotor ->GetEncPosition());
+	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainFrontLeftMotor->GetPosition());
+	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainFrontRightMotor->GetEncPosition());
+	SmartDashboard::PutBoolean("left encoder present", RobotMap::drivetrainFrontLeftMotor->IsSensorPresent(CANTalon::FeedbackDevice::QuadEncoder));
+	SmartDashboard::PutBoolean("right encoder present", RobotMap::drivetrainFrontRightMotor->IsSensorPresent(CANTalon::FeedbackDevice::QuadEncoder));
 	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
 	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterLeftFlywheel->GetSpeed());
 	SmartDashboard::PutNumber("right flywheel speed", RobotMap::shooterRightFlywheel->GetSpeed());
