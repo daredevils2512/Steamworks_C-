@@ -8,7 +8,6 @@
 class Gear : public Subsystem {
 private:
 	std::shared_ptr<DigitalInput> limitswitch;
-	std::shared_ptr<DigitalInput> photoeye;
 	std::shared_ptr<DoubleSolenoid> solenoid;
 
 public:
@@ -16,7 +15,6 @@ public:
 	void InitDefaultCommand();
 
 	bool GetLimitSwitch();
-	bool GetPhotoeye();
 	frc::DoubleSolenoid::Value GetIntakeDirection();
 	void ActuateGearIntake(DoubleSolenoid::Value dir);
 	void UpdateGearActuator();

@@ -1,6 +1,6 @@
 #include "AutoDrive.h"
 
-AutoDrive::AutoDrive(double radius, double outerSpeed, Drivetrain::Direction direction, double targetFeet) {
+AutoDrive::AutoDrive(double radius, double outerSpeed, Drivetrain::Direction direction, double targetFeet, double degrees) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::drivetrain.get());
@@ -8,8 +8,10 @@ AutoDrive::AutoDrive(double radius, double outerSpeed, Drivetrain::Direction dir
 	m_rightSpeed = 0.0;
 	m_targetFeet = targetFeet;
 	m_direction = direction;
+	m_degrees = degrees;
+	m_radius = radius;
 	int width = 27;
-	double innerSpeed = ((radius - width / 2) / (radius + width/2) * outerSpeed);
+	double innerSpeed = ((m_radius - width / 2) / (m_radius + width/2) * outerSpeed);
 	switch (m_direction) {
 		case Drivetrain::Direction::clockwise:
 			m_leftSpeed = outerSpeed;
@@ -45,12 +47,16 @@ bool AutoDrive::IsFinished() {
 	double feetsGone;
 	double leftDistance = abs(Robot::drivetrain->GetLeftEncoder());
 	double rightDistance = abs(Robot::drivetrain->GetRightEncoder());
+	double middleCircumference = 2 * M_PI * m_radius;
+	double degreesToDrive = middleCircumference / m_degrees;
 	switch (m_direction) {
 		case Drivetrain::Direction::clockwise:
 			feetsGone = Robot::drivetrain->GetLeftEncoder();
+			return (degreesToDrive >= feetsGone);
 			break;
 		case Drivetrain::Direction::counterClockwise:
 			feetsGone = Robot::drivetrain->GetRightEncoder();
+			return (degreesToDrive >= feetsGone);
 			break;
 		case Drivetrain::Direction::straight:
 			feetsGone = Robot::drivetrain->GetEncoders();
@@ -68,7 +74,6 @@ bool AutoDrive::IsFinished() {
 			std::cout << "That direction isn't an option in the AutoDrive finished: " << (int)m_direction << std::endl;
 			return true;
 	}
-	return (feetsGone >= m_targetFeet);
 }
 
 // Called once after isFinished returns true
