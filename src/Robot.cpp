@@ -65,7 +65,6 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterLeftFlywheel->GetSpeed());
 	SmartDashboard::PutNumber("right flywheel speed", RobotMap::shooterRightFlywheel->GetSpeed());
 	SmartDashboard::PutBoolean("gear limit switch" , Robot::gear->GetLimitSwitch());
-	SmartDashboard::PutBoolean("gear photoeye", RobotMap::gearPhotoeye ->Get());
 	SmartDashboard::PutNumber("joystickz", Robot::oi->GetManualShooterSwivel());
 	SmartDashboard::PutBoolean("joystick zbutton", Robot::oi->CDR_zPositiveAxis.Get());
 	SmartDashboard::PutNumber("throttle adjustment", Robot::oi->GetTranslatedThrottle());
