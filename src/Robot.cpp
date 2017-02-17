@@ -61,20 +61,18 @@ void Robot::TeleopPeriodic() {
 	//prints information to the smart dashboard
 	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainFrontLeftMotor->GetPosition());
 	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainFrontRightMotor->GetEncPosition());
-	SmartDashboard::PutBoolean("left encoder present", RobotMap::drivetrainFrontLeftMotor->IsSensorPresent(CANTalon::FeedbackDevice::QuadEncoder));
-	SmartDashboard::PutBoolean("right encoder present", RobotMap::drivetrainFrontRightMotor->IsSensorPresent(CANTalon::FeedbackDevice::QuadEncoder));
 	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
 	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterLeftFlywheel->GetSpeed());
 	SmartDashboard::PutNumber("right flywheel speed", RobotMap::shooterRightFlywheel->GetSpeed());
 	SmartDashboard::PutBoolean("gear limit switch" , Robot::gear->GetLimitSwitch());
-	SmartDashboard::PutBoolean("gear photoeye", RobotMap::gearPhotoeye ->Get());
 	SmartDashboard::PutNumber("joystickz", Robot::oi->GetManualShooterSwivel());
 	SmartDashboard::PutBoolean("joystick zbutton", Robot::oi->CDR_zPositiveAxis.Get());
 	SmartDashboard::PutNumber("throttle adjustment", Robot::oi->GetTranslatedThrottle());
-	SmartDashboard::PutBoolean("rev encoder", (RobotMap::shooterTurretSwivel->GetEncPosition() < Robot::shooter->maxEncPosition));
+	SmartDashboard::PutBoolean("rev encoder", (RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition));
 	SmartDashboard::PutBoolean("fwd encoder", (RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition));
 	SmartDashboard::PutBoolean("rev limit switch", RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed());
 	SmartDashboard::PutBoolean("fwd limit switch", RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed());
+	SmartDashboard::PutNumber("frame size", Robot::pixySubsystem->GetShooterPixyData().size());
 }
 
 void Robot::TestPeriodic() {
