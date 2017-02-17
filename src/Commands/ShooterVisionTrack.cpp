@@ -126,6 +126,7 @@ void ShooterVisionTrack::Execute() {
 	int middle = 318/2;
 	//sets the acceptable tolerance of the target
 	int tolerance = 30;
+	int slowDownTolerance = 60;
 	//sets the minimum and maximum speeds of the turret swivel
 
 	//double minspeed = 0.1;
@@ -139,11 +140,19 @@ void ShooterVisionTrack::Execute() {
 	}else if(trackedObj.x < middle){
 		// left of middle
 		std::cout << "-" << std::endl;
-		Robot::shooter->SetSwivelSpeed(-0.6);
+		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
+			Robot::shooter->SetSwivelSpeed(-0.4);
+		}else{
+			Robot::shooter->SetSwivelSpeed(-0.6);
+		}
 	}else{
 		// hopefully to the right of middle
 		std::cout << "+" << std::endl;
-		Robot::shooter->SetSwivelSpeed(0.6);
+		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
+			Robot::shooter->SetSwivelSpeed(0.4);
+		}else{
+			Robot::shooter->SetSwivelSpeed(0.6);
+		}
 	}
 
 }

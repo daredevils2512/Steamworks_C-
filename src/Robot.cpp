@@ -25,6 +25,8 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	compressor.reset(new frc::Compressor());
+	frc::CameraServer::GetInstance()->StartAutomaticCapture();
+	frc::CameraServer::GetInstance()->StartAutomaticCapture();
   }
 
 void Robot::DisabledInit(){
@@ -59,7 +61,7 @@ void Robot::TeleopPeriodic() {
 	//gear->UpdateGearActuator();
 	Scheduler::GetInstance()->Run();
 	//prints information to the smart dashboard
-	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainFrontLeftMotor->GetPosition());
+	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainFrontLeftMotor->GetEncPosition());
 	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainFrontRightMotor->GetEncPosition());
 	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
 	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterLeftFlywheel->GetSpeed());

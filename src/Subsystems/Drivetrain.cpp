@@ -60,8 +60,8 @@ double Drivetrain::GetEncoders() {
 
 void Drivetrain::ResetEncoders() {
 	//resets the drivetrain encoder values
-	Left->Reset();
-	Right->Reset();
+	Left->SetPosition(0);
+	Right->SetPosition(0);
 }
 
 void Drivetrain::TurnDirection(double m_targetX , double centerX){
