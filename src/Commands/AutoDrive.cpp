@@ -1,12 +1,11 @@
 #include "AutoDrive.h"
 
-AutoDrive::AutoDrive(double radius, double outerSpeed, Drivetrain::Direction direction, double targetFeet, double degrees) {
+AutoDrive::AutoDrive(double radius, double outerSpeed, Drivetrain::Direction direction, double degrees) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::drivetrain.get());
 	m_leftSpeed = 0.0;
 	m_rightSpeed = 0.0;
-	m_targetFeet = targetFeet;
 	m_direction = direction;
 	m_degrees = degrees;
 	m_radius = radius;
@@ -68,7 +67,7 @@ bool AutoDrive::IsFinished() {
 					leftDistance = rightDistance;
 				}
 			}
-			return (((leftDistance + rightDistance) / 2) > m_targetFeet);
+			return (((leftDistance + rightDistance) / 2) > feetsGone);
 			break;
 		default:
 			std::cout << "That direction isn't an option in the AutoDrive finished: " << (int)m_direction << std::endl;
