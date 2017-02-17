@@ -9,7 +9,7 @@ ShooterVisionTrack::ShooterVisionTrack() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	abort = false;
-	speed = 1;
+	speed = 0.5;
 	fwdLastPressed = false;
 	revLastPressed = false;
 	fwdLastPassed = false;
@@ -29,19 +29,19 @@ bool ShooterVisionTrack::IsWithinThreshold(double setpoint, double threshold, do
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionTrack::Execute() {
 	std::vector<PixySubsystem::ObjectValues> frame = Robot::pixySubsystem->GetShooterPixyData();
+	std::cout << frame.size() << std::endl;
 	if(frame.size() == 0){
-		if ( FwdPressedThisTime() || FwdEncPassedThisTime()||
+		if (FwdPressedThisTime() || FwdEncPassedThisTime() ||
 				RevPressedThisTime() || RevEncPassedThisTime()) {
-			std::cout << "reverse pressed this time: " << RevPressedThisTime() << std::endl;
-			std::cout << "forward pressed this time: " << FwdPressedThisTime() << std::endl;
-			std::cout << "forward encoder passed this time: " << FwdEncPassedThisTime() << std::endl;
-			std::cout << "reverse encoder passed this time: " << RevEncPassedThisTime() << std::endl;
+//			std::cout << "reverse pressed this time: " << RevPressedThisTime() << std::endl;
+//			std::cout << "forward pressed this time: " << FwdPressedThisTime() << std::endl;
+//			std::cout << "forward encoder passed this time: " << FwdEncPassedThisTime() << std::endl;
+//			std::cout << "reverse encoder passed this time: " << RevEncPassedThisTime() << std::endl;
+			std::cout << "switch speed" << std::endl;
 			speed = -speed; //reverse the speed
 
 		}
 		Robot::shooter->SetSwivelSpeed(speed);
-		std::cout << "speed: " << speed << std::endl;
-		std::cout << "still scanning" << std::endl;
 		return;
 	}
 
@@ -52,6 +52,7 @@ void ShooterVisionTrack::Execute() {
 	PixySubsystem::ObjectValues bottomBar;
 	int maxArea = 79.5 * 49.5;
 	if(frame.size() == 1){ // if we have one object
+		std::cout << "found one object" << std::endl;
 		PixySubsystem::ObjectValues stare = frame[0]; // focused object
 		if(stare.width*stare.height < maxArea){// if the object is smaller than the maximum area
 			trackedObj = stare;
@@ -65,6 +66,7 @@ void ShooterVisionTrack::Execute() {
 	}else if(frame.size() > 1) {
 		// we have multiple objects
 		// sets max area by dividing the image frame by 4
+		std::cout << "found multiple objects" << std::endl;
 		for(unsigned i = 0; i < frame.size(); i++){
 			//iterate through all known objects
 			PixySubsystem::ObjectValues stare = frame[i]; //focused object
@@ -127,31 +129,33 @@ void ShooterVisionTrack::Execute() {
 	//sets the center of the image
 	int middle = 318/2;
 	//sets the acceptable tolerance of the target
-	int tolerance = 6;
+	int tolerance = 30;
 	//sets the minimum and maximum speeds of the turret swivel
 
 	//double minspeed = 0.1;
 	//double maxspeed = 0.5;
 	//double speed = minspeed+((dist/120) * (maxspeed - minspeed));
-	double speed = 0.25;
 	if(middle-(tolerance/2) <= trackedObj.x && trackedObj.x <= middle + (tolerance/2)){
 		//if the difference between the center and the tolerance is less than or equal to the middle added to the tolerance
 		//then stop the shooter from swiveling
 		Robot::shooter->SetSwivelSpeed(0);
+		std::cout << "tolerance acceptable" << std::endl;
 	}else if(trackedObj.x < middle){
 		// left of middle
-		Robot::shooter->SetSwivelSpeed(speed);
+		std::cout << "+" << std::endl;
+		Robot::shooter->SetSwivelSpeed(-0.6);
 	}else{
 		// hopefully to the right of middle
-		Robot::shooter->SetSwivelSpeed(-speed);
+		std::cout << "-" << std::endl;
+		Robot::shooter->SetSwivelSpeed(0.6);
 	}
 
 }
 bool ShooterVisionTrack::FwdPressedThisTime() {
 	if(RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed()){
-		if(fwdLastPressed)
+		if(fwdLastPressed){
 			return false;
-		else{
+		}else{
 			fwdLastPressed = true;
 			//std::cout << "FwdPressedThisTime = true" << std::endl;
 			return true;
@@ -160,14 +164,14 @@ bool ShooterVisionTrack::FwdPressedThisTime() {
 	}else{
 		fwdLastPressed = false;
 		//std::cout << "FwdPressedThisTime = false" << std::endl;
-		return true;
+		return false;
 	}
 }
 bool ShooterVisionTrack::RevPressedThisTime() {
 	if(RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed()){
-		if(revLastPressed)
+		if(revLastPressed){
 			return false;
-		else{
+		}else{
 			revLastPressed = true;
 			//std::cout << "RevPressedThisTime = true" << std::endl;
 			return true;
@@ -175,7 +179,7 @@ bool ShooterVisionTrack::RevPressedThisTime() {
 	}else{
 		revLastPressed = false;
 		//std::cout << "RevPressedThisTime = false" << std::endl;
-		return true;
+		return false;
 	}
 }
 bool ShooterVisionTrack::FwdEncPassedThisTime() {
@@ -191,7 +195,7 @@ bool ShooterVisionTrack::FwdEncPassedThisTime() {
 	}else{
 		fwdLastPassed = false;
 		//std::cout << "FwdEncPassedThisTime = false" << std::endl;
-		return true;
+		return false;
 	}
 }
 bool ShooterVisionTrack::RevEncPassedThisTime() {

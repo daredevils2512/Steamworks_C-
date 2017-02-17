@@ -77,7 +77,7 @@ void RobotMap::init() {
 	lw->AddActuator("Shooter" , "SpinCycleFeed" , shooterSpinCycleFeed);
 
 	shooterRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS0));
-	shooterFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS2));
+	shooterFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS1));
 
 	//creating a new chassis consisting of all the drivetrain motors
 	drivetrainChassis.reset (new frc::RobotDrive (drivetrainFrontLeftMotor , drivetrainRearLeftMotor , drivetrainFrontRightMotor , drivetrainRearRightMotor));
