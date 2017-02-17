@@ -16,13 +16,12 @@ private:
 
 	double m_leftSpeed;
 	double m_rightSpeed;
-	double m_targetFeet;
 	double m_degrees;
 	double m_radius;
 	Drivetrain::Direction  m_direction;
 
 public:
-	AutoDrive(double radius, double outerSpeed, Drivetrain::Direction direction, double targetFeet, double degrees);
+	AutoDrive(double radius, double outerSpeed, Drivetrain::Direction direction, double degrees);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
