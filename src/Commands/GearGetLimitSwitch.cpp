@@ -1,5 +1,6 @@
 #include "GearGetLimitSwitch.h"
 #include "../Subsystems/Gear.h"
+#include "../Robot.h"
 
 GearGetLimitSwitch::GearGetLimitSwitch() {
 	// Use Requires() here to declare subsystem dependencies

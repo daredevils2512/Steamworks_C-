@@ -1,4 +1,7 @@
 #include "_CMG_GearCenterPeg.h"
+#include "AutoDrive.h"
+#include "GearGetLimitSwitch.h"
+#include "PauseCommand.h"
 
 _CMG_GearCenterPeg::_CMG_GearCenterPeg() {
 	// Add Commands here:

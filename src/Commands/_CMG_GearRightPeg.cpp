@@ -1,5 +1,6 @@
 #include "_CMG_GearRightPeg.h"
 #include "../Subsystems/Gear.h"
+#include "AutoDrive.h"
 
 _CMG_GearRightPeg::_CMG_GearRightPeg() {
 	// Add Commands here:

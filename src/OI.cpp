@@ -37,7 +37,7 @@ OI::OI()
 	CDR_trigger.WhenReleased(new ShooterRunFlywheel(0.0));//working
 	CDR_trigger.WhenReleased(new ShooterRunSpinCycleFeed(0.0));//working
 	CDR_joystickPOV.WhenPressed(new ShooterPOVHoodControl());//working
-	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack());
+	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack());//button itself works, command needs work
 	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(-1.0));//working
 	CDR_topLeftJoystick.WhenReleased(new FloorIntakeRunMotor(0.0));//working
 	CDR_bottomLeftJoystick.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
@@ -62,8 +62,8 @@ OI::OI()
 	CDB_bigRed.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kReverse));//working
 	CDB_green.WhileHeld(new FloorIntakeRunMotor(1.0));//working
 	CDB_green.WhenReleased(new FloorIntakeRunMotor(0.0));//working
-	CDB_yellow.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
-	CDB_yellow.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
+	CDB_yellow.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
+	CDB_yellow.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
 	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(0.8));//working
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-0.8));//working
