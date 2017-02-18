@@ -1,6 +1,6 @@
 #include <Commands/_CMG_AutonomousGearRightPeg.h>
+#include <Commands/AutoCircleDrive.h>
 #include "../Subsystems/Gear.h"
-#include "AutoDrive.h"
 
 _CMG_AutonomousGearRightPeg::_CMG_AutonomousGearRightPeg() {
 	// Add Commands here:
@@ -19,5 +19,5 @@ _CMG_AutonomousGearRightPeg::_CMG_AutonomousGearRightPeg() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
-	AddSequential(new AutoDrive(0.0, 0.0, Drivetrain::Direction::counterClockwise, 0.0));
+	AddSequential(new AutoCircleDrive(0.0, 0.0, Drivetrain::Direction::counterClockwise, 0.0));
 }

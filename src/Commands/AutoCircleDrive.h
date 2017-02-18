@@ -1,5 +1,5 @@
-#ifndef AutoDrive_H
-#define AutoDrive_H
+#ifndef AutoCircleDrive_H
+#define AutoCircleDrive_H
 
 #include <CMATH>
 
@@ -7,7 +7,7 @@
 #include "../Subsystems/Drivetrain.h"
 #include "../Robot.h"
 
-class AutoDrive : public CommandBase {
+class AutoCircleDrive : public CommandBase {
 private:
 	struct Speeds {
 		double leftSpeed;
@@ -21,7 +21,7 @@ private:
 	Drivetrain::Direction  m_direction;
 
 public:
-	AutoDrive(double radius, double outerSpeed, Drivetrain::Direction direction, double degrees);
+	AutoCircleDrive(double radius, double outerSpeed, Drivetrain::Direction direction, double degrees);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
