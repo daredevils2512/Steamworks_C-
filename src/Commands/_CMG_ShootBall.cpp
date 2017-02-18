@@ -22,6 +22,6 @@ _CMG_ShootBall::_CMG_ShootBall() {
 	// arm.
 	AddSequential(new ShooterRunFlywheel(2150));//2050 for boiler shot
 	AddSequential(new PauseCommand(0.5));
-	AddSequential(new ShooterRunSpinCycleFeed(1.0));
+	AddSequential(new ShooterRunSpinCycleFeed(0.9));
 
 }

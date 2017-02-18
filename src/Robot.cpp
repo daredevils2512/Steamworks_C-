@@ -25,8 +25,8 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	compressor.reset(new frc::Compressor());
-	frc::CameraServer::GetInstance()->StartAutomaticCapture();
-	frc::CameraServer::GetInstance()->StartAutomaticCapture();
+//	frc::CameraServer::GetInstance()->StartAutomaticCapture();
+//	frc::CameraServer::GetInstance()->StartAutomaticCapture();
   }
 
 void Robot::DisabledInit(){
@@ -74,7 +74,7 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutBoolean("fwd encoder", (RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition));
 	SmartDashboard::PutBoolean("rev limit switch", RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed());
 	SmartDashboard::PutBoolean("fwd limit switch", RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed());
-	SmartDashboard::PutNumber("frame size", Robot::pixySubsystem->GetShooterPixyData().size());
+	//SmartDashboard::PutNumber("frame size", Robot::pixySubsystem->GetShooterPixyData().size());
 }
 
 void Robot::TestPeriodic() {
