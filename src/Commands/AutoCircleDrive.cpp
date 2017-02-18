@@ -1,6 +1,6 @@
 #include "AutoCircleDrive.h"
 
-AutoCircleDrive::AutoCircleDrive(double radius, double outerSpeed, Drivetrain::Direction direction, double degrees) {
+AutoCircleDrive::AutoCircleDrive(double degrees, double outerSpeed, Drivetrain::Direction direction, double radius) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::drivetrain.get());

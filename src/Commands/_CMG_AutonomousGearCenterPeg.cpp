@@ -1,5 +1,5 @@
 #include <Commands/_CMG_AutonomousGearCenterPeg.h>
-#include <Commands/AutoCircleDrive.h>
+#include <Commands/AutoStraightDrive.h>
 #include "GearGetLimitSwitch.h"
 #include "PauseCommand.h"
 #include "GearGetLimitSwitch.h"
@@ -22,8 +22,8 @@ _CMG_AutonomousGearCenterPeg::_CMG_AutonomousGearCenterPeg() {
 		// e.g. if Command1 requires chassis, and Command2 requires arm,
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
-	AddSequential(new AutoCircleDrive(1.0, 0.347, Drivetrain::Direction::straight, 112.0));
+	AddSequential(new AutoStraightDrive(9.4, 1.0));
 	AddSequential(new GearGetLimitSwitch());
 	AddSequential(new PauseCommand(1.0));
-	AddSequential(new AutoCircleDrive(1.0, -0.347, Drivetrain::Direction::straight, 4.58761));
+	AddSequential(new AutoStraightDrive(0.75, -1.0));
 }
