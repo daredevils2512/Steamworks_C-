@@ -12,6 +12,9 @@ Drivetrain::Drivetrain() : Subsystem("Drivetrain") {
     Right = RobotMap::drivetrainRearRightMotor;
     Left = RobotMap::drivetrainRearLeftMotor;
 
+    leftEncoder = RobotMap::drivetrainLeftEncoder;
+    rightEncoder = RobotMap::drivetrainRightEncoder;
+
 }
 
 void Drivetrain::InitDefaultCommand() {
@@ -45,23 +48,19 @@ void Drivetrain::Shifter(frc::DoubleSolenoid::Value dir) {
 
 double Drivetrain::GetLeftEncoder() {
 	//gets distance moved since last reset scaled by distance per pulse
-	return Left->GetEncPosition() * distancePerPulse;
+	return leftEncoder->GetDistance();
 }
 
 double Drivetrain::GetRightEncoder() {
 	//gets distance moved since last reset scaled by distance per pulse
-	return Right->GetEncPosition() * distancePerPulse;
+	return rightEncoder->GetDistance();
 }
 
-double Drivetrain::GetEncoders() {
-	//gets distance moved since last reset scaled by distance per pulse
-	return ((GetLeftEncoder() + GetRightEncoder()) / 2);
-}
 
 void Drivetrain::ResetEncoders() {
 	//resets the drivetrain encoder values
-	Left->SetPosition(0);
-	Right->SetPosition(0);
+	leftEncoder->Reset();
+	rightEncoder->Reset();
 }
 
 void Drivetrain::TurnDirection(double m_targetX , double centerX){

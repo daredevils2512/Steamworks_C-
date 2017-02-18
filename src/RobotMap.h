@@ -25,6 +25,8 @@ public:
 
 	//robot drivetrain
 	static std::shared_ptr<frc::RobotDrive> drivetrainChassis;
+	static std::shared_ptr<frc::Encoder> drivetrainLeftEncoder;
+	static std::shared_ptr<frc::Encoder> drivetrainRightEncoder;
 	//compressor switch and sensor to regulate compressor when connected to robot
 	static std::shared_ptr<frc::Relay> compressorSpike;
 	static std::shared_ptr<frc::DigitalInput> compressorPressureSwitch;

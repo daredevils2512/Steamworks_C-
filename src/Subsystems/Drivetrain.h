@@ -22,6 +22,8 @@ private:
 
 	std::shared_ptr<RobotDrive> Chassis;
 	std::shared_ptr<DoubleSolenoid> DriveTrainShift;
+	std::shared_ptr<frc::Encoder> leftEncoder;
+	std::shared_ptr<frc::Encoder> rightEncoder;
 
 	//Declaring all of the functions the Drivetrain subsystem can do
 public:
@@ -32,12 +34,9 @@ public:
 	void Shifter (frc::DoubleSolenoid::Value dir);
 	double GetLeftEncoder();
 	double GetRightEncoder();
-	double GetEncoders();
 	void ResetEncoders();
 	void TurnDirection(double m_targetX , double centerX);
 	bool IsWithinThreshold(double obj1X, double obj2X, int threshold);
-
-	const double distancePerPulse = 0.0490873852123;
 
 	enum class Direction {
 		clockwise,
