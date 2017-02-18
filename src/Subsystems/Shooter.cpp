@@ -13,7 +13,7 @@ Shooter::Shooter() : Subsystem("Shooter") {
 
 	lastConditionRight = false;
 	lastConditionLeft = false;
-	maxEncPosition = 10500;
+	maxEncPosition = 8500;
 }
 
 void Shooter::InitDefaultCommand() {

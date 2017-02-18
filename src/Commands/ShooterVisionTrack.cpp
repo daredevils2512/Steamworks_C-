@@ -30,9 +30,10 @@ bool ShooterVisionTrack::IsWithinThreshold(double setpoint, double threshold, do
 void ShooterVisionTrack::Execute() {
 	std::vector<PixySubsystem::ObjectValues> frame = Robot::pixySubsystem->GetShooterPixyData();
 	std::cout << "vector size" << frame.size() << std::endl;
+	std::cout << "speed: " << speed << std::endl;
 	if(frame.size() == 0){
-		if (/*FwdPressedThisTime() ||*/ FwdEncPassedThisTime() ||
-				/*RevPressedThisTime() ||*/ RevEncPassedThisTime()) {
+		if (FwdPressedThisTime() || FwdEncPassedThisTime() ||
+				RevPressedThisTime() || RevEncPassedThisTime()) {
 			std::cout << "switch speed" << std::endl;
 			speed = -speed; //reverse the speed
 
@@ -126,7 +127,7 @@ void ShooterVisionTrack::Execute() {
 	int middle = 318/2;
 	//sets the acceptable tolerance of the target
 	int tolerance = 30;
-	int slowDownTolerance = 60;
+	int slowDownTolerance = 80;
 	//sets the minimum and maximum speeds of the turret swivel
 
 	//double minspeed = 0.1;
@@ -141,7 +142,7 @@ void ShooterVisionTrack::Execute() {
 		// left of middle
 		std::cout << "-" << std::endl;
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
-			Robot::shooter->SetSwivelSpeed(-0.4);
+			Robot::shooter->SetSwivelSpeed(-0.3);
 		}else{
 			Robot::shooter->SetSwivelSpeed(-0.6);
 		}
@@ -149,7 +150,7 @@ void ShooterVisionTrack::Execute() {
 		// hopefully to the right of middle
 		std::cout << "+" << std::endl;
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
-			Robot::shooter->SetSwivelSpeed(0.4);
+			Robot::shooter->SetSwivelSpeed(0.3);
 		}else{
 			Robot::shooter->SetSwivelSpeed(0.6);
 		}

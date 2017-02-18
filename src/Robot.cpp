@@ -55,6 +55,7 @@ void Robot::TeleopInit() {
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Cancel();
 	compressor->SetClosedLoopControl(true);
+	Robot::shooter->SetSwivelSpeed(0.0);
 }
 
 void Robot::TeleopPeriodic() {
@@ -75,6 +76,7 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutBoolean("rev limit switch", RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed());
 	SmartDashboard::PutBoolean("fwd limit switch", RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed());
 	//SmartDashboard::PutNumber("frame size", Robot::pixySubsystem->GetShooterPixyData().size());
+	SmartDashboard::PutNumber("swivel speed", RobotMap::shooterTurretSwivel->Get());
 }
 
 void Robot::TestPeriodic() {
