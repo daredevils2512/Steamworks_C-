@@ -9,7 +9,7 @@ ShooterVisionTrack::ShooterVisionTrack() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	abort = false;
-	speed = 0.5;
+	speed = 0.7;
 	fwdLastPressed = false;
 	revLastPressed = false;
 	fwdLastPassed = false;
@@ -31,8 +31,8 @@ void ShooterVisionTrack::Execute() {
 	std::vector<PixySubsystem::ObjectValues> frame = Robot::pixySubsystem->GetShooterPixyData();
 	std::cout << frame.size() << std::endl;
 	if(frame.size() == 0){
-		if (FwdPressedThisTime() || FwdEncPassedThisTime() ||
-				RevPressedThisTime() || RevEncPassedThisTime()) {
+		if (/*FwdPressedThisTime() ||*/ FwdEncPassedThisTime() ||
+				/*RevPressedThisTime() ||*/ RevEncPassedThisTime()) {
 //			std::cout << "reverse pressed this time: " << RevPressedThisTime() << std::endl;
 //			std::cout << "forward pressed this time: " << FwdPressedThisTime() << std::endl;
 //			std::cout << "forward encoder passed this time: " << FwdEncPassedThisTime() << std::endl;

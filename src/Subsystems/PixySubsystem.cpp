@@ -26,15 +26,19 @@ void PixySubsystem::CollectFrameData(std::shared_ptr<frc::SPI> realPixy, std::sh
 	bool foundOneStartValue = false;
 	int translatedWord = 0;
 	int zeroCount = 0;
+	frameData.clear();
 	while(!doneCollecting && zeroCount < 16) {
 		if(useRealPixy) {
 			realPixy->Read(true, receiveArray, 2);
 			translatedWord = (receiveArray[0] << 8) | receiveArray[1];
+			std::cout << "word: " << translatedWord << " " << std::hex << translatedWord << std::dec << std::endl;
 			if(saveData) {
 				if(FoundZeros(translatedWord)) {
+					std::cout << "found zeros" << std::endl;
 					doneCollecting = true;
 					saveData = false;
 					if(ObjectIsGood(objectData)) {
+						std::cout << "add object" << std::endl;
 						frameData.push_back(objectData);
 					}
 					objectData.clear();
@@ -43,21 +47,25 @@ void PixySubsystem::CollectFrameData(std::shared_ptr<frc::SPI> realPixy, std::sh
 						if(!foundOneStartValue) {
 							foundOneStartValue = true;
 							if(!firstTime && ObjectIsGood(objectData)) {
+								std::cout << "add object (2)" << std::endl;
 								frameData.push_back(objectData);
 							}else{
 								firstTime = false;
 							}
 						}else{
+							std::cout << "clear frame" << std::endl;
 							frameData.clear();
 						}
 						objectData.clear();
 					}else{
 						foundOneStartValue = false;
 					}
+					std::cout << "add word" << std::endl;
 					objectData.push_back(translatedWord);
 				}
 			}else{
 				if(IsStartValue(translatedWord)) {
+					std::cout << "clear frame (2)" << std::endl;
 					frameData.clear();
 					saveData = true;
 					firstTime = true;
@@ -105,6 +113,7 @@ bool PixySubsystem::IsFrameEmpty() {
 
 std::vector<PixySubsystem::ObjectValues> PixySubsystem::GetObjectData() {
 	std::vector<ObjectValues> objectAccumulator;
+	std::cout << "frameData size" << frameData.size() << std::endl;
 	for(auto object : frameData) {
 		ObjectValues currentObject;
 		currentObject.checksum = object[1];

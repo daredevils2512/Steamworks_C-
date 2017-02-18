@@ -72,7 +72,7 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutBoolean("fwd encoder", (RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition));
 	SmartDashboard::PutBoolean("rev limit switch", RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed());
 	SmartDashboard::PutBoolean("fwd limit switch", RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed());
-	SmartDashboard::PutNumber("frame size", Robot::pixySubsystem->GetShooterPixyData().size());
+	//SmartDashboard::PutNumber("frame size", Robot::pixySubsystem->GetShooterPixyData().size());
 }
 
 void Robot::TestPeriodic() {
