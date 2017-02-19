@@ -31,5 +31,5 @@ void ShooterSwivelTurret::End() {
 // subsystems is scheduled to run
 void ShooterSwivelTurret::Interrupted() {
 	//also stop
-	End();
+	Robot::shooter->SetSwivelSpeed(0.0);
 }

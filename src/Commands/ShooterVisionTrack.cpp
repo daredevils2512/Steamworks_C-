@@ -9,7 +9,7 @@ ShooterVisionTrack::ShooterVisionTrack() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	abort = false;
-	speed = 0.5;
+	speed = 0.6;
 	fwdLastPressed = false;
 	revLastPressed = false;
 	fwdLastPassed = false;
@@ -29,14 +29,11 @@ bool ShooterVisionTrack::IsWithinThreshold(double setpoint, double threshold, do
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionTrack::Execute() {
 	std::vector<PixySubsystem::ObjectValues> frame = Robot::pixySubsystem->GetShooterPixyData();
-	std::cout << frame.size() << std::endl;
+	std::cout << "vector size" << frame.size() << std::endl;
+	std::cout << "speed: " << speed << std::endl;
 	if(frame.size() == 0){
 		if (FwdPressedThisTime() || FwdEncPassedThisTime() ||
 				RevPressedThisTime() || RevEncPassedThisTime()) {
-//			std::cout << "reverse pressed this time: " << RevPressedThisTime() << std::endl;
-//			std::cout << "forward pressed this time: " << FwdPressedThisTime() << std::endl;
-//			std::cout << "forward encoder passed this time: " << FwdEncPassedThisTime() << std::endl;
-//			std::cout << "reverse encoder passed this time: " << RevEncPassedThisTime() << std::endl;
 			std::cout << "switch speed" << std::endl;
 			speed = -speed; //reverse the speed
 
@@ -130,6 +127,7 @@ void ShooterVisionTrack::Execute() {
 	int middle = 318/2;
 	//sets the acceptable tolerance of the target
 	int tolerance = 30;
+	int slowDownTolerance = 80;
 	//sets the minimum and maximum speeds of the turret swivel
 
 	//double minspeed = 0.1;
@@ -142,12 +140,20 @@ void ShooterVisionTrack::Execute() {
 		std::cout << "tolerance acceptable" << std::endl;
 	}else if(trackedObj.x < middle){
 		// left of middle
-		std::cout << "+" << std::endl;
-		Robot::shooter->SetSwivelSpeed(-0.6);
+		std::cout << "-" << std::endl;
+		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
+			Robot::shooter->SetSwivelSpeed(-0.3);
+		}else{
+			Robot::shooter->SetSwivelSpeed(-0.6);
+		}
 	}else{
 		// hopefully to the right of middle
-		std::cout << "-" << std::endl;
-		Robot::shooter->SetSwivelSpeed(0.6);
+		std::cout << "+" << std::endl;
+		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
+			Robot::shooter->SetSwivelSpeed(0.3);
+		}else{
+			Robot::shooter->SetSwivelSpeed(0.6);
+		}
 	}
 
 }

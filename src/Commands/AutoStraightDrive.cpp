@@ -32,7 +32,7 @@ bool AutoStraightDrive::IsFinished() {
 			leftDistance = rightDistance;
 		}
 	}
-	return (leftDistance + rightDistance) / 2 > m_targetFeet;
+	return (leftDistance + rightDistance) / 2 >= m_targetFeet;
 }
 
 // Called once after isFinished returns true

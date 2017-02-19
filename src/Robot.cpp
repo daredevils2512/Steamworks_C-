@@ -1,4 +1,5 @@
 #include "Robot.h"
+#include "Commands/AutoTimedDriveForward.h"
 
 //access pointer objects declared in Robot.h
 std::shared_ptr<Drivetrain> Robot::drivetrain;
@@ -25,6 +26,8 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	compressor.reset(new frc::Compressor());
+//	frc::CameraServer::GetInstance()->StartAutomaticCapture();
+//	frc::CameraServer::GetInstance()->StartAutomaticCapture();
   }
 
 void Robot::DisabledInit(){
@@ -38,6 +41,7 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
 	//starts autonomous
 	std::string autoString = FileIO::getFileAsString("auto.txt");
+	autonomousCommand.reset(new AutoTimedDriveForward(3.0));
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
 }
@@ -53,14 +57,19 @@ void Robot::TeleopInit() {
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Cancel();
 	compressor->SetClosedLoopControl(true);
+	Robot::shooter->SetSwivelSpeed(0.0);
+	Robot::drivetrain->ResetEncoders();
 }
 
 void Robot::TeleopPeriodic() {
 	//gear->UpdateGearActuator();
 	Scheduler::GetInstance()->Run();
 	//prints information to the smart dashboard
-	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainFrontLeftMotor->GetPosition());
-	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainFrontRightMotor->GetEncPosition());
+	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainLeftEncoder->GetDistance());
+	SmartDashboard::PutBoolean("encoder left test", RobotMap::drivetrainLeftEncoder->GetStopped());
+	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder->GetDistance());
+	SmartDashboard::PutNumber("left encoder distance", Robot::drivetrain->GetLeftEncoder());
+	SmartDashboard::PutNumber("right encoder distance", Robot::drivetrain->GetRightEncoder());
 	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
 	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterLeftFlywheel->GetSpeed());
 	SmartDashboard::PutNumber("right flywheel speed", RobotMap::shooterRightFlywheel->GetSpeed());
@@ -72,7 +81,8 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutBoolean("fwd encoder", (RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition));
 	SmartDashboard::PutBoolean("rev limit switch", RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed());
 	SmartDashboard::PutBoolean("fwd limit switch", RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed());
-	SmartDashboard::PutNumber("frame size", Robot::pixySubsystem->GetShooterPixyData().size());
+	//SmartDashboard::PutNumber("frame size", Robot::pixySubsystem->GetShooterPixyData().size());
+	SmartDashboard::PutNumber("swivel speed", RobotMap::shooterTurretSwivel->Get());
 }
 
 void Robot::TestPeriodic() {

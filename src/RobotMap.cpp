@@ -17,6 +17,8 @@ std::shared_ptr<CANTalon> RobotMap::shooterSpinCycleFeed;
 std::shared_ptr<frc::SPI> RobotMap::shooterRealPixy;
 std::shared_ptr<frc::SPI> RobotMap::shooterFakePixy;
 std::shared_ptr<frc::RobotDrive> RobotMap::drivetrainChassis;
+std::shared_ptr<frc::Encoder> RobotMap::drivetrainLeftEncoder;
+std::shared_ptr<frc::Encoder> RobotMap::drivetrainRightEncoder;
 std::shared_ptr<frc::Relay> RobotMap::compressorSpike;
 std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
@@ -33,8 +35,6 @@ void RobotMap::init() {
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
 
 	drivetrainFrontLeftMotor.reset (new CANTalon(4));
-	drivetrainFrontLeftMotor->SetFeedbackDevice(CANTalon::QuadEncoder);
-	drivetrainFrontLeftMotor->ConfigEncoderCodesPerRev(256);
 	lw->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
 	//Setting the control mode of the front motors to slaves
 
@@ -43,8 +43,6 @@ void RobotMap::init() {
 	//Setting up PID with the back motors since they are the Masters
 
 	drivetrainFrontRightMotor.reset (new CANTalon(9));
-	drivetrainFrontRightMotor->SetFeedbackDevice(CANTalon::QuadEncoder);
-	drivetrainFrontRightMotor->ConfigEncoderCodesPerRev(256);
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
 	//Setting the control mode of the front motors to slaves
 
@@ -86,6 +84,12 @@ void RobotMap::init() {
 		drivetrainChassis ->SetExpiration(0.5);
 		drivetrainChassis ->SetSensitivity(0.5);
 		drivetrainChassis ->SetMaxOutput(1.0);
+
+	drivetrainLeftEncoder.reset(new frc::Encoder(1, 2, false, Encoder::k4X));
+	//drivetrainLeftEncoder->SetDistancePerPulse(0.0490873852123);
+
+	drivetrainRightEncoder.reset(new frc::Encoder(3, 4, false, Encoder::k4X));
+	//drivetrainRightEncoder->SetDistancePerPulse(0.0490873852123);
 
 	shooterHoodActuator.reset (new frc::DoubleSolenoid (0, 1, 0));
 	lw ->AddActuator("Shooter", "HoodActuator", shooterHoodActuator);

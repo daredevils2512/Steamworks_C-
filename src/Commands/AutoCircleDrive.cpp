@@ -1,6 +1,6 @@
 #include "AutoCircleDrive.h"
 
-AutoCircleDrive::AutoCircleDrive(double radius, double outerSpeed, Drivetrain::Direction direction, double degrees) {
+AutoCircleDrive::AutoCircleDrive(double degrees, double outerSpeed, Drivetrain::Direction direction, double radius) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::drivetrain.get());
@@ -46,11 +46,11 @@ bool AutoCircleDrive::IsFinished() {
 	switch (m_direction) {
 		case Drivetrain::Direction::clockwise:
 			feetsGone = Robot::drivetrain->GetLeftEncoder();
-			return (partToDrive >= feetsGone);
+			return feetsGone >= partToDrive;
 			break;
 		case Drivetrain::Direction::counterClockwise:
 			feetsGone = Robot::drivetrain->GetRightEncoder();
-			return (partToDrive >= feetsGone);
+			return feetsGone >= partToDrive;
 			break;
 		default:
 			std::cout << "That direction isn't an option in the AutoDrive finished: " << (int)m_direction << std::endl;
