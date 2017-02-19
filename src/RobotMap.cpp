@@ -86,10 +86,10 @@ void RobotMap::init() {
 		drivetrainChassis ->SetMaxOutput(1.0);
 
 	drivetrainLeftEncoder.reset(new frc::Encoder(1, 2, false, Encoder::k4X));
-	drivetrainLeftEncoder->SetDistancePerPulse(0.0490873852123);
+	//drivetrainLeftEncoder->SetDistancePerPulse(0.0490873852123);
 
 	drivetrainRightEncoder.reset(new frc::Encoder(3, 4, false, Encoder::k4X));
-	drivetrainRightEncoder->SetDistancePerPulse(0.0490873852123);
+	//drivetrainRightEncoder->SetDistancePerPulse(0.0490873852123);
 
 	shooterHoodActuator.reset (new frc::DoubleSolenoid (0, 1, 0));
 	lw ->AddActuator("Shooter", "HoodActuator", shooterHoodActuator);

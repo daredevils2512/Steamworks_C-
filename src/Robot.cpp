@@ -56,6 +56,7 @@ void Robot::TeleopInit() {
 		autonomousCommand->Cancel();
 	compressor->SetClosedLoopControl(true);
 	Robot::shooter->SetSwivelSpeed(0.0);
+	Robot::drivetrain->ResetEncoders();
 }
 
 void Robot::TeleopPeriodic() {
@@ -63,7 +64,10 @@ void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
 	//prints information to the smart dashboard
 	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainLeftEncoder->GetDistance());
+	SmartDashboard::PutBoolean("encoder left test", RobotMap::drivetrainLeftEncoder->GetStopped());
 	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder->GetDistance());
+	SmartDashboard::PutNumber("left encoder distance", Robot::drivetrain->GetLeftEncoder());
+	SmartDashboard::PutNumber("right encoder distance", Robot::drivetrain->GetRightEncoder());
 	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
 	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterLeftFlywheel->GetSpeed());
 	SmartDashboard::PutNumber("right flywheel speed", RobotMap::shooterRightFlywheel->GetSpeed());
