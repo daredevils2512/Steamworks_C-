@@ -1,4 +1,5 @@
 #include "Robot.h"
+#include "Commands/AutoTimedDriveForward.h"
 
 //access pointer objects declared in Robot.h
 std::shared_ptr<Drivetrain> Robot::drivetrain;
@@ -40,6 +41,7 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
 	//starts autonomous
 	std::string autoString = FileIO::getFileAsString("auto.txt");
+	autonomousCommand.reset(new AutoTimedDriveForward(3.0));
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
 }
