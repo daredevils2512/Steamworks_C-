@@ -1,9 +1,9 @@
-#include <Commands/_CMG_AutonomousGearRightPeg.h>
+#include "_CMG_AutonomousLeftGearPeg.h"
 #include <Commands/AutoCircleDrive.h>
 #include "../Subsystems/Gear.h"
 #include "../Subsystems/Drivetrain.h"
 
-_CMG_AutonomousGearRightPeg::_CMG_AutonomousGearRightPeg() {
+_CMG_AutonomousLeftGearPeg::_CMG_AutonomousLeftGearPeg() {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
 	//      AddSequential(new Command2());
@@ -21,5 +21,5 @@ _CMG_AutonomousGearRightPeg::_CMG_AutonomousGearRightPeg() {
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 	Robot::drivetrain->ResetEncoders();
-	AddSequential(new AutoCircleDrive(160.0, 1.0, Drivetrain::Direction::counterClockwise, 0.0));
+	AddSequential(new AutoCircleDrive(160.0, 1.0, Drivetrain::Direction::clockwise, 0.0));
 }
