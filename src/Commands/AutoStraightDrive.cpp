@@ -24,7 +24,7 @@ void AutoStraightDrive::Execute() {
 bool AutoStraightDrive::IsFinished() {
 	double leftDistance = abs(Robot::drivetrain->GetLeftEncoder());
 	double rightDistance = abs(Robot::drivetrain->GetRightEncoder());
-	if(abs(leftDistance - rightDistance) > 2) {
+	if(abs(leftDistance - rightDistance) > 6) {
 		//set lagging encoder to value of other encoder
 		if(leftDistance > rightDistance) {
 			rightDistance = leftDistance;

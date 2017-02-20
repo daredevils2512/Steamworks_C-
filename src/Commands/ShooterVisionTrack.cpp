@@ -124,7 +124,7 @@ void ShooterVisionTrack::Execute() {
 		return;
 	}
 	//sets the center of the image
-	int middle = 140;//159
+	int middle = 120;//159
 	//sets the acceptable tolerance of the target
 	int tolerance = 30;
 	int slowDownTolerance = 80;

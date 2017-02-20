@@ -1,9 +1,9 @@
-#include "_CMG_AutonomousLeftGearPeg.h"
+#include "_CMG_AutonomousGearFarPeg.h"
 #include <Commands/AutoCircleDrive.h>
 #include "../Subsystems/Gear.h"
 #include "../Subsystems/Drivetrain.h"
 
-_CMG_AutonomousLeftGearPeg::_CMG_AutonomousLeftGearPeg() {
+_CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
 	//      AddSequential(new Command2());
@@ -20,5 +20,5 @@ _CMG_AutonomousLeftGearPeg::_CMG_AutonomousLeftGearPeg() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
-	AddSequential(new AutoCircleDrive(160.0, 1.0, Drivetrain::Direction::clockwise, 0.0));
+	AddSequential(new AutoCircleDrive(160.0, 1.0, Drivetrain::Direction::clockwise, 80.0));
 }
