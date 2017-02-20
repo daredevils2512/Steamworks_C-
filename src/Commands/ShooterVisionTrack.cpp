@@ -29,12 +29,12 @@ bool ShooterVisionTrack::IsWithinThreshold(double setpoint, double threshold, do
 // Called repeatedly when this Command is scheduled to run
 void ShooterVisionTrack::Execute() {
 	std::vector<PixySubsystem::ObjectValues> frame = Robot::pixySubsystem->GetShooterPixyData();
-	std::cout << "vector size" << frame.size() << std::endl;
-	std::cout << "speed: " << speed << std::endl;
+//	std::cout << "vector size" << frame.size() << std::endl;
+//	std::cout << "speed: " << speed << std::endl;
 	if(frame.size() == 0){
-		if (FwdPressedThisTime() || FwdEncPassedThisTime() ||
-				RevPressedThisTime() || RevEncPassedThisTime()) {
-			std::cout << "switch speed" << std::endl;
+		if (/*FwdPressedThisTime() ||*/ FwdEncPassedThisTime() ||
+				/*RevPressedThisTime() ||*/ RevEncPassedThisTime()) {
+//			std::cout << "switch speed" << std::endl;
 			speed = -speed; //reverse the speed
 
 		}
@@ -49,7 +49,7 @@ void ShooterVisionTrack::Execute() {
 	PixySubsystem::ObjectValues bottomBar;
 	int maxArea = 79.5 * 49.5;
 	if(frame.size() == 1){ // if we have one object
-		std::cout << "found one object" << std::endl;
+//		std::cout << "found one object" << std::endl;
 		PixySubsystem::ObjectValues stare = frame[0]; // focused object
 		if(stare.width*stare.height < maxArea){// if the object is smaller than the maximum area
 			trackedObj = stare;
@@ -57,13 +57,13 @@ void ShooterVisionTrack::Execute() {
 		}
 		abort = !trackedSet; // abort if we haven't set tracked
 		if(abort){
-			std::cout << "aborted 1 object" << std::endl;
+//			std::cout << "aborted 1 object" << std::endl;
 			return; // if not tracked, abort!
 		}
 	}else if(frame.size() > 1) {
 		// we have multiple objects
 		// sets max area by dividing the image frame by 4
-		std::cout << "found multiple objects" << std::endl;
+//		std::cout << "found multiple objects" << std::endl;
 		for(unsigned i = 0; i < frame.size(); i++){
 			//iterate through all known objects
 			PixySubsystem::ObjectValues stare = frame[i]; //focused object
@@ -113,18 +113,18 @@ void ShooterVisionTrack::Execute() {
 		}
 	}else{
 		//if we have zero objects somehow, abort.
-		std::cout << "aborted zero objects" << std::endl;
+//		std::cout << "aborted zero objects" << std::endl;
 		abort = true;
 		return;
 	}
 	if((!trackedSet && !barsSet) || frame.size() < 1){
 		//if we don't have anything, abort!
-		std::cout << "aborted we have nothing" << std::endl;
+//		std::cout << "aborted we have nothing" << std::endl;
 		abort = true;
 		return;
 	}
 	//sets the center of the image
-	int middle = 318/2;
+	int middle = 140;//159
 	//sets the acceptable tolerance of the target
 	int tolerance = 30;
 	int slowDownTolerance = 80;
@@ -137,10 +137,10 @@ void ShooterVisionTrack::Execute() {
 		//if the difference between the center and the tolerance is less than or equal to the middle added to the tolerance
 		//then stop the shooter from swiveling
 		Robot::shooter->SetSwivelSpeed(0);
-		std::cout << "tolerance acceptable" << std::endl;
+//		std::cout << "tolerance acceptable" << std::endl;
 	}else if(trackedObj.x < middle){
 		// left of middle
-		std::cout << "-" << std::endl;
+//		std::cout << "-" << std::endl;
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
 			Robot::shooter->SetSwivelSpeed(-0.3);
 		}else{
@@ -148,7 +148,7 @@ void ShooterVisionTrack::Execute() {
 		}
 	}else{
 		// hopefully to the right of middle
-		std::cout << "+" << std::endl;
+//		std::cout << "+" << std::endl;
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
 			Robot::shooter->SetSwivelSpeed(0.3);
 		}else{

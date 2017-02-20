@@ -1,10 +1,8 @@
-#include "_CMG_ShootBall.h"
-#include "ShooterRunSpinCycleFeed.h"
-#include "ShooterRunFlywheel.h"
+#include "_CMG_ShooterManualSwivel.h"
 #include "PauseCommand.h"
-#include "../Robot.h"
+#include "ShooterSwivelTurret.h"
 
-_CMG_ShootBall::_CMG_ShootBall() {
+_CMG_ShooterManualSwivel::_CMG_ShooterManualSwivel(double speed) {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
 	//      AddSequential(new Command2());
@@ -21,8 +19,7 @@ _CMG_ShootBall::_CMG_ShootBall() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
-	AddSequential(new ShooterRunFlywheel(2440/*Robot::shooter->GetShooterSpeed()*/));//2050 for boiler shot
-	AddSequential(new PauseCommand(0.5));
-	AddSequential(new ShooterRunSpinCycleFeed(0.8));
-
+	AddSequential(new ShooterSwivelTurret(speed));
+	AddSequential(new PauseCommand(0.01));
+	AddSequential(new ShooterSwivelTurret(0.0));
 }

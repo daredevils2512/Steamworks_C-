@@ -14,6 +14,7 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	lastConditionRight = false;
 	lastConditionLeft = false;
 	maxEncPosition = 8500;
+	shooterSpeed = 2250;
 }
 
 void Shooter::InitDefaultCommand() {
@@ -58,4 +59,12 @@ bool Shooter::IsHoodActuated() {
 double Shooter::GetVirtualDistance(PixySubsystem::ObjectValues object){
 	//calculates the distance from the target in inches
 	return (0.00349450614331*(pow(object.y,2))) - (0.0873599815179*(object.y)) + 43.068903964768;
+}
+
+void Shooter::SaveShooterSpeed(double speed) {
+	shooterSpeed = speed;
+}
+
+double Shooter::GetShooterSpeed() {
+	return shooterSpeed;
 }

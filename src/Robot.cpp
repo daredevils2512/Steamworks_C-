@@ -1,5 +1,6 @@
 #include "Robot.h"
 #include "Commands/AutoTimedDriveForward.h"
+#include <Encoder.h>
 
 //access pointer objects declared in Robot.h
 std::shared_ptr<Drivetrain> Robot::drivetrain;
@@ -26,8 +27,8 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	compressor.reset(new frc::Compressor());
-//	frc::CameraServer::GetInstance()->StartAutomaticCapture();
-//	frc::CameraServer::GetInstance()->StartAutomaticCapture();
+	frc::CameraServer::GetInstance()->StartAutomaticCapture();
+	frc::CameraServer::GetInstance()->StartAutomaticCapture();
   }
 
 void Robot::DisabledInit(){
@@ -66,8 +67,8 @@ void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
 	//prints information to the smart dashboard
 	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainLeftEncoder->GetDistance());
-	SmartDashboard::PutBoolean("encoder left test", RobotMap::drivetrainLeftEncoder->GetStopped());
 	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder->GetDistance());
+	SmartDashboard::PutBoolean("encoder left test", RobotMap::drivetrainLeftEncoder->GetStopped());
 	SmartDashboard::PutNumber("left encoder distance", Robot::drivetrain->GetLeftEncoder());
 	SmartDashboard::PutNumber("right encoder distance", Robot::drivetrain->GetRightEncoder());
 	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
@@ -83,6 +84,11 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutBoolean("fwd limit switch", RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed());
 	//SmartDashboard::PutNumber("frame size", Robot::pixySubsystem->GetShooterPixyData().size());
 	SmartDashboard::PutNumber("swivel speed", RobotMap::shooterTurretSwivel->Get());
+
+//	SmartDashboard::PutBoolean("leftA", RobotMap::leftA->Get());
+//	SmartDashboard::PutBoolean("leftB", RobotMap::leftB->Get());
+//	SmartDashboard::PutBoolean("RightA", RobotMap::RightA->Get());
+//	SmartDashboard::PutBoolean("RightB", RobotMap::RightB->Get());
 }
 
 void Robot::TestPeriodic() {

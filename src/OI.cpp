@@ -16,6 +16,9 @@
 #include "Commands/ShooterManualSwivel.h"
 #include "Commands/ShooterManualRunFlywheel.h"
 #include "Commands/ShooterPOVHoodControl.h"
+#include "Commands/SetShootBallSpeed.h"
+#include "Commands/_CMG_ShooterManualSwivel.h"
+#include "Commands/GearToggleIntake.h"
 
 
 OI::OI()
@@ -38,17 +41,20 @@ OI::OI()
 	CDR_trigger.WhenReleased(new ShooterRunFlywheel(0.0));//working
 	CDR_trigger.WhenReleased(new ShooterRunSpinCycleFeed(0.0));//working
 	CDR_joystickPOV.WhenPressed(new ShooterPOVHoodControl());//working
-	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack());//button itself works, command needs work
+	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack());//working
 	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(-1.0));//working
 	CDR_topLeftJoystick.WhenReleased(new FloorIntakeRunMotor(0.0));//working
-	CDR_bottomLeftJoystick.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
-	CDR_bottomLeftJoystick.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
+//	CDR_bottomLeftJoystick.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
+//	CDR_bottomLeftJoystick.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
+	CDR_bottomLeftJoystick.WhenPressed(new GearToggleIntake());
 	CDR_topRightJoystick.WhileHeld(new ClimberRunMotor(0.8));//working
 	CDR_topRightJoystick.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDR_bottomRightJoystick.WhileHeld(new ClimberRunMotor(-0.8));//working
 	CDR_bottomRightJoystick.WhenReleased(new ClimberRunMotor(0.0));//working
-	CDR_bottomRightBase.WhenPressed(new ShooterRunFlywheel(0.4));//working
-	CDR_topRightBase.WhenPressed(new ShooterRunFlywheel(2570));//working
+//	CDR_bottomRightBase.WhenPressed(new ShooterRunFlywheel(0.4));//working
+//	CDR_topRightBase.WhenPressed(new ShooterRunFlywheel(2570));//working
+	CDR_bottomRightBase.WhenPressed(new SetShootBallSpeed(2250));
+	CDR_topRightBase.WhenPressed(new SetShootBallSpeed(2400));
 	CDR_bottomLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.8));//working
 	CDR_topLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.0));//working
 	CDR_topMiddleBase.WhenPressed(new ShooterRunFlywheel(0.0));//working, sometimes wheels spurt randomly
@@ -70,12 +76,16 @@ OI::OI()
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-0.8));//working
 	CDB_bottomRed.WhenReleased(new ClimberRunMotor(0.0));//working
-	CDB_topWhite.WhenPressed(new ShooterRunFlywheel(0.6));//working
-	CDB_topRed.WhenPressed(new ShooterRunFlywheel(0.8));//working
-	CDB_middleWhite.WhileHeld(new ShooterSwivelTurret(1.0));//working
-	CDB_middleWhite.WhenReleased(new ShooterSwivelTurret(0.0));//working
-	CDB_middleRed.WhileHeld(new ShooterSwivelTurret(-1.0));//working
-	CDB_middleRed.WhenReleased(new ShooterSwivelTurret(0.0));//working
+//	CDB_topWhite.WhenPressed(new ShooterRunFlywheel(0.6));//working
+//	CDB_topRed.WhenPressed(new ShooterRunFlywheel(0.8));//working
+	CDB_topWhite.WhenPressed(new SetShootBallSpeed(2250));
+	CDB_topRed.WhenPressed(new SetShootBallSpeed(2400));
+//	CDB_middleWhite.WhileHeld(new ShooterSwivelTurret(1.0));//working
+//	CDB_middleWhite.WhenReleased(new ShooterSwivelTurret(0.0));//working
+//	CDB_middleRed.WhileHeld(new ShooterSwivelTurret(-1.0));//working
+//	CDB_middleRed.WhenReleased(new ShooterSwivelTurret(0.0));//working
+	CDB_middleWhite.WhenPressed(new _CMG_ShooterManualSwivel(1.0));
+	CDB_middleRed.WhenPressed(new _CMG_ShooterManualSwivel(-1.0));
 }
 
 double OI::GetTurn() {
@@ -130,6 +140,6 @@ double OI::GetManualShooterSwivel() {
 }
 
 double OI::GetTranslatedThrottle() {
-		return (-(coDriverController.GetAxis(frc::Joystick::AxisType::kThrottleAxis)) + 1) / 2;
+		return ((-(coDriverController.GetAxis(frc::Joystick::AxisType::kThrottleAxis)) + 1) / 2) * 3000;
 }
 

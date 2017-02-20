@@ -3,6 +3,7 @@
 #include "WPILib.h"
 #include "CANTalon.h"
 #include "SPI.h"
+#include <Encoder.h>
 
 class RobotMap {
 public:
@@ -42,7 +43,10 @@ public:
 	static std::shared_ptr<frc::DoubleSolenoid> gearSolenoid;
 	static std::shared_ptr<frc::DoubleSolenoid> shooterHoodActuator;
 
-
+//	static std::shared_ptr<frc::DigitalInput> leftA;
+//	static std::shared_ptr<frc::DigitalInput> leftB;
+//	static std::shared_ptr<frc::DigitalInput> RightA;
+//	static std::shared_ptr<frc::DigitalInput> RightB;
 
 	static void init();
 };

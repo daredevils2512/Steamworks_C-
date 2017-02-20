@@ -27,6 +27,10 @@ std::shared_ptr<frc::SPI> RobotMap::gearRealPixy;
 std::shared_ptr<frc::SPI> RobotMap::gearFakePixy;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearSolenoid;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::shooterHoodActuator;
+//std::shared_ptr<frc::DigitalInput> RobotMap::leftA;
+//std::shared_ptr<frc::DigitalInput> RobotMap::leftB;
+//std::shared_ptr<frc::DigitalInput> RobotMap::RightA;
+//std::shared_ptr<frc::DigitalInput> RobotMap::RightB;
 
 //runs at startup of robot
 void RobotMap::init() {
@@ -85,10 +89,15 @@ void RobotMap::init() {
 		drivetrainChassis ->SetSensitivity(0.5);
 		drivetrainChassis ->SetMaxOutput(1.0);
 
-	drivetrainLeftEncoder.reset(new frc::Encoder(1, 2, false, Encoder::k4X));
+	drivetrainLeftEncoder.reset(new frc::Encoder(1, 2, false, Encoder::k4X));//1, 2
+	drivetrainLeftEncoder->SetReverseDirection(true);
+	drivetrainLeftEncoder->SetDistancePerPulse(128);
+	//drivetrainLeftEncoder->SetMaxPeriod(1.0);
 	//drivetrainLeftEncoder->SetDistancePerPulse(0.0490873852123);
 
-	drivetrainRightEncoder.reset(new frc::Encoder(3, 4, false, Encoder::k4X));
+	drivetrainRightEncoder.reset(new frc::Encoder(3, 4, false, Encoder::k4X));//3, 4
+	drivetrainRightEncoder->SetDistancePerPulse(128);
+	//drivetrainRightEncoder->SetMaxPeriod(1.0);
 	//drivetrainRightEncoder->SetDistancePerPulse(0.0490873852123);
 
 	shooterHoodActuator.reset (new frc::DoubleSolenoid (0, 1, 0));
@@ -105,5 +114,10 @@ void RobotMap::init() {
 
 	gearSolenoid.reset (new frc::DoubleSolenoid(0, 2, 3));
 	lw ->AddActuator("Gear" , "GearSolenoid" , gearSolenoid);
+
+//	leftA.reset(new frc::DigitalInput(1));
+//	leftB.reset(new frc::DigitalInput(2));
+//	RightA.reset(new frc::DigitalInput(3));
+//	RightB.reset(new frc::DigitalInput(4));
 
 }
