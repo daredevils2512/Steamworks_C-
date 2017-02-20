@@ -20,6 +20,5 @@ _CMG_AutonomousLeftGearPeg::_CMG_AutonomousLeftGearPeg() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
-	Robot::drivetrain->ResetEncoders();
 	AddSequential(new AutoCircleDrive(160.0, 1.0, Drivetrain::Direction::clockwise, 0.0));
 }

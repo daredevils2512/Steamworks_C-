@@ -1,6 +1,6 @@
 #include "AutoCircleDrive.h"
 
-AutoCircleDrive::AutoCircleDrive(double degrees, double outerSpeed, Drivetrain::Direction direction, double radius) {
+AutoCircleDrive::AutoCircleDrive(double radius, double outerSpeed, Drivetrain::Direction direction, double degrees) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::drivetrain.get());
@@ -29,7 +29,7 @@ AutoCircleDrive::AutoCircleDrive(double degrees, double outerSpeed, Drivetrain::
 
 // Called just before this Command runs the first time
 void AutoCircleDrive::Initialize() {
-
+	Robot::drivetrain->ResetEncoders();
 }
 
 // Called repeatedly when this Command is scheduled to run

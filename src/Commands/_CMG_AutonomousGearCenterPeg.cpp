@@ -23,7 +23,6 @@ _CMG_AutonomousGearCenterPeg::_CMG_AutonomousGearCenterPeg() {
 		// e.g. if Command1 requires chassis, and Command2 requires arm,
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
-	Robot::drivetrain->ResetEncoders();
 	AddSequential(new AutoStraightDrive(9.4, 1.0));
 	AddSequential(new GearGetLimitSwitch());
 	AddSequential(new PauseCommand(1.0));
