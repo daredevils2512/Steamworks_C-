@@ -19,6 +19,8 @@
 #include "Commands/SetShootBallSpeed.h"
 #include "Commands/_CMG_ShooterManualSwivel.h"
 #include "Commands/GearToggleIntake.h"
+#include "Commands/AutoStraightDrive.h"
+#include "Commands/AutoDimeSpin.h"
 
 
 OI::OI()
@@ -71,7 +73,9 @@ OI::OI()
 	CDB_green.WhenReleased(new FloorIntakeRunMotor(0.0));//working
 //	CDB_yellow.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
 //	CDB_yellow.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
-	CDB_yellow.WhenPressed(new AutoCircleDrive(36.0, 0.5, Robot::drivetrain->Direction::clockwise, 90.0)); //90
+//	CDB_yellow.WhenPressed(new AutoCircleDrive(60.0, 0.8, Robot::drivetrain->Direction::clockwise, 90.0)); //90
+//	CDB_yellow.WhenPressed((new AutoStraightDrive(60.0, 0.5)));
+	CDB_yellow.WhenPressed(new AutoDimeSpin(0.9, 24, Robot::drivetrain->Direction::clockwise));
 	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(0.8));//working
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-0.8));//working

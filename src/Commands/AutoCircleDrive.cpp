@@ -10,7 +10,7 @@ AutoCircleDrive::AutoCircleDrive(double radius, double outerSpeed, Drivetrain::D
 	m_degrees = degrees;
 	m_radius = radius;
 	int width = 27;
-	double innerSpeed = ((m_radius - width / 2) / (m_radius + width/2) * outerSpeed);
+	double innerSpeed = ((m_radius - (width / 2)) / (m_radius + (width/2)) * outerSpeed);
 	switch (m_direction) {
 		case Drivetrain::Direction::clockwise:
 			m_leftSpeed = outerSpeed;
@@ -25,6 +25,8 @@ AutoCircleDrive::AutoCircleDrive(double radius, double outerSpeed, Drivetrain::D
 			m_leftSpeed = 0.0;
 			m_rightSpeed = 0.0;
 	}
+	std::cout << m_leftSpeed << std::endl;
+	std::cout << m_rightSpeed << std::endl;
 }
 
 // Called just before this Command runs the first time

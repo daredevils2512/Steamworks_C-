@@ -91,12 +91,14 @@ void RobotMap::init() {
 
 	drivetrainLeftEncoder.reset(new frc::Encoder(1, 2, false, Encoder::k4X));//1, 2
 	drivetrainLeftEncoder->SetReverseDirection(true);
-	drivetrainLeftEncoder->SetDistancePerPulse(128);
+	drivetrainLeftEncoder->SetDistancePerPulse(0.0349059176);
+	//drivetrainLeftEncoder->SetDistancePerPulse(128);
 	//drivetrainLeftEncoder->SetMaxPeriod(1.0);
 	//drivetrainLeftEncoder->SetDistancePerPulse(0.0490873852123);
 
 	drivetrainRightEncoder.reset(new frc::Encoder(3, 4, false, Encoder::k4X));//3, 4
-	drivetrainRightEncoder->SetDistancePerPulse(128);
+	drivetrainRightEncoder->SetDistancePerPulse(0.0349059176);
+	//drivetrainRightEncoder->SetDistancePerPulse(128);
 	//drivetrainRightEncoder->SetMaxPeriod(1.0);
 	//drivetrainRightEncoder->SetDistancePerPulse(0.0490873852123);
 

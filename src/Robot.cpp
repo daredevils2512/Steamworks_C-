@@ -84,6 +84,8 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutBoolean("fwd limit switch", RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed());
 	//SmartDashboard::PutNumber("frame size", Robot::pixySubsystem->GetShooterPixyData().size());
 	SmartDashboard::PutNumber("swivel speed", RobotMap::shooterTurretSwivel->Get());
+	SmartDashboard::PutNumber("drivetrain left speed", RobotMap::drivetrainFrontLeftMotor->Get());
+	SmartDashboard::PutNumber("drivetrain right speed", RobotMap::drivetrainFrontRightMotor->Get());
 
 //	SmartDashboard::PutBoolean("leftA", RobotMap::leftA->Get());
 //	SmartDashboard::PutBoolean("leftB", RobotMap::leftB->Get());
