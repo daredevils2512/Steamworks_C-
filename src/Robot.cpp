@@ -59,7 +59,7 @@ void Robot::AutonomousInit() {
 		std::string lastPart;
 		std::getline(ifs, firstPart, ':');
 		std::getline(ifs, lastPart);
-		while(lastPart.substr(0,1) == " "){
+		while(lastPart[0] == ' '){
 			lastPart = lastPart.substr(1);
 		}
 		if(!ifs.eof()){
