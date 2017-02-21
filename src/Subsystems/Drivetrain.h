@@ -37,6 +37,9 @@ public:
 	void ResetEncoders();
 	void TurnDirection(double m_targetX , double centerX);
 	bool IsWithinThreshold(double obj1X, double obj2X, int threshold);
+	void SetAutonomous(bool isAutonomous);
+	bool GetAutonomous();
+	bool blockJoysticks;
 
 	enum class Direction {
 		clockwise,

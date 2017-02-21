@@ -5,10 +5,12 @@
 #include "../Subsystems/Shooter.h"
 #include "../Subsystems/PixySubsystem.h"
 
-ShooterVisionTrack::ShooterVisionTrack() {
+ShooterVisionTrack::ShooterVisionTrack(bool isAutonomous) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	abort = false;
+	targetAcquired = false;
+	m_isAutonomous = isAutonomous;
 	speed = 0.6;
 	fwdLastPressed = false;
 	revLastPressed = false;
@@ -32,6 +34,7 @@ void ShooterVisionTrack::Execute() {
 //	std::cout << "vector size" << frame.size() << std::endl;
 //	std::cout << "speed: " << speed << std::endl;
 	if(frame.size() == 0){
+		targetAcquired = false;
 		if (/*FwdPressedThisTime() ||*/ FwdEncPassedThisTime() ||
 				/*RevPressedThisTime() ||*/ RevEncPassedThisTime()) {
 //			std::cout << "switch speed" << std::endl;
@@ -61,6 +64,7 @@ void ShooterVisionTrack::Execute() {
 			return; // if not tracked, abort!
 		}
 	}else if(frame.size() > 1) {
+		targetAcquired = false;
 		// we have multiple objects
 		// sets max area by dividing the image frame by 4
 //		std::cout << "found multiple objects" << std::endl;
@@ -124,9 +128,9 @@ void ShooterVisionTrack::Execute() {
 		return;
 	}
 	//sets the center of the image
-	int middle = 120;//159
+	int middle = 150;//159
 	//sets the acceptable tolerance of the target
-	int tolerance = 30;
+	int tolerance = 20;
 	int slowDownTolerance = 80;
 	//sets the minimum and maximum speeds of the turret swivel
 
@@ -136,11 +140,14 @@ void ShooterVisionTrack::Execute() {
 	if(middle-(tolerance/2) <= trackedObj.x && trackedObj.x <= middle + (tolerance/2)){
 		//if the difference between the center and the tolerance is less than or equal to the middle added to the tolerance
 		//then stop the shooter from swiveling
+		targetAcquired = true;
 		Robot::shooter->SetSwivelSpeed(0);
+		std::cout << trackedObj.x << std::endl;
 //		std::cout << "tolerance acceptable" << std::endl;
 	}else if(trackedObj.x < middle){
 		// left of middle
 //		std::cout << "-" << std::endl;
+		targetAcquired = false;
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
 			Robot::shooter->SetSwivelSpeed(-0.3);
 		}else{
@@ -149,13 +156,13 @@ void ShooterVisionTrack::Execute() {
 	}else{
 		// hopefully to the right of middle
 //		std::cout << "+" << std::endl;
+		targetAcquired = false;
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
 			Robot::shooter->SetSwivelSpeed(0.3);
 		}else{
 			Robot::shooter->SetSwivelSpeed(0.6);
 		}
 	}
-
 }
 bool ShooterVisionTrack::FwdPressedThisTime() {
 	if(RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed()){
@@ -223,7 +230,11 @@ bool ShooterVisionTrack::RevEncPassedThisTime() {
 // Make this return true when this Command no longer needs to run execute()
 bool ShooterVisionTrack::IsFinished() {
 	//ends the command if the frame size is zer or if a limit switch is pressed
-	return false;//abort || passedSafetyThreshold;
+	if(m_isAutonomous) {
+		return targetAcquired;
+	}else{
+		return false;//abort || passedSafetyThreshold;
+	}
 }
 
 // Called once after isFinished returns true

@@ -23,9 +23,13 @@ public:
 	bool IsHeightSame(double obj1, double obj2, double threshold);
 	bool IsYSame(double obj1, double obj2, double threshold);
 	void TurnDirection(double m_targetX , double centerX);
+	void TrackObject(double objectX);
 
 private:
 	double m_targetX;
+	bool targetAcquired;
+	bool abort;
+	int goalPixel;
 };
 
 #endif  // GearVisionTurn_H

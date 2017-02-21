@@ -1,6 +1,10 @@
 #include "Robot.h"
 #include "Commands/AutoTimedDriveForward.h"
 #include <Encoder.h>
+#include "Commands/_CMG_AutonomousGearFarPeg.h"
+#include "Commands/_CMG_AutonomousGearCenterPeg.h"
+#include "Commands/_CMG_AutonomousGearClosePeg.h"
+#include "Commands/_CMG_AutonomousHopper.h"
 
 //access pointer objects declared in Robot.h
 std::shared_ptr<Drivetrain> Robot::drivetrain;
@@ -41,49 +45,33 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	//starts autonomous
-	std::ifstream ifs("C:\\Users\\daredevils\\Desktop\\FileIO test file.txt");
-	while (!ifs.eof()) {
-		std::string firstPart;
-		std::string lastPart;
-		std::getline(ifs, firstPart, ':');
-		std::getline(ifs, lastPart);
-		if (firstPart == "Alliance") {
-			  if (lastPart == "Blue") {
-
-			} else if (lastPart == "Red") {
-
-			}
-		} else if (firstPart == "Autonomous") {
-			  if (lastPart == "Close") {
-
-			} else if (lastPart == "Far") {
-
-			} else if (lastPart == "Center") {
-
-			}
-		} else if (firstPart == "DoHopper") {
-			  if (lastPart == "Yes") {
-
-			} else if (lastPart == "No") {
-
-			}
-		}
-	}
-	ifs.close();
-	autonomousCommand.reset(new AutoTimedDriveForward(3.0));
+	Robot::shooter->SetFlywheelSpeed(0.0);
+	Robot::shooter->SetSpinCycleFeedSpeed(0.0);
+	Robot::floorIntake->SetSpeed(0.0);
+	Robot::drivetrain->SetAutonomous(true);
+	std::string autoString = FileIO::getFileAsString("auto.txt");
+//	autonomousCommand.reset(new _CMG_AutonomousGearFarPeg());
+//	autonomousCommand.reset(new _CMG_AutonomousGearCenterPeg());
+//	autonomousCommand.reset(new _CMG_AutonomousGearClosePeg());
+	autonomousCommand.reset(new _CMG_AutonomousHopper());
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
 }
 
 void Robot::AutonomousPeriodic() {
-	gear->UpdateGearActuator();
+//	gear->UpdateGearActuator();
+//	Scheduler::GetInstance()->RemoveAll();
 	Scheduler::GetInstance()->Run();
 }
 
 void Robot::TeleopInit() {
 	//stops autonomous command
+	Robot::shooter->SetFlywheelSpeed(0.0);
+	Robot::shooter->SetSpinCycleFeedSpeed(0.0);
+	Robot::floorIntake->SetSpeed(0.0);
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Cancel();
+	Robot::drivetrain->SetAutonomous(false);
 	compressor->SetClosedLoopControl(true);
 	Robot::shooter->SetSwivelSpeed(0.0);
 	Robot::drivetrain->ResetEncoders();
@@ -111,6 +99,8 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutBoolean("fwd limit switch", RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed());
 	//SmartDashboard::PutNumber("frame size", Robot::pixySubsystem->GetShooterPixyData().size());
 	SmartDashboard::PutNumber("swivel speed", RobotMap::shooterTurretSwivel->Get());
+	SmartDashboard::PutNumber("drivetrain left speed", RobotMap::drivetrainFrontLeftMotor->Get());
+	SmartDashboard::PutNumber("drivetrain right speed", RobotMap::drivetrainFrontRightMotor->Get());
 
 //	SmartDashboard::PutBoolean("leftA", RobotMap::leftA->Get());
 //	SmartDashboard::PutBoolean("leftB", RobotMap::leftB->Get());

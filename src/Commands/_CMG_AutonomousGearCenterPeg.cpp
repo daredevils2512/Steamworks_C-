@@ -23,8 +23,10 @@ _CMG_AutonomousGearCenterPeg::_CMG_AutonomousGearCenterPeg() {
 		// e.g. if Command1 requires chassis, and Command2 requires arm,
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
-	AddSequential(new AutoStraightDrive(9.4, 1.0));
-	AddSequential(new GearGetLimitSwitch());
-	AddSequential(new PauseCommand(1.0));
-	AddSequential(new AutoStraightDrive(0.75, -1.0));
+//	AddSequential(new AutoStraightDrive(9.4, 1.0));
+//	AddSequential(new GearGetLimitSwitch());
+//	AddSequential(new PauseCommand(1.0));
+//	AddSequential(new AutoStraightDrive(0.75, -1.0));
+	AddSequential(new AutoStraightDrive(48.0, 0.7));
+	AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 }

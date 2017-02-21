@@ -84,19 +84,21 @@ void RobotMap::init() {
 	//creating a new chassis consisting of all the drivetrain motors
 	drivetrainChassis.reset (new frc::RobotDrive (drivetrainFrontLeftMotor , drivetrainRearLeftMotor , drivetrainFrontRightMotor , drivetrainRearRightMotor));
 
-	drivetrainChassis ->SetSafetyEnabled(true);
+	drivetrainChassis ->SetSafetyEnabled(false);
 		drivetrainChassis ->SetExpiration(0.5);
 		drivetrainChassis ->SetSensitivity(0.5);
 		drivetrainChassis ->SetMaxOutput(1.0);
 
 	drivetrainLeftEncoder.reset(new frc::Encoder(1, 2, false, Encoder::k4X));//1, 2
 	drivetrainLeftEncoder->SetReverseDirection(true);
-	drivetrainLeftEncoder->SetDistancePerPulse(128);
+	drivetrainLeftEncoder->SetDistancePerPulse(0.0349059176);
+	//drivetrainLeftEncoder->SetDistancePerPulse(128);
 	//drivetrainLeftEncoder->SetMaxPeriod(1.0);
 	//drivetrainLeftEncoder->SetDistancePerPulse(0.0490873852123);
 
 	drivetrainRightEncoder.reset(new frc::Encoder(3, 4, false, Encoder::k4X));//3, 4
-	drivetrainRightEncoder->SetDistancePerPulse(128);
+	drivetrainRightEncoder->SetDistancePerPulse(0.0349059176);
+	//drivetrainRightEncoder->SetDistancePerPulse(128);
 	//drivetrainRightEncoder->SetMaxPeriod(1.0);
 	//drivetrainRightEncoder->SetDistancePerPulse(0.0490873852123);
 

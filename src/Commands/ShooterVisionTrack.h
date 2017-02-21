@@ -5,7 +5,7 @@
 
 class ShooterVisionTrack: public CommandBase {
 public:
-	ShooterVisionTrack();
+	ShooterVisionTrack(bool isAutonomous);
 	void Initialize() override;
 	void Execute() override;
 	bool IsFinished() override;
@@ -14,6 +14,8 @@ public:
 private:
 	bool IsWithinThreshold(double setpoint, double threshold, double value);
 	bool abort;
+	bool targetAcquired;
+	bool m_isAutonomous;
 	double speed;
 	bool fwdLastPressed;
 	bool revLastPressed;

@@ -15,6 +15,8 @@ Drivetrain::Drivetrain() : Subsystem("Drivetrain") {
     leftEncoder = RobotMap::drivetrainLeftEncoder;
     rightEncoder = RobotMap::drivetrainRightEncoder;
 
+    blockJoysticks = false;
+
 }
 
 void Drivetrain::InitDefaultCommand() {
@@ -83,4 +85,12 @@ void Drivetrain::TurnDirection(double m_targetX , double centerX){
 bool Drivetrain::IsWithinThreshold(double obj1X, double obj2X, int threshold){
 	int tol = threshold / 2;
 	return (obj1X - tol <= obj2X && obj1X + tol >= obj2X) && (obj2X - tol <= obj1X && obj2X + tol >= obj1X);
+}
+
+void Drivetrain::SetAutonomous(bool isAutonomous) {
+	blockJoysticks = isAutonomous;
+}
+
+bool Drivetrain::GetAutonomous() {
+	return blockJoysticks;
 }
