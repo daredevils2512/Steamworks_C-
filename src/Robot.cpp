@@ -41,7 +41,35 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	//starts autonomous
-	std::string autoString = FileIO::getFileAsString("auto.txt");
+	std::ifstream ifs("C:\\Users\\daredevils\\Desktop\\FileIO test file.txt");
+	while (!ifs.eof()) {
+		std::string firstPart;
+		std::string lastPart;
+		std::getline(ifs, firstPart, ':');
+		std::getline(ifs, lastPart);
+		if (firstPart == "Alliance") {
+			  if (lastPart == "Blue") {
+
+			} else if (lastPart == "Red") {
+
+			}
+		} else if (firstPart == "Autonomous") {
+			  if (lastPart == "Close") {
+
+			} else if (lastPart == "Far") {
+
+			} else if (lastPart == "Center") {
+
+			}
+		} else if (firstPart == "DoHopper") {
+			  if (lastPart == "Yes") {
+
+			} else if (lastPart == "No") {
+
+			}
+		}
+	}
+	ifs.close();
 	autonomousCommand.reset(new AutoTimedDriveForward(3.0));
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
@@ -49,7 +77,6 @@ void Robot::AutonomousInit() {
 
 void Robot::AutonomousPeriodic() {
 	gear->UpdateGearActuator();
-	Scheduler::GetInstance()->RemoveAll();
 	Scheduler::GetInstance()->Run();
 }
 

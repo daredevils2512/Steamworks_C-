@@ -11,11 +11,12 @@
 #include <iostream>
 #include <fstream>
 #include <iterator>
-using namespace std;
+#include <vector>
 
 class FileIO {
 	public:
-		static string getFileAsString(string path);
+		static std::string getFileAsString(std::string path);
+		std::vector<std::vector<std::string>> getLines(std::string path);
 };
 
 
