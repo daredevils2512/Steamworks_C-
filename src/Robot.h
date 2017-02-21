@@ -20,7 +20,7 @@ class Robot : public IterativeRobot {
 public:
 
 	//pointer object declaration for subsystems, autonomous, oi, live window
-	std::unique_ptr<Command> autonomousCommand;
+	std::unique_ptr<frc::CommandGroup> autonomousCommand;
 	static std::unique_ptr<OI> oi;
 	LiveWindow *lw = LiveWindow::GetInstance();
 

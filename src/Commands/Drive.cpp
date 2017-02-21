@@ -15,8 +15,10 @@ void Drive::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void Drive::Execute() {
 		//moves drivetrain based off of values from operator interface
+	if(!Robot::drivetrain->GetAutonomous()) {
 		Robot::drivetrain->DriveRobotArcade(Robot::oi->GetMove() , Robot::oi->GetTurn());
 	}
+}
 
 
 // Make this return true when this Command no longer needs to run execute()

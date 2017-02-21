@@ -84,7 +84,7 @@ void RobotMap::init() {
 	//creating a new chassis consisting of all the drivetrain motors
 	drivetrainChassis.reset (new frc::RobotDrive (drivetrainFrontLeftMotor , drivetrainRearLeftMotor , drivetrainFrontRightMotor , drivetrainRearRightMotor));
 
-	drivetrainChassis ->SetSafetyEnabled(true);
+	drivetrainChassis ->SetSafetyEnabled(false);
 		drivetrainChassis ->SetExpiration(0.5);
 		drivetrainChassis ->SetSensitivity(0.5);
 		drivetrainChassis ->SetMaxOutput(1.0);

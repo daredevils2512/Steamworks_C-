@@ -1,6 +1,10 @@
 #include "Robot.h"
 #include "Commands/AutoTimedDriveForward.h"
 #include <Encoder.h>
+#include "Commands/_CMG_AutonomousGearFarPeg.h"
+#include "Commands/_CMG_AutonomousGearCenterPeg.h"
+#include "Commands/_CMG_AutonomousGearClosePeg.h"
+#include "Commands/_CMG_AutonomousHopper.h"
 
 //access pointer objects declared in Robot.h
 std::shared_ptr<Drivetrain> Robot::drivetrain;
@@ -41,22 +45,33 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	//starts autonomous
+	Robot::shooter->SetFlywheelSpeed(0.0);
+	Robot::shooter->SetSpinCycleFeedSpeed(0.0);
+	Robot::floorIntake->SetSpeed(0.0);
+	Robot::drivetrain->SetAutonomous(true);
 	std::string autoString = FileIO::getFileAsString("auto.txt");
-	autonomousCommand.reset(new AutoTimedDriveForward(3.0));
+//	autonomousCommand.reset(new _CMG_AutonomousGearFarPeg());
+//	autonomousCommand.reset(new _CMG_AutonomousGearCenterPeg());
+//	autonomousCommand.reset(new _CMG_AutonomousGearClosePeg());
+	autonomousCommand.reset(new _CMG_AutonomousHopper());
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
 }
 
 void Robot::AutonomousPeriodic() {
-	gear->UpdateGearActuator();
-	Scheduler::GetInstance()->RemoveAll();
+//	gear->UpdateGearActuator();
+//	Scheduler::GetInstance()->RemoveAll();
 	Scheduler::GetInstance()->Run();
 }
 
 void Robot::TeleopInit() {
 	//stops autonomous command
+	Robot::shooter->SetFlywheelSpeed(0.0);
+	Robot::shooter->SetSpinCycleFeedSpeed(0.0);
+	Robot::floorIntake->SetSpeed(0.0);
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Cancel();
+	Robot::drivetrain->SetAutonomous(false);
 	compressor->SetClosedLoopControl(true);
 	Robot::shooter->SetSwivelSpeed(0.0);
 	Robot::drivetrain->ResetEncoders();

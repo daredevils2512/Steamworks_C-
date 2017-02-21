@@ -11,7 +11,7 @@ AutoDimeSpin::AutoDimeSpin(double speed, double turnDistance, Drivetrain::Direct
 
 // Called just before this Command runs the first time
 void AutoDimeSpin::Initialize() {
-
+	Robot::drivetrain->ResetEncoders();
 }
 
 // Called repeatedly when this Command is scheduled to run

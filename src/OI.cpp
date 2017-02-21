@@ -21,6 +21,7 @@
 #include "Commands/GearToggleIntake.h"
 #include "Commands/AutoStraightDrive.h"
 #include "Commands/AutoDimeSpin.h"
+#include "Commands/_CMG_AutonomousGearFarPeg.h"
 
 
 OI::OI()
@@ -43,7 +44,7 @@ OI::OI()
 	CDR_trigger.WhenReleased(new ShooterRunFlywheel(0.0));//working
 	CDR_trigger.WhenReleased(new ShooterRunSpinCycleFeed(0.0));//working
 	CDR_joystickPOV.WhenPressed(new ShooterPOVHoodControl());//working
-	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack());//working
+	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack(false));//working
 	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(-1.0));//working
 	CDR_topLeftJoystick.WhenReleased(new FloorIntakeRunMotor(0.0));//working
 //	CDR_bottomLeftJoystick.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
@@ -75,7 +76,8 @@ OI::OI()
 //	CDB_yellow.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
 //	CDB_yellow.WhenPressed(new AutoCircleDrive(60.0, 0.8, Robot::drivetrain->Direction::clockwise, 90.0)); //90
 //	CDB_yellow.WhenPressed((new AutoStraightDrive(60.0, 0.5)));
-	CDB_yellow.WhenPressed(new AutoDimeSpin(0.9, 24, Robot::drivetrain->Direction::clockwise));
+//	CDB_yellow.WhenPressed(new AutoDimeSpin(0.9, 24, Robot::drivetrain->Direction::clockwise));
+	CDB_yellow.WhenPressed(new _CMG_AutonomousGearFarPeg());
 	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(0.8));//working
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-0.8));//working
