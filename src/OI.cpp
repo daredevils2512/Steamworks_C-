@@ -22,6 +22,8 @@
 #include "Commands/AutoStraightDrive.h"
 #include "Commands/AutoDimeSpin.h"
 #include "Commands/_CMG_AutonomousGearFarPeg.h"
+#include "Commands/GearVisionTurn.h"
+#include "Commands/ShooterSwivelMoveToPosition.h"
 
 
 OI::OI()
@@ -31,7 +33,7 @@ OI::OI()
 	DRC_rightTrigger.WhenReleased(new DrivetrainShift(false));//working
 	DRC_rightBumper.WhenPressed(new FloorIntakeRunMotor(-1.0));//working
 	DRC_leftBumper.WhenPressed(new FloorIntakeRunMotor(0.0));//working
-	DRC_xButton.WhileHeld(new ClimberRunMotor(0.8));//working
+	DRC_xButton.WhileHeld(new ClimberRunMotor(1.0));//working
 	DRC_xButton.WhenReleased(new ClimberRunMotor(0.0));//working
 //	DRC_yButton.WhileHeld(new ClimberRunMotor(0.8));//working
 //	DRC_yButton.WhenReleased(new ClimberRunMotor(0.0));//working
@@ -50,17 +52,19 @@ OI::OI()
 //	CDR_bottomLeftJoystick.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
 //	CDR_bottomLeftJoystick.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
 	CDR_bottomLeftJoystick.WhenPressed(new GearToggleIntake());
-	CDR_topRightJoystick.WhileHeld(new ClimberRunMotor(0.8));//working
+	CDR_topRightJoystick.WhileHeld(new ClimberRunMotor(1.0));//working
 	CDR_topRightJoystick.WhenReleased(new ClimberRunMotor(0.0));//working
-	CDR_bottomRightJoystick.WhileHeld(new ClimberRunMotor(-0.8));//working
+	CDR_bottomRightJoystick.WhileHeld(new ClimberRunMotor(-1.0));//working
 	CDR_bottomRightJoystick.WhenReleased(new ClimberRunMotor(0.0));//working
 //	CDR_bottomRightBase.WhenPressed(new ShooterRunFlywheel(0.4));//working
 //	CDR_topRightBase.WhenPressed(new ShooterRunFlywheel(2570));//working
 	CDR_bottomRightBase.WhenPressed(new SetShootBallSpeed(2250));
 	CDR_topRightBase.WhenPressed(new SetShootBallSpeed(2400));
-	CDR_bottomLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.8));//working
+	CDR_bottomLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.95));//working
 	CDR_topLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.0));//working
 	CDR_topMiddleBase.WhenPressed(new ShooterRunFlywheel(0.0));//working, sometimes wheels spurt randomly
+	CDR_bottomMiddleBase.WhileHeld(new ShooterRunSpinCycleFeed(-0.95));
+	CDR_bottomMiddleBase.WhenReleased(new ShooterRunSpinCycleFeed(0.0));
 	CDR_zPositiveAxis.WhileHeld(new ShooterManualSwivel());//working
 	CDR_zPositiveAxis.WhenReleased(new ShooterSwivelTurret(0.0));//working
 	CDR_zNegativeAxis.WhileHeld(new ShooterManualSwivel());//working
@@ -77,7 +81,9 @@ OI::OI()
 //	CDB_yellow.WhenPressed(new AutoCircleDrive(60.0, 0.8, Robot::drivetrain->Direction::clockwise, 90.0)); //90
 //	CDB_yellow.WhenPressed((new AutoStraightDrive(60.0, 0.5)));
 //	CDB_yellow.WhenPressed(new AutoDimeSpin(0.9, 24, Robot::drivetrain->Direction::clockwise));
-	CDB_yellow.WhenPressed(new _CMG_AutonomousGearFarPeg());
+//	CDB_yellow.WhenPressed(new _CMG_AutonomousGearFarPeg());
+	CDB_yellow.WhenPressed(new GearVisionTurn(200));
+//	CDB_yellow.WhenPressed(new ShooterSwivelMoveToPosition(0.0));
 	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(0.8));//working
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-0.8));//working

@@ -27,6 +27,7 @@ public:
 	void SetFlywheelSpeed(double speed);
 	void SetSpinCycleFeedSpeed(double speed);
 	void SetSwivelSpeed(double speed);
+	double GetSwivelPosition();
 	void ActuateHood(frc::DoubleSolenoid::Value direction);
 	bool IsHoodActuated();
 	double GetVirtualDistance(PixySubsystem::ObjectValues object);

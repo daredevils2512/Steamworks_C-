@@ -7,6 +7,11 @@
 #include "../Robot.h"
 #include "PauseCommand.h"
 #include "GearIntakeActuate.h"
+#include "GearGetLimitSwitch.h"
+#include "ShooterSwivelTurret.h"
+#include "ShooterVisionTrack.h"
+#include "FloorIntakeRunMotor.h"
+#include "_CMG_ShootBall.h"
 
 _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 	// Add Commands here:
@@ -26,10 +31,26 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 //	AddSequential(new AutoCircleDrive(160.0, 1.0, Drivetrain::Direction::counterClockwise, 80.0));
-	AddSequential(new AutoStraightDrive(44.0, 0.7));
+	AddSequential(new AutoStraightDrive(46.0, 0.7));
 	AddSequential(new PauseCommand(0.2));
 	AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::clockwise));
 	AddSequential(new PauseCommand(0.2));
 	AddSequential(new AutoStraightDrive(44.0, 0.7));
 	AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+	if(gotoHopper) {
+		AddSequential(new GearGetLimitSwitch());
+		AddSequential(new PauseCommand(1.0));
+		AddParallel(new ShooterSwivelTurret(-0.4));
+		AddSequential(new AutoStraightDrive(25.0, -0.7));
+		AddSequential(new ShooterSwivelTurret(0.0));
+		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoDimeSpin(0.9, 47.0, Robot::drivetrain->Direction::counterClockwise));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoStraightDrive(44.0, 0.9));
+		AddSequential(new PauseCommand(0.5));
+		AddSequential(new ShooterVisionTrack(true));
+		AddParallel(new FloorIntakeRunMotor(-1.0));
+		AddSequential(new _CMG_ShootBall());
+	}
 }

@@ -9,7 +9,7 @@ GearVisionTurn::GearVisionTurn(double targetX) {
 	m_targetX = targetX;
 	targetAcquired = false;
 	abort = false;
-	goalPixel = 200;
+	goalPixel = targetX;
 }
 
 // Called just before this Command runs the first time
@@ -34,11 +34,11 @@ void GearVisionTurn::Execute() {
 		std::cout << "One target found" << std::endl;
 	}else{
 		PixySubsystem::ObjectValues targetObject;
-		int closestTargetToCenter = 650;
+		int furthestLeftObjectPixel = 318;
 		for(auto object : objectsFound) {
-			if(abs(goalPixel - object.x) < abs(goalPixel - closestTargetToCenter)) {
+			if(object.x < furthestLeftObjectPixel) {
 				targetObject = object;
-				closestTargetToCenter = object.x;
+				furthestLeftObjectPixel = object.x;
 			}
 		}
 		TrackObject(targetObject.x);

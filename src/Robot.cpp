@@ -48,12 +48,13 @@ void Robot::AutonomousInit() {
 	Robot::shooter->SetFlywheelSpeed(0.0);
 	Robot::shooter->SetSpinCycleFeedSpeed(0.0);
 	Robot::floorIntake->SetSpeed(0.0);
+	Robot::shooter->SetSwivelSpeed(0.0);
 	Robot::drivetrain->SetAutonomous(true);
 	std::string autoString = FileIO::getFileAsString("auto.txt");
 //	autonomousCommand.reset(new _CMG_AutonomousGearFarPeg());
 //	autonomousCommand.reset(new _CMG_AutonomousGearCenterPeg());
-//	autonomousCommand.reset(new _CMG_AutonomousGearClosePeg());
-	autonomousCommand.reset(new _CMG_AutonomousHopper());
+	autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(true));
+//	autonomousCommand.reset(new _CMG_AutonomousHopper());
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
 }
@@ -69,6 +70,7 @@ void Robot::TeleopInit() {
 	Robot::shooter->SetFlywheelSpeed(0.0);
 	Robot::shooter->SetSpinCycleFeedSpeed(0.0);
 	Robot::floorIntake->SetSpeed(0.0);
+	Robot::shooter->SetSwivelSpeed(0.0);
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Cancel();
 	Robot::drivetrain->SetAutonomous(false);

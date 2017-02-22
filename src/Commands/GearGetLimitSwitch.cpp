@@ -20,7 +20,8 @@ void GearGetLimitSwitch::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool GearGetLimitSwitch::IsFinished() {
-	return Robot::gear->GetLimitSwitch();
+	//inverted so it finishes when the switch is released
+	return !Robot::gear->GetLimitSwitch();
 }
 
 // Called once after isFinished returns true

@@ -47,7 +47,12 @@ void Shooter::SetSpinCycleFeedSpeed(double speed){
 
 void Shooter::SetSwivelSpeed(double speed){
 	//Set the speed to crank the swivel around at
+	turretSwivel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
 	turretSwivel->Set(speed);
+}
+
+double Shooter::GetSwivelPosition() {
+	return turretSwivel->GetEncPosition();
 }
 
 bool Shooter::IsHoodActuated() {

@@ -11,7 +11,7 @@ ShooterVisionTrack::ShooterVisionTrack(bool isAutonomous) {
 	abort = false;
 	targetAcquired = false;
 	m_isAutonomous = isAutonomous;
-	speed = 0.6;
+	speed = 0.7;
 	fwdLastPressed = false;
 	revLastPressed = false;
 	fwdLastPassed = false;
@@ -35,11 +35,17 @@ void ShooterVisionTrack::Execute() {
 //	std::cout << "speed: " << speed << std::endl;
 	if(frame.size() == 0){
 		targetAcquired = false;
-		if (/*FwdPressedThisTime() ||*/ FwdEncPassedThisTime() ||
-				/*RevPressedThisTime() ||*/ RevEncPassedThisTime()) {
-//			std::cout << "switch speed" << std::endl;
-			speed = -speed; //reverse the speed
-
+//		if (/*FwdPressedThisTime() ||*/ FwdEncPassedThisTime() ||
+//				/*RevPressedThisTime() ||*/ RevEncPassedThisTime()) {
+////			std::cout << "switch speed" << std::endl;
+//			speed = -speed; //reverse the speed
+//
+//		}
+		if(FwdEncPassedThisTime()) {
+			speed = -0.7;
+		}
+		if(RevEncPassedThisTime()) {
+			speed = 0.7;
 		}
 		Robot::shooter->SetSwivelSpeed(speed);
 		return;
@@ -128,7 +134,7 @@ void ShooterVisionTrack::Execute() {
 		return;
 	}
 	//sets the center of the image
-	int middle = 150;//159
+	int middle = 160;//159
 	//sets the acceptable tolerance of the target
 	int tolerance = 20;
 	int slowDownTolerance = 80;
@@ -151,7 +157,7 @@ void ShooterVisionTrack::Execute() {
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
 			Robot::shooter->SetSwivelSpeed(-0.3);
 		}else{
-			Robot::shooter->SetSwivelSpeed(-0.6);
+			Robot::shooter->SetSwivelSpeed(-0.7);
 		}
 	}else{
 		// hopefully to the right of middle
@@ -160,7 +166,7 @@ void ShooterVisionTrack::Execute() {
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
 			Robot::shooter->SetSwivelSpeed(0.3);
 		}else{
-			Robot::shooter->SetSwivelSpeed(0.6);
+			Robot::shooter->SetSwivelSpeed(0.7);
 		}
 	}
 }
