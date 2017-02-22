@@ -50,11 +50,42 @@ void Robot::AutonomousInit() {
 	Robot::floorIntake->SetSpeed(0.0);
 	Robot::shooter->SetSwivelSpeed(0.0);
 	Robot::drivetrain->SetAutonomous(true);
-	std::string autoString = FileIO::getFileAsString("auto.txt");
 //	autonomousCommand.reset(new _CMG_AutonomousGearFarPeg());
 //	autonomousCommand.reset(new _CMG_AutonomousGearCenterPeg());
 	autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(true));
 //	autonomousCommand.reset(new _CMG_AutonomousHopper());
+	std::ifstream ifs("C:\\Users\\daredevils\\Desktop\\FileIO test file.txt"); // TODO: this wont work so fix it, use local filesystem on roborio
+	while (!ifs.eof()) {
+		std::string firstPart;
+		std::string lastPart;
+		std::getline(ifs, firstPart, ':');
+		std::getline(ifs, lastPart);
+		while(lastPart[0] == ' '){
+			lastPart = lastPart.substr(1);
+		}
+		if(!ifs.eof()){
+			lastPart = lastPart.substr(0,lastPart.size()-1);
+		}
+		if (firstPart == "Autonomous") {
+			if (lastPart == "Far") {
+				autonomousCommand.reset(new _CMG_AutonomousGearFarPeg());
+			} else if (lastPart == "Close") {
+				autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(false));
+			} else if (lastPart == "Center") {
+				autonomousCommand.reset(new _CMG_AutonomousGearCenterPeg());
+			} else if (lastPart == "Hopper") {
+				autonomousCommand.reset(new _CMG_AutonomousHopper());
+			}
+		} else if (firstPart == "DoHopper") {
+			if (lastPart == "Yes") {
+				autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(true));
+			} else if (lastPart == "No") {
+				autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(false));
+			}
+
+		}
+	}
+	ifs.close();
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
 }

@@ -11,6 +11,7 @@ AutoCircleDrive::AutoCircleDrive(double radius, double outerSpeed, Drivetrain::D
 	m_radius = radius;
 	int width = 27;
 	double innerSpeed = ((m_radius - (width / 2)) / (m_radius + (width/2)) * outerSpeed);
+	std::cout << "Inner speed: " << innerSpeed << std::endl;
 	switch (m_direction) {
 		case Drivetrain::Direction::clockwise:
 			m_leftSpeed = outerSpeed;
@@ -45,6 +46,9 @@ bool AutoCircleDrive::IsFinished() {
 	double middleCircumference = 2.0 * M_PI * m_radius;
 	double partOfCircle = m_degrees / 360.0;
 	double partToDrive = middleCircumference * partOfCircle;
+	std::cout << "Circumference: " << middleCircumference << std::endl;
+	std::cout << "Part of Circle to Drive: " << partOfCircle << std::endl;
+	std::cout << "Part to drive: " << partToDrive << std::endl;
 	switch (m_direction) {
 		case Drivetrain::Direction::clockwise:
 			feetsGone = Robot::drivetrain->GetLeftEncoder();
