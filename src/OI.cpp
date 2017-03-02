@@ -39,6 +39,7 @@ OI::OI()
 	DRC_yButton.WhenReleased(new FloorIntakeRunMotor(0.0));//working
 	DRC_aButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
 	DRC_bButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
+	DRC_startButton.WhenPressed(new ClimberRunMotor(1.0));
 
 	CDR_trigger.WhileHeld(new _CMG_ShootBall());//working
 	CDR_trigger.WhenReleased(new ShooterRunFlywheel(0.0));//working
