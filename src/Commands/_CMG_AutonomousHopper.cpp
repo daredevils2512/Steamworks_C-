@@ -25,33 +25,27 @@ _CMG_AutonomousHopper::_CMG_AutonomousHopper() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
-	AddParallel(new ShooterSwivelTurret(-0.4));
-	AddSequential(new AutoStraightDrive(50.0, 0.7));
-	AddSequential(new ShooterSwivelTurret(0.0));
-	AddSequential(new PauseCommand(0.2));
-	AddSequential(new AutoDimeSpin(0.9, 33.0, Robot::drivetrain->Direction::counterClockwise));
-	AddSequential(new PauseCommand(0.2));
-	AddSequential(new AutoStraightDrive(20.0, 0.7));
-	AddParallel(new ShooterVisionTrack(true));
-	AddParallel(new FloorIntakeRunMotor(-1.0));
-	AddSequential(new _CMG_ShootBall());
-//	AddSequential(new PauseCommand(2.0));
-//	AddSequential(new ShooterRunSpinCycleFeed(-0.95));
-//	AddSequential(new PauseCommand(0.5));
-//	AddSequential(new ShooterRunSpinCycleFeed(0.95));
-//
-//	AddSequential(new PauseCommand(2.0));
-//	AddSequential(new ShooterRunSpinCycleFeed(-0.95));
-//	AddSequential(new PauseCommand(0.5));
-//	AddSequential(new ShooterRunSpinCycleFeed(0.95));
-//
-//	AddSequential(new PauseCommand(2.0));
-//	AddSequential(new ShooterRunSpinCycleFeed(-0.95));
-//	AddSequential(new PauseCommand(0.5));
-//	AddSequential(new ShooterRunSpinCycleFeed(0.95));
-//
-//	AddSequential(new PauseCommand(2.0));
-//	AddSequential(new ShooterRunSpinCycleFeed(-0.95));
-//	AddSequential(new PauseCommand(0.5));
-//	AddSequential(new ShooterRunSpinCycleFeed(0.95));
+	if(Robot::robotAlliance == frc::DriverStation::kBlue) {
+		AddParallel(new ShooterSwivelTurret(-0.4));
+		AddSequential(new AutoStraightDrive(50.0, 0.7));
+		AddSequential(new ShooterSwivelTurret(0.0));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoDimeSpin(0.9, 33.0, Robot::drivetrain->Direction::counterClockwise));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoStraightDrive(20.0, 0.7));
+		AddParallel(new ShooterVisionTrack(true));
+		AddParallel(new FloorIntakeRunMotor(-1.0));
+		AddSequential(new _CMG_ShootBall());
+	}else{
+		AddParallel(new ShooterSwivelTurret(0.4));
+		AddSequential(new AutoStraightDrive(50.0, 0.7));
+		AddSequential(new ShooterSwivelTurret(0.0));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoDimeSpin(0.9, 33.0, Robot::drivetrain->Direction::clockwise));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoStraightDrive(20.0, 0.7));
+		AddParallel(new ShooterVisionTrack(true));
+		AddParallel(new FloorIntakeRunMotor(-1.0));
+		AddSequential(new _CMG_ShootBall());
+	}
 }

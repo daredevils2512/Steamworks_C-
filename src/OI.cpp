@@ -35,8 +35,6 @@ OI::OI()
 	DRC_leftBumper.WhenPressed(new FloorIntakeRunMotor(0.0));//working
 	DRC_xButton.WhileHeld(new ClimberRunMotor(1.0));//working
 	DRC_xButton.WhenReleased(new ClimberRunMotor(0.0));//working
-//	DRC_yButton.WhileHeld(new ClimberRunMotor(0.8));//working
-//	DRC_yButton.WhenReleased(new ClimberRunMotor(0.0));//working
 	DRC_yButton.WhileHeld(new FloorIntakeRunMotor(1.0));//working
 	DRC_yButton.WhenReleased(new FloorIntakeRunMotor(0.0));//working
 	DRC_aButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
@@ -49,15 +47,11 @@ OI::OI()
 	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack(false));//working
 	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(-1.0));//working
 	CDR_topLeftJoystick.WhenReleased(new FloorIntakeRunMotor(0.0));//working
-//	CDR_bottomLeftJoystick.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
-//	CDR_bottomLeftJoystick.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
-	CDR_bottomLeftJoystick.WhenPressed(new GearToggleIntake());
+	CDR_bottomLeftJoystick.WhenPressed(new GearToggleIntake());//working
 	CDR_topRightJoystick.WhileHeld(new ClimberRunMotor(1.0));//working
 	CDR_topRightJoystick.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDR_bottomRightJoystick.WhileHeld(new ClimberRunMotor(-1.0));//working
 	CDR_bottomRightJoystick.WhenReleased(new ClimberRunMotor(0.0));//working
-//	CDR_bottomRightBase.WhenPressed(new ShooterRunFlywheel(0.4));//working
-//	CDR_topRightBase.WhenPressed(new ShooterRunFlywheel(2570));//working
 	CDR_bottomRightBase.WhenPressed(new SetShootBallSpeed(2250));
 	CDR_topRightBase.WhenPressed(new SetShootBallSpeed(2400));
 	CDR_bottomLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.95));//working
@@ -76,26 +70,13 @@ OI::OI()
 	CDB_bigRed.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kReverse));//working
 	CDB_green.WhileHeld(new FloorIntakeRunMotor(1.0));//working
 	CDB_green.WhenReleased(new FloorIntakeRunMotor(0.0));//working
-//	CDB_yellow.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
-//	CDB_yellow.WhenReleased(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
-//	CDB_yellow.WhenPressed(new AutoCircleDrive(60.0, 0.8, Robot::drivetrain->Direction::clockwise, 90.0)); //90
-//	CDB_yellow.WhenPressed((new AutoStraightDrive(60.0, 0.5)));
-//	CDB_yellow.WhenPressed(new AutoDimeSpin(0.9, 24, Robot::drivetrain->Direction::clockwise));
-//	CDB_yellow.WhenPressed(new _CMG_AutonomousGearFarPeg());
 	CDB_yellow.WhenPressed(new GearVisionTurn(200));
-//	CDB_yellow.WhenPressed(new ShooterSwivelMoveToPosition(0.0));
 	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(0.8));//working
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-0.8));//working
 	CDB_bottomRed.WhenReleased(new ClimberRunMotor(0.0));//working
-//	CDB_topWhite.WhenPressed(new ShooterRunFlywheel(0.6));//working
-//	CDB_topRed.WhenPressed(new ShooterRunFlywheel(0.8));//working
 	CDB_topWhite.WhenPressed(new SetShootBallSpeed(2250));
 	CDB_topRed.WhenPressed(new SetShootBallSpeed(2400));
-//	CDB_middleWhite.WhileHeld(new ShooterSwivelTurret(1.0));//working
-//	CDB_middleWhite.WhenReleased(new ShooterSwivelTurret(0.0));//working
-//	CDB_middleRed.WhileHeld(new ShooterSwivelTurret(-1.0));//working
-//	CDB_middleRed.WhenReleased(new ShooterSwivelTurret(0.0));//working
 	CDB_middleWhite.WhenPressed(new _CMG_ShooterManualSwivel(1.0));
 	CDB_middleRed.WhenPressed(new _CMG_ShooterManualSwivel(-1.0));
 }

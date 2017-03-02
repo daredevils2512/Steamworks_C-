@@ -23,6 +23,8 @@ std::shared_ptr<frc::Relay> RobotMap::compressorSpike;
 std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearLimitSwitch;
+std::shared_ptr<frc::DigitalInput> RobotMap::gearPixyDigital;
+std::shared_ptr<frc::AnalogInput> RobotMap::gearPixyAnalog;
 std::shared_ptr<frc::SPI> RobotMap::gearRealPixy;
 std::shared_ptr<frc::SPI> RobotMap::gearFakePixy;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearSolenoid;
@@ -92,15 +94,9 @@ void RobotMap::init() {
 	drivetrainLeftEncoder.reset(new frc::Encoder(1, 2, false, Encoder::k4X));//1, 2
 	drivetrainLeftEncoder->SetReverseDirection(true);
 	drivetrainLeftEncoder->SetDistancePerPulse(0.0349059176);
-	//drivetrainLeftEncoder->SetDistancePerPulse(128);
-	//drivetrainLeftEncoder->SetMaxPeriod(1.0);
-	//drivetrainLeftEncoder->SetDistancePerPulse(0.0490873852123);
 
 	drivetrainRightEncoder.reset(new frc::Encoder(3, 4, false, Encoder::k4X));//3, 4
 	drivetrainRightEncoder->SetDistancePerPulse(0.0349059176);
-	//drivetrainRightEncoder->SetDistancePerPulse(128);
-	//drivetrainRightEncoder->SetMaxPeriod(1.0);
-	//drivetrainRightEncoder->SetDistancePerPulse(0.0490873852123);
 
 	shooterHoodActuator.reset (new frc::DoubleSolenoid (0, 1, 0));
 	lw ->AddActuator("Shooter", "HoodActuator", shooterHoodActuator);
@@ -111,15 +107,14 @@ void RobotMap::init() {
 	gearLimitSwitch.reset (new frc::DigitalInput(0));
 	lw ->AddSensor("Gear" , "GearLimitSwitch" , gearLimitSwitch);
 
+	gearPixyDigital.reset(new frc::DigitalInput(1));
+
+	gearPixyAnalog.reset(new frc::AnalogInput(0));
+
 	gearRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS1));
 	gearFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS3));
 
 	gearSolenoid.reset (new frc::DoubleSolenoid(0, 2, 3));
 	lw ->AddActuator("Gear" , "GearSolenoid" , gearSolenoid);
-
-//	leftA.reset(new frc::DigitalInput(1));
-//	leftB.reset(new frc::DigitalInput(2));
-//	RightA.reset(new frc::DigitalInput(3));
-//	RightB.reset(new frc::DigitalInput(4));
 
 }

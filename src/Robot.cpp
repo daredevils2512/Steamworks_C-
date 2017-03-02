@@ -14,6 +14,7 @@ std::shared_ptr<Gear> Robot::gear;
 std::shared_ptr<Shooter> Robot::shooter;
 std::shared_ptr<PixySubsystem> Robot::pixySubsystem;
 std::unique_ptr<OI> Robot::oi;
+frc::DriverStation::Alliance Robot::robotAlliance;
 
 std::shared_ptr<frc::Compressor> Robot::compressor;
 
@@ -45,16 +46,14 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	//starts autonomous
+	Robot::robotAlliance = frc::DriverStation::GetInstance().GetAlliance();
+
 	Robot::shooter->SetFlywheelSpeed(0.0);
 	Robot::shooter->SetSpinCycleFeedSpeed(0.0);
 	Robot::floorIntake->SetSpeed(0.0);
 	Robot::shooter->SetSwivelSpeed(0.0);
 	Robot::drivetrain->SetAutonomous(true);
-//	autonomousCommand.reset(new _CMG_AutonomousGearFarPeg());
-//	autonomousCommand.reset(new _CMG_AutonomousGearCenterPeg());
-	autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(true));
-//	autonomousCommand.reset(new _CMG_AutonomousHopper());
-	std::ifstream ifs("C:\\Users\\daredevils\\Desktop\\FileIO test file.txt"); // TODO: this wont work so fix it, use local filesystem on roborio
+	std::ifstream ifs("/home/lvuser/Autonomous.txt"); // TODO: this wont work so fix it, use local filesystem on roborio
 	while (!ifs.eof()) {
 		std::string firstPart;
 		std::string lastPart;
@@ -91,8 +90,6 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
-//	gear->UpdateGearActuator();
-//	Scheduler::GetInstance()->RemoveAll();
 	Scheduler::GetInstance()->Run();
 }
 
@@ -111,38 +108,16 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-	//gear->UpdateGearActuator();
 	Scheduler::GetInstance()->Run();
 	//prints information to the smart dashboard
-	SmartDashboard::PutNumber("left encoder" , RobotMap::drivetrainLeftEncoder->GetDistance());
-	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder->GetDistance());
-	SmartDashboard::PutBoolean("encoder left test", RobotMap::drivetrainLeftEncoder->GetStopped());
-	SmartDashboard::PutNumber("left encoder distance", Robot::drivetrain->GetLeftEncoder());
-	SmartDashboard::PutNumber("right encoder distance", Robot::drivetrain->GetRightEncoder());
 	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
 	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterLeftFlywheel->GetSpeed());
 	SmartDashboard::PutNumber("right flywheel speed", RobotMap::shooterRightFlywheel->GetSpeed());
 	SmartDashboard::PutBoolean("gear limit switch" , Robot::gear->GetLimitSwitch());
-	SmartDashboard::PutNumber("joystickz", Robot::oi->GetManualShooterSwivel());
-	SmartDashboard::PutBoolean("joystick zbutton", Robot::oi->CDR_zPositiveAxis.Get());
-	SmartDashboard::PutNumber("throttle adjustment", Robot::oi->GetTranslatedThrottle());
-	SmartDashboard::PutBoolean("rev encoder", (RobotMap::shooterTurretSwivel->GetEncPosition() < -Robot::shooter->maxEncPosition));
-	SmartDashboard::PutBoolean("fwd encoder", (RobotMap::shooterTurretSwivel->GetEncPosition() > Robot::shooter->maxEncPosition));
-	SmartDashboard::PutBoolean("rev limit switch", RobotMap::shooterTurretSwivel->IsRevLimitSwitchClosed());
-	SmartDashboard::PutBoolean("fwd limit switch", RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed());
-	//SmartDashboard::PutNumber("frame size", Robot::pixySubsystem->GetShooterPixyData().size());
-	SmartDashboard::PutNumber("swivel speed", RobotMap::shooterTurretSwivel->Get());
-	SmartDashboard::PutNumber("drivetrain left speed", RobotMap::drivetrainFrontLeftMotor->Get());
-	SmartDashboard::PutNumber("drivetrain right speed", RobotMap::drivetrainFrontRightMotor->Get());
-
-//	SmartDashboard::PutBoolean("leftA", RobotMap::leftA->Get());
-//	SmartDashboard::PutBoolean("leftB", RobotMap::leftB->Get());
-//	SmartDashboard::PutBoolean("RightA", RobotMap::RightA->Get());
-//	SmartDashboard::PutBoolean("RightB", RobotMap::RightB->Get());
 }
 
 void Robot::TestPeriodic() {
-	lw->Run();
+	//lw->Run();
 }
 
 START_ROBOT_CLASS(Robot);

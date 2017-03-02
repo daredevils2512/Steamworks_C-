@@ -22,7 +22,8 @@ public:
 	//pointer object declaration for subsystems, autonomous, oi, live window
 	std::unique_ptr<frc::CommandGroup> autonomousCommand;
 	static std::unique_ptr<OI> oi;
-	LiveWindow *lw = LiveWindow::GetInstance();
+	static frc::DriverStation::Alliance robotAlliance;
+
 
 static std::shared_ptr<Drivetrain> drivetrain;
 static std::shared_ptr<Climber> climber;
@@ -42,9 +43,5 @@ virtual void AutonomousPeriodic();
 virtual void TeleopInit();
 virtual void TeleopPeriodic();
 virtual void TestPeriodic();
-
-private:
-	// true if using the autonomous chooser
-	bool chooser;
 };
 #endif

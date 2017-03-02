@@ -25,10 +25,19 @@ _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 //	AddSequential(new AutoCircleDrive(160.0, 1.0, Drivetrain::Direction::clockwise, 80.0));
-	AddSequential(new AutoStraightDrive(45.0, 0.7));
-	AddSequential(new PauseCommand(0.2));
-	AddSequential(new AutoDimeSpin(0.9, 23.0, Robot::drivetrain->Direction::counterClockwise));
-	AddSequential(new PauseCommand(0.2));
-	AddSequential(new AutoStraightDrive(48.0, 0.7));
-	AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+	if(Robot::robotAlliance == frc::DriverStation::kBlue){
+		AddSequential(new AutoStraightDrive(45.0, 0.7));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoDimeSpin(0.9, 23.0, Robot::drivetrain->Direction::counterClockwise));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoStraightDrive(48.0, 0.7));
+		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+	}else{
+		AddSequential(new AutoStraightDrive(45.0, 0.7));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoDimeSpin(0.9, 23.0, Robot::drivetrain->Direction::clockwise));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoStraightDrive(48.0, 0.7));
+		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+	}
 }
