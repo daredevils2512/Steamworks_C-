@@ -33,11 +33,11 @@ _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 		AddSequential(new AutoStraightDrive(48.0, 0.7));
 		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 	}else{
-		AddSequential(new AutoStraightDrive(45.0, 0.7));
+		AddSequential(new AutoStraightDrive(46.0, 0.7));
 		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoDimeSpin(0.9, 23.0, Robot::drivetrain->Direction::clockwise));
+		AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::clockwise));
 		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoStraightDrive(48.0, 0.7));
+		AddSequential(new AutoStraightDrive(44.0, 0.7));
 		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 	}
 }

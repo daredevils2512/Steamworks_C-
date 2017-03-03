@@ -21,7 +21,7 @@ _CMG_ShootBall::_CMG_ShootBall() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
-	AddSequential(new ShooterRunFlywheel(2490/*Robot::shooter->GetShooterSpeed()*/));//2050 for boiler shot; 2370 for hopper shot
+	AddSequential(new ShooterRunFlywheel(2600));
 	AddSequential(new PauseCommand(0.5));
-	AddSequential(new ShooterRunSpinCycleFeed(0.8));
+	AddSequential(new ShooterRunSpinCycleFeed(1.0));
 }

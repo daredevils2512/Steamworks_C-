@@ -107,7 +107,7 @@ void RobotMap::init() {
 	gearLimitSwitch.reset (new frc::DigitalInput(0));
 	lw ->AddSensor("Gear" , "GearLimitSwitch" , gearLimitSwitch);
 
-	gearPixyDigital.reset(new frc::DigitalInput(1));
+	gearPixyDigital.reset(new frc::DigitalInput(5));
 
 	gearPixyAnalog.reset(new frc::AnalogInput(0));
 

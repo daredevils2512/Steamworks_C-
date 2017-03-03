@@ -148,7 +148,7 @@ void ShooterVisionTrack::Execute() {
 		//then stop the shooter from swiveling
 		targetAcquired = true;
 		Robot::shooter->SetSwivelSpeed(0);
-		std::cout << trackedObj.x << std::endl;
+		//std::cout << trackedObj.x << std::endl;
 //		std::cout << "tolerance acceptable" << std::endl;
 	}else if(trackedObj.x < middle){
 		// left of middle
@@ -169,6 +169,7 @@ void ShooterVisionTrack::Execute() {
 			Robot::shooter->SetSwivelSpeed(0.7);
 		}
 	}
+	//SmartDashboard::PutBoolean("Boiler Acquired", targetAcquired);
 }
 bool ShooterVisionTrack::FwdPressedThisTime() {
 	if(RobotMap::shooterTurretSwivel->IsFwdLimitSwitchClosed()){

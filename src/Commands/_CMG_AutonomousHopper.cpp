@@ -26,9 +26,7 @@ _CMG_AutonomousHopper::_CMG_AutonomousHopper() {
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 	if(Robot::robotAlliance == frc::DriverStation::kBlue) {
-		AddParallel(new ShooterSwivelTurret(-0.4));
 		AddSequential(new AutoStraightDrive(50.0, 0.7));
-		AddSequential(new ShooterSwivelTurret(0.0));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 33.0, Robot::drivetrain->Direction::counterClockwise));
 		AddSequential(new PauseCommand(0.2));
@@ -37,9 +35,7 @@ _CMG_AutonomousHopper::_CMG_AutonomousHopper() {
 		AddParallel(new FloorIntakeRunMotor(-1.0));
 		AddSequential(new _CMG_ShootBall());
 	}else{
-		AddParallel(new ShooterSwivelTurret(0.4));
 		AddSequential(new AutoStraightDrive(50.0, 0.7));
-		AddSequential(new ShooterSwivelTurret(0.0));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 33.0, Robot::drivetrain->Direction::clockwise));
 		AddSequential(new PauseCommand(0.2));

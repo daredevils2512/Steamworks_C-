@@ -37,8 +37,8 @@ OI::OI()
 	DRC_xButton.WhenReleased(new ClimberRunMotor(0.0));//working
 	DRC_yButton.WhileHeld(new FloorIntakeRunMotor(1.0));//working
 	DRC_yButton.WhenReleased(new FloorIntakeRunMotor(0.0));//working
-	DRC_aButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
-	DRC_bButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
+	DRC_aButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
+	DRC_bButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
 	DRC_startButton.WhenPressed(new ClimberRunMotor(1.0));
 
 	CDR_trigger.WhileHeld(new _CMG_ShootBall());//working
@@ -71,7 +71,7 @@ OI::OI()
 	CDB_bigRed.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kReverse));//working
 	CDB_green.WhileHeld(new FloorIntakeRunMotor(1.0));//working
 	CDB_green.WhenReleased(new FloorIntakeRunMotor(0.0));//working
-	CDB_yellow.WhenPressed(new GearVisionTurn(200));
+	CDB_yellow.WhenPressed(new GearVisionTurn(216));
 	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(0.8));//working
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-0.8));//working
