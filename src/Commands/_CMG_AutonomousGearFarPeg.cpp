@@ -6,6 +6,7 @@
 #include "AutoDimeSpin.h"
 #include "../Robot.h"
 #include "PauseCommand.h"
+#include "GearVisionTurn.h"
 
 _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 	// Add Commands here:
@@ -30,14 +31,30 @@ _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 23.0, Robot::drivetrain->Direction::counterClockwise));
 		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoStraightDrive(48.0, 0.7));
+		AddSequential(new AutoStraightDrive(33.0, 0.7));//48
+		AddSequential(new PauseCommand(0.5));
+		AddSequential(new GearVisionTurn(216));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new GearVisionTurn(216));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new GearVisionTurn(216));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoStraightDrive(15.0, 0.7));
 		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
-	}else{
+	}else{//red working
 		AddSequential(new AutoStraightDrive(46.0, 0.7));
 		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::clockwise));
+		AddSequential(new AutoDimeSpin(0.9, 16.0, Robot::drivetrain->Direction::clockwise));
 		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoStraightDrive(44.0, 0.7));
+		AddSequential(new AutoStraightDrive(30.0, 0.7));//44
+		AddSequential(new PauseCommand(0.5));
+		AddSequential(new GearVisionTurn(216));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new GearVisionTurn(216));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new GearVisionTurn(216));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoStraightDrive(12.0, 0.7));
 		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 	}
 }

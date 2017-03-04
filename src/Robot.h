@@ -17,8 +17,8 @@
 
 //class declaration of the robot
 class Robot : public IterativeRobot {
-private:
-	static frc::SendableChooser<frc::CommandGroup*> chooser;
+//private:
+//	static frc::SendableChooser<frc::CommandGroup*> chooser;
 
 public:
 
