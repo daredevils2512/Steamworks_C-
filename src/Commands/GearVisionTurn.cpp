@@ -25,7 +25,9 @@ void GearVisionTurn::Initialize() {
 void GearVisionTurn::Execute() {
 	//Gets the frame data from the GearPixy so we can use it
 	double targetX = Robot::pixySubsystem->GetGearPixyData();
+	std::cout << targetX << std::endl;
 	if(targetX == -1) {
+		std::cout << "-1" << std::endl;
 		numberOfNegOne++;
 		if(numberOfNegOne >= 20) {
 			abort = true;

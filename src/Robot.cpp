@@ -116,7 +116,6 @@ void Robot::TeleopInit() {
 	compressor->SetClosedLoopControl(true);
 	Robot::shooter->SetSwivelSpeed(0.0);
 	Robot::drivetrain->ResetEncoders();
-	std::cout << robotAlliance << std::endl;
 }
 
 void Robot::TeleopPeriodic() {

@@ -42,19 +42,19 @@ _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 		AddSequential(new AutoStraightDrive(15.0, 0.7));
 		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 	}else{//red working
-		AddSequential(new AutoStraightDrive(46.0, 0.7));
+		AddSequential(new AutoStraightDrive(45.0, 0.7));
 		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoDimeSpin(0.9, 16.0, Robot::drivetrain->Direction::clockwise));
+		AddSequential(new AutoDimeSpin(0.9, 17.0, Robot::drivetrain->Direction::clockwise));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(30.0, 0.7));//44
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(216));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new GearVisionTurn(216));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new GearVisionTurn(216));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoStraightDrive(12.0, 0.7));
+//		AddSequential(new GearVisionTurn(216));
+//		AddSequential(new PauseCommand(0.2));
+//		AddSequential(new GearVisionTurn(216));
+//		AddSequential(new PauseCommand(0.2));
+//		AddSequential(new GearVisionTurn(216));
+//		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoStraightDrive(13.0, 0.5));
 		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 	}
 }
