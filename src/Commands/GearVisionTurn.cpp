@@ -34,6 +34,7 @@ void GearVisionTurn::Execute() {
 			std::cout << "gear tracking aborted" << std::endl;
 		}
 	}else{
+		numberOfNegOne = 0;
 		TrackObject(targetX);
 	}
 }
