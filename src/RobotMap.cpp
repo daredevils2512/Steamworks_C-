@@ -10,10 +10,11 @@ std::shared_ptr<CANTalon> RobotMap::drivetrainFrontRightMotor;
 std::shared_ptr<CANTalon> RobotMap::drivetrainRearRightMotor;
 std::shared_ptr<CANTalon> RobotMap::climberMotor;
 std::shared_ptr<CANTalon> RobotMap::intakeMotor;
-std::shared_ptr<CANTalon> RobotMap::shooterLeftFlywheel;
-std::shared_ptr<CANTalon> RobotMap::shooterRightFlywheel;
+std::shared_ptr<CANTalon> RobotMap::shooterFlywheel;
 std::shared_ptr<CANTalon> RobotMap::shooterTurretSwivel;
 std::shared_ptr<CANTalon> RobotMap::shooterSpinCycleFeed;
+std::shared_ptr<CANTalon> RobotMap::shooterBottomBooster;
+std::shared_ptr<CANTalon> RobotMap::shooterTopBooster;
 std::shared_ptr<frc::SPI> RobotMap::shooterRealPixy;
 std::shared_ptr<frc::SPI> RobotMap::shooterFakePixy;
 std::shared_ptr<frc::RobotDrive> RobotMap::drivetrainChassis;
@@ -62,15 +63,10 @@ void RobotMap::init() {
 	intakeMotor.reset (new CANTalon(3));
 	lw->AddActuator("FloorIntake" , "IntakeMotor" , intakeMotor);
 
-	shooterLeftFlywheel.reset (new CANTalon(5));
-	shooterLeftFlywheel->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-	shooterLeftFlywheel->SetPID(0.08 , 0.000065, 2, 0.0285);
-	lw->AddActuator("Shooter" , "LeftFlywheel" , shooterLeftFlywheel);
-
-	shooterRightFlywheel.reset (new CANTalon(7));
-	shooterRightFlywheel->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-	shooterRightFlywheel->SetPID(0.08, 0.000065, 2, 0.0285);
-	lw->AddActuator("Shooter" , "RightFlywheel" , shooterRightFlywheel);
+	shooterFlywheel.reset (new CANTalon(5));
+	shooterFlywheel->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+	shooterFlywheel->SetPID(0.062 , 0.000055, 4.0, 0.032);
+	lw->AddActuator("Shooter" , "Flywheel" , shooterFlywheel);
 
 	shooterTurretSwivel.reset (new CANTalon(6));
 	lw->AddActuator("Shooter" , "TurretSwivel" , shooterTurretSwivel);
@@ -79,6 +75,10 @@ void RobotMap::init() {
 
 	shooterSpinCycleFeed.reset (new CANTalon(0));
 	lw->AddActuator("Shooter" , "SpinCycleFeed" , shooterSpinCycleFeed);
+
+	shooterBottomBooster.reset(new CANTalon(7));
+
+	shooterTopBooster.reset(new CANTalon(10));
 
 	shooterRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS0));
 	shooterFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS2));

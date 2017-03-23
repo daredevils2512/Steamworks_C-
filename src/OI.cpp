@@ -130,10 +130,10 @@ int OI::GetJoystickPOV() {
 }
 
 double OI::GetManualShooterSwivel() {
-	return Desensitize(coDriverController.GetRawAxis(2));
+	return coDriverController.GetRawAxis(2) / 2;
 }
 
 double OI::GetTranslatedThrottle() {
-		return ((-(coDriverController.GetAxis(frc::Joystick::AxisType::kThrottleAxis)) + 1) / 2) * 3000;
+		return ((-(coDriverController.GetAxis(frc::Joystick::AxisType::kThrottleAxis)) + 1) / 2) * 4200;
 }
 

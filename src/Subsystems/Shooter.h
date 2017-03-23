@@ -12,10 +12,11 @@ class Shooter : public Subsystem {
 private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
-	std::shared_ptr<CANTalon> leftFlywheel;
-	std::shared_ptr<CANTalon> rightFlywheel;
+	std::shared_ptr<CANTalon> flywheel;
 	std::shared_ptr<CANTalon> turretSwivel;
 	std::shared_ptr<CANTalon> spinCycleFeed;
+	std::shared_ptr<CANTalon> bottomBooster;
+	std::shared_ptr<CANTalon> topBooster;
 	std::shared_ptr<frc::DoubleSolenoid> hoodActuator;
 
 	bool lastConditionRight;
@@ -25,6 +26,7 @@ public:
 	Shooter();
 	void InitDefaultCommand();
 	void SetFlywheelSpeed(double speed);
+	void SetBoosterSpeed(double speed);
 	void SetSpinCycleFeedSpeed(double speed);
 	void SetSwivelSpeed(double speed);
 	double GetSwivelPosition();

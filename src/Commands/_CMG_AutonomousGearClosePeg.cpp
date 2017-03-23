@@ -12,6 +12,7 @@
 #include "ShooterVisionTrack.h"
 #include "FloorIntakeRunMotor.h"
 #include "_CMG_ShootBall.h"
+#include "GearVisionTurn.h"
 
 _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 	// Add Commands here:
@@ -34,9 +35,17 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 	if(Robot::robotAlliance == frc::DriverStation::kBlue) {
 		AddSequential(new AutoStraightDrive(46.0, 0.7));
 		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::clockwise));
+		AddSequential(new AutoDimeSpin(0.9, 16.25, Robot::drivetrain->Direction::clockwise));
 		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoStraightDrive(44.0, 0.7));
+		AddSequential(new AutoStraightDrive(30.0, 0.7));
+		AddSequential(new PauseCommand(0.5));
+		AddSequential(new GearVisionTurn(208));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new GearVisionTurn(208));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new GearVisionTurn(208));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoStraightDrive(13.0, 0.5));
 		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 		if(gotoHopper) {
 			AddSequential(new GearGetLimitSwitch());
@@ -59,7 +68,15 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::counterClockwise));
 		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoStraightDrive(44.0, 0.7));
+		AddSequential(new AutoStraightDrive(30.0, 0.7));
+		AddSequential(new PauseCommand(0.5));
+		AddSequential(new GearVisionTurn(208));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new GearVisionTurn(208));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new GearVisionTurn(208));
+		AddSequential(new PauseCommand(0.2));
+		AddSequential(new AutoStraightDrive(13.0, 0.5));
 		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 		if(gotoHopper) {
 			AddSequential(new GearGetLimitSwitch());

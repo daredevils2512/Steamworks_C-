@@ -11,7 +11,7 @@ ShooterVisionTrack::ShooterVisionTrack(bool isAutonomous) {
 	abort = false;
 	targetAcquired = false;
 	m_isAutonomous = isAutonomous;
-	speed = 0.7;
+	speed = 0.4;
 	fwdLastPressed = false;
 	revLastPressed = false;
 	fwdLastPassed = false;
@@ -42,10 +42,10 @@ void ShooterVisionTrack::Execute() {
 //
 //		}
 		if(FwdEncPassedThisTime()) {
-			speed = -0.7;
+			speed = -0.4;
 		}
 		if(RevEncPassedThisTime()) {
-			speed = 0.7;
+			speed = 0.4;
 		}
 		Robot::shooter->SetSwivelSpeed(speed);
 		return;
@@ -137,7 +137,7 @@ void ShooterVisionTrack::Execute() {
 	int middle = 160;//159
 	//sets the acceptable tolerance of the target
 	int tolerance = 20;
-	int slowDownTolerance = 80;
+	int slowDownTolerance = 150;
 	//sets the minimum and maximum speeds of the turret swivel
 
 	//double minspeed = 0.1;
@@ -155,18 +155,18 @@ void ShooterVisionTrack::Execute() {
 //		std::cout << "-" << std::endl;
 		targetAcquired = false;
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
-			Robot::shooter->SetSwivelSpeed(-0.3);
+			Robot::shooter->SetSwivelSpeed(-0.2);
 		}else{
-			Robot::shooter->SetSwivelSpeed(-0.7);
+			Robot::shooter->SetSwivelSpeed(-0.4);
 		}
 	}else{
 		// hopefully to the right of middle
 //		std::cout << "+" << std::endl;
 		targetAcquired = false;
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
-			Robot::shooter->SetSwivelSpeed(0.3);
+			Robot::shooter->SetSwivelSpeed(0.2);
 		}else{
-			Robot::shooter->SetSwivelSpeed(0.7);
+			Robot::shooter->SetSwivelSpeed(0.4);
 		}
 	}
 }

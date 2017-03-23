@@ -17,10 +17,11 @@ public:
 	//1 speed controller for running the intake motor
 	static std::shared_ptr<CANTalon> intakeMotor;
 
-	static std::shared_ptr<CANTalon> shooterLeftFlywheel;
-	static std::shared_ptr<CANTalon> shooterRightFlywheel;
+	static std::shared_ptr<CANTalon> shooterFlywheel;
 	static std::shared_ptr<CANTalon> shooterTurretSwivel;
 	static std::shared_ptr<CANTalon> shooterSpinCycleFeed;
+	static std::shared_ptr<CANTalon> shooterBottomBooster;
+	static std::shared_ptr<CANTalon> shooterTopBooster;
 	static std::shared_ptr<frc::SPI> shooterRealPixy;
 	static std::shared_ptr<frc::SPI> shooterFakePixy;
 

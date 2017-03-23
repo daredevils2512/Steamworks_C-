@@ -10,12 +10,15 @@ GearVisionTurn::GearVisionTurn(double targetX) {
 	targetAcquired = false;
 	abort = false;
 	goalPixel = targetX;
+	numberOfNegOne = 0;
+	SetTimeout(1.0);
 }
 
 // Called just before this Command runs the first time
 void GearVisionTurn::Initialize() {
 	targetAcquired = false;
 	abort = false;
+	numberOfNegOne = 0;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -23,15 +26,21 @@ void GearVisionTurn::Execute() {
 	//Gets the frame data from the GearPixy so we can use it
 	double targetX = Robot::pixySubsystem->GetGearPixyData();
 	if(targetX == -1) {
-		abort = true;
+		std::cout << "-1" << std::endl;
+		numberOfNegOne++;
+		if(numberOfNegOne >= 20) {
+			abort = true;
+			std::cout << "gear tracking aborted" << std::endl;
+		}
 	}else{
+		numberOfNegOne = 0;
 		TrackObject(targetX);
 	}
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool GearVisionTurn::IsFinished() {
-	return targetAcquired || abort;
+	return targetAcquired || abort || IsTimedOut();
 }
 
 // Called once after isFinished returns true
@@ -81,16 +90,25 @@ void GearVisionTurn::TurnDirection(double m_targetX , double centerX){
 }
 
 void GearVisionTurn::TrackObject(double objectX) {
-	int tolerance = 20;
-	if(goalPixel-(tolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
-		Robot::drivetrain->DriveRobotTank(0.0, 0.0);
-		std::cout << "Gear target acquired" << std::endl;
-		targetAcquired = true;
-	}else if(objectX < goalPixel) {
-		Robot::drivetrain->DriveRobotTank(-0.8, 0.8);
-		std::cout << "-" << std::endl;
-	}else{
-		Robot::drivetrain->DriveRobotTank(0.8, -0.8);
-		std::cout << "+" << std::endl;
-	}
+	int tolerance = 30;
+		int slowDownTolerance = 100;
+		if(goalPixel-(tolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
+			Robot::drivetrain->DriveRobotTank(0.0, 0.0);
+			std::cout << "Gear target acquired" << std::endl;
+			targetAcquired = true;
+		}else if(objectX < goalPixel) {
+			if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
+				Robot::drivetrain->DriveRobotTank(-0.4, 0.4);
+			}else{
+				Robot::drivetrain->DriveRobotTank(-0.7, 0.7);
+			}
+			std::cout << "-" << std::endl;
+		}else{
+			if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
+				Robot::drivetrain->DriveRobotTank(0.4, -0.4);
+			}else{
+				Robot::drivetrain->DriveRobotTank(0.7, -0.7);
+			}
+			std::cout << "+" << std::endl;
+		}
 }

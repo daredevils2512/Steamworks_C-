@@ -111,8 +111,7 @@ void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
 	//prints information to the smart dashboard
 	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
-	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterLeftFlywheel->GetSpeed());
-	SmartDashboard::PutNumber("right flywheel speed", RobotMap::shooterRightFlywheel->GetSpeed());
+	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterFlywheel->GetSpeed());
 	SmartDashboard::PutBoolean("gear limit switch" , Robot::gear->GetLimitSwitch());
 }
 

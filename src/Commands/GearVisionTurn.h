@@ -30,6 +30,7 @@ private:
 	bool targetAcquired;
 	bool abort;
 	int goalPixel;
+	int numberOfNegOne;
 };
 
 #endif  // GearVisionTurn_H

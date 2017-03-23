@@ -4,10 +4,11 @@
 
 Shooter::Shooter() : Subsystem("Shooter") {
 	//quick defines
-	leftFlywheel = RobotMap::shooterLeftFlywheel;
-	rightFlywheel = RobotMap::shooterRightFlywheel;
+	flywheel = RobotMap::shooterFlywheel;
 	spinCycleFeed = RobotMap::shooterSpinCycleFeed;
 	turretSwivel = RobotMap::shooterTurretSwivel;
+	bottomBooster = RobotMap::shooterBottomBooster;
+	topBooster = RobotMap::shooterTopBooster;
 
 	hoodActuator = RobotMap::shooterHoodActuator;
 
@@ -30,14 +31,18 @@ void Shooter::ActuateHood(frc::DoubleSolenoid::Value direction){
 void Shooter::SetFlywheelSpeed(double speed){
 	//Set the flywheels to the appropriate speeds
 	if((speed <= 1) && (speed >=-1)) {
-		leftFlywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
-		rightFlywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
 	}else{
-		leftFlywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
-		rightFlywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
+		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
 	}
-	leftFlywheel->Set(speed);
-	rightFlywheel->Set(-speed);
+	flywheel->Set(speed);
+}
+
+void Shooter::SetBoosterSpeed(double speed) {
+	bottomBooster->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+	bottomBooster->Set(speed);
+	topBooster->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+	topBooster->Set(speed);
 }
 
 void Shooter::SetSpinCycleFeedSpeed(double speed){
