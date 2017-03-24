@@ -33,7 +33,7 @@ void Robot::RobotInit() {
 
 	compressor.reset(new frc::Compressor());
 	frc::CameraServer::GetInstance()->StartAutomaticCapture();
-	frc::CameraServer::GetInstance()->StartAutomaticCapture();
+//	frc::CameraServer::GetInstance()->StartAutomaticCapture();
   }
 
 void Robot::DisabledInit(){
@@ -68,18 +68,24 @@ void Robot::AutonomousInit() {
 		if (firstPart == "Autonomous") {
 			if (lastPart == "Far") {
 				autonomousCommand.reset(new _CMG_AutonomousGearFarPeg());
+//				std::cout << "far" << std::endl;
 			} else if (lastPart == "Close") {
 				autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(false));
+//				std::cout << "close" << std::endl;
 			} else if (lastPart == "Center") {
 				autonomousCommand.reset(new _CMG_AutonomousGearCenterPeg());
+//				std::cout << "center" << std::endl;
 			} else if (lastPart == "Hopper") {
 				autonomousCommand.reset(new _CMG_AutonomousHopper());
+//				std::cout << "just hopper" << std::endl;
 			}
 		} else if (firstPart == "DoHopper") {
 			if (lastPart == "Yes") {
 				autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(true));
+//				std::cout << "close with hopper" << std::endl;
 			} else if (lastPart == "No") {
 				autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(false));
+//				std::cout << "close without hopper" << std::endl;
 			}
 
 		}
@@ -91,6 +97,8 @@ void Robot::AutonomousInit() {
 
 void Robot::AutonomousPeriodic() {
 	Scheduler::GetInstance()->Run();
+	SmartDashboard::PutNumber("left encoder", RobotMap::drivetrainLeftEncoder->GetDistance());
+	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder->GetDistance());
 }
 
 void Robot::TeleopInit() {
@@ -113,6 +121,12 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
 	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterFlywheel->GetSpeed());
 	SmartDashboard::PutBoolean("gear limit switch" , Robot::gear->GetLimitSwitch());
+	SmartDashboard::PutNumber("left encoder", RobotMap::drivetrainLeftEncoder->GetDistance());
+	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder->GetDistance());
+	SmartDashboard::PutNumber("subsystem get left encoder", Robot::drivetrain->GetLeftEncoder());
+	SmartDashboard::PutNumber("subsystem get right encoder", Robot::drivetrain->GetRightEncoder());
+	SmartDashboard::PutNumber("left encoder raw", RobotMap::drivetrainLeftEncoder->Get());
+	SmartDashboard::PutNumber("right encoder raw", RobotMap::drivetrainRightEncoder->Get());
 }
 
 void Robot::TestPeriodic() {

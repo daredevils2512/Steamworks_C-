@@ -107,12 +107,12 @@ void RobotMap::init() {
 	gearLimitSwitch.reset (new frc::DigitalInput(0));
 	lw ->AddSensor("Gear" , "GearLimitSwitch" , gearLimitSwitch);
 
-	gearPixyDigital.reset(new frc::DigitalInput(1));
+	gearPixyDigital.reset(new frc::DigitalInput(5));
 
 	gearPixyAnalog.reset(new frc::AnalogInput(0));
 
-	gearRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS1));
-	gearFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS3));
+//	gearRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS1));
+//	gearFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS3));
 
 	gearSolenoid.reset (new frc::DoubleSolenoid(0, 2, 3));
 	lw ->AddActuator("Gear" , "GearSolenoid" , gearSolenoid);

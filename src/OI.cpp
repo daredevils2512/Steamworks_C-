@@ -24,6 +24,7 @@
 #include "Commands/_CMG_AutonomousGearFarPeg.h"
 #include "Commands/GearVisionTurn.h"
 #include "Commands/ShooterSwivelMoveToPosition.h"
+#include "Commands/ShooterRunBoosters.h"
 
 
 OI::OI()
@@ -44,6 +45,7 @@ OI::OI()
 	CDR_trigger.WhileHeld(new _CMG_ShootBall());//working
 	CDR_trigger.WhenReleased(new ShooterRunFlywheel(0.0));//working
 	CDR_trigger.WhenReleased(new ShooterRunSpinCycleFeed(0.0));//working
+	CDR_trigger.WhenReleased(new ShooterRunBoosters(0.0));
 	CDR_joystickPOV.WhenPressed(new ShooterPOVHoodControl());//working
 	CDR_sideJoystickButton.WhileHeld(new ShooterVisionTrack(false));//working
 	CDR_topLeftJoystick.WhileHeld(new FloorIntakeRunMotor(-1.0));//working
@@ -53,8 +55,8 @@ OI::OI()
 	CDR_topRightJoystick.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDR_bottomRightJoystick.WhileHeld(new ClimberRunMotor(-1.0));//working
 	CDR_bottomRightJoystick.WhenReleased(new ClimberRunMotor(0.0));//working
-	CDR_bottomRightBase.WhenPressed(new SetShootBallSpeed(2250));
-	CDR_topRightBase.WhenPressed(new SetShootBallSpeed(2400));
+//	CDR_bottomRightBase.WhenPressed(new ShooterRunBoosters(0.0));
+//	CDR_topRightBase.WhenPressed(new ShooterRunBoosters(0.8));
 	CDR_bottomLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.95));//working
 	CDR_topLeftBase.WhenPressed(new ShooterRunSpinCycleFeed(0.0));//working
 	CDR_topMiddleBase.WhenPressed(new ShooterRunFlywheel(0.0));//working, sometimes wheels spurt randomly
