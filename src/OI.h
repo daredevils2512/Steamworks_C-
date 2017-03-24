@@ -25,7 +25,7 @@ private:
 	JoystickButton DRC_bButton{&driverController, 2};
 	JoystickButton DRC_xButton{&driverController, 3};
 	JoystickButton DRC_yButton{&driverController, 4};
-	JoystickButton DRC_startButton{&driverController, 9};
+	JoystickButton DRC_startButton{&driverController, 8};
 
 	JoystickButton CDR_trigger{&coDriverController, 1};
 	JoystickButton CDR_sideJoystickButton{&coDriverController, 2};

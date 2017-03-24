@@ -19,6 +19,7 @@ void GearVisionTurn::Initialize() {
 	targetAcquired = false;
 	abort = false;
 	numberOfNegOne = 0;
+	std::cout << "start gear tracking" << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -90,6 +91,7 @@ void GearVisionTurn::TurnDirection(double m_targetX , double centerX){
 }
 
 void GearVisionTurn::TrackObject(double objectX) {
+	std::cout << objectX << std::endl;
 	int tolerance = 30;
 		int slowDownTolerance = 100;
 		if(goalPixel-(tolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
@@ -98,6 +100,7 @@ void GearVisionTurn::TrackObject(double objectX) {
 			targetAcquired = true;
 		}else if(objectX < goalPixel) {
 			if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
+				std::cout << "slow" << std::endl;
 				Robot::drivetrain->DriveRobotTank(-0.4, 0.4);
 			}else{
 				Robot::drivetrain->DriveRobotTank(-0.7, 0.7);
@@ -106,6 +109,7 @@ void GearVisionTurn::TrackObject(double objectX) {
 		}else{
 			if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
 				Robot::drivetrain->DriveRobotTank(0.4, -0.4);
+				std::cout << "slow" << std::endl;
 			}else{
 				Robot::drivetrain->DriveRobotTank(0.7, -0.7);
 			}

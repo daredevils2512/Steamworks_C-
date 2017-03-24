@@ -53,7 +53,13 @@ void Robot::AutonomousInit() {
 	Robot::floorIntake->SetSpeed(0.0);
 	Robot::shooter->SetSwivelSpeed(0.0);
 	Robot::drivetrain->SetAutonomous(true);
-	std::ifstream ifs("/home/lvuser/Autonomous.txt"); // TODO: this wont work so fix it, use local filesystem on roborio
+	Robot::drivetrain->ResetEncoders();
+	std::ifstream ifs("/home/lvuser/Autonomous.txt");
+	if(!ifs.good()) {
+		std::cout << "ERROR: no auto file" << std::endl;
+		ifs.close();
+		return;
+	}
 	while (!ifs.eof()) {
 		std::string firstPart;
 		std::string lastPart;
@@ -68,24 +74,24 @@ void Robot::AutonomousInit() {
 		if (firstPart == "Autonomous") {
 			if (lastPart == "Far") {
 				autonomousCommand.reset(new _CMG_AutonomousGearFarPeg());
-//				std::cout << "far" << std::endl;
+				std::cout << "far" << std::endl;
 			} else if (lastPart == "Close") {
 				autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(false));
-//				std::cout << "close" << std::endl;
+				std::cout << "close" << std::endl;
 			} else if (lastPart == "Center") {
 				autonomousCommand.reset(new _CMG_AutonomousGearCenterPeg());
-//				std::cout << "center" << std::endl;
+				std::cout << "center" << std::endl;
 			} else if (lastPart == "Hopper") {
 				autonomousCommand.reset(new _CMG_AutonomousHopper());
-//				std::cout << "just hopper" << std::endl;
+				std::cout << "just hopper" << std::endl;
 			}
 		} else if (firstPart == "DoHopper") {
 			if (lastPart == "Yes") {
 				autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(true));
-//				std::cout << "close with hopper" << std::endl;
+				std::cout << "close with hopper" << std::endl;
 			} else if (lastPart == "No") {
 				autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(false));
-//				std::cout << "close without hopper" << std::endl;
+				std::cout << "close without hopper" << std::endl;
 			}
 
 		}
@@ -122,7 +128,9 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterFlywheel->GetSpeed());
 	SmartDashboard::PutBoolean("gear limit switch" , Robot::gear->GetLimitSwitch());
 	SmartDashboard::PutNumber("left encoder", RobotMap::drivetrainLeftEncoder->GetDistance());
+//	SmartDashboard::PutBoolean("left encoder digitalcheck", RobotMap::drivetrainLeftEncoder->CheckDigitalChannel(2));
 	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder->GetDistance());
+//	SmartDashboard::PutBoolean("right encoder digitalcheck", RobotMap::drivetrainRightEncoder->CheckDigitalChannel(4));
 	SmartDashboard::PutNumber("subsystem get left encoder", Robot::drivetrain->GetLeftEncoder());
 	SmartDashboard::PutNumber("subsystem get right encoder", Robot::drivetrain->GetRightEncoder());
 	SmartDashboard::PutNumber("left encoder raw", RobotMap::drivetrainLeftEncoder->Get());

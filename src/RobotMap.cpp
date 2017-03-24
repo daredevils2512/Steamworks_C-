@@ -92,6 +92,7 @@ void RobotMap::init() {
 		drivetrainChassis ->SetMaxOutput(1.0);
 
 	drivetrainLeftEncoder.reset(new frc::Encoder(1, 2, false, Encoder::k4X));//1, 2
+
 	drivetrainLeftEncoder->SetReverseDirection(true);
 	drivetrainLeftEncoder->SetDistancePerPulse(0.0349059176);
 

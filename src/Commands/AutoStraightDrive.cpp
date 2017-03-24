@@ -8,11 +8,13 @@ AutoStraightDrive::AutoStraightDrive(double targetFeet, double speed) {
 	Requires(Robot::drivetrain.get());
 	m_targetFeet = targetFeet;
 	m_speed = speed;
+	SetTimeout(3.0);
 }
 
 // Called just before this Command runs the first time
 void AutoStraightDrive::Initialize() {
 	Robot::drivetrain->ResetEncoders();
+	std::cout << "drive started" << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -32,11 +34,15 @@ bool AutoStraightDrive::IsFinished() {
 			leftDistance = rightDistance;
 		}
 	}
-	return (leftDistance + rightDistance) / 2 >= m_targetFeet;
+	if(IsTimedOut()) {
+		std::cout << "timed out" << std::endl;
+	}
+	return ((leftDistance + rightDistance) / 2 >= m_targetFeet) || IsTimedOut();
 }
 
 // Called once after isFinished returns true
 void AutoStraightDrive::End() {
+	std::cout << "drive completed" << std::endl;
 	Robot::drivetrain->DriveRobotTank(0.0 , 0.0);
 }
 
