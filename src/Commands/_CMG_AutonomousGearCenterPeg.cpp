@@ -24,7 +24,7 @@ _CMG_AutonomousGearCenterPeg::_CMG_AutonomousGearCenterPeg() {
 		// arm.
 //	AddSequential(new AutoStraightDrive(48.0, 0.7));
 //	AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
-	AddSequential(new AutoStraightDrive(20.0, 0.5));
+	AddSequential(new AutoStraightDrive(30.0, 0.5));
 	AddSequential(new PauseCommand(0.5));
 	AddSequential(new GearVisionTurn(208));
 	AddSequential(new PauseCommand(0.2));

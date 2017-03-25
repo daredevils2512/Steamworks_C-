@@ -8,7 +8,7 @@ AutoStraightDrive::AutoStraightDrive(double targetFeet, double speed) {
 	Requires(Robot::drivetrain.get());
 	m_targetFeet = targetFeet;
 	m_speed = speed;
-	SetTimeout(3.0);
+	SetTimeout(2.5);
 }
 
 // Called just before this Command runs the first time
