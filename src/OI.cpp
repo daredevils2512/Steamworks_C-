@@ -73,15 +73,16 @@ OI::OI()
 	CDB_bigRed.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kReverse));//working
 	CDB_green.WhileHeld(new FloorIntakeRunMotor(1.0));//working
 	CDB_green.WhenReleased(new FloorIntakeRunMotor(0.0));//working
-	CDB_yellow.WhenPressed(new GearVisionTurn(200));
+	CDB_yellow.WhenPressed(new ShooterSwivelMoveToPosition(-8000));//-7565
+//	CDB_yellow.WhenPressed(new GearVisionTurn(210));
 	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(1.0));//working
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-0.8));//working
 	CDB_bottomRed.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDB_topWhite.WhenPressed(new SetShootBallSpeed(2250));
 	CDB_topRed.WhenPressed(new SetShootBallSpeed(2400));
-	CDB_middleWhite.WhenPressed(new ShooterSwivelTurret(0.2));
-	CDB_middleRed.WhenPressed(new ShooterSwivelTurret(-0.2));
+	CDB_middleWhite.WhenPressed(new _CMG_ShooterManualSwivel(0.2));
+	CDB_middleRed.WhenPressed(new _CMG_ShooterManualSwivel(-0.2));
 }
 
 double OI::GetTurn() {
@@ -132,7 +133,7 @@ int OI::GetJoystickPOV() {
 }
 
 double OI::GetManualShooterSwivel() {
-	return coDriverController.GetRawAxis(2) / 2;
+	return Desensitize(coDriverController.GetRawAxis(2)) / 2;
 }
 
 double OI::GetTranslatedThrottle() {

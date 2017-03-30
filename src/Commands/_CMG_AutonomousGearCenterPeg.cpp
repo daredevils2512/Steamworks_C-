@@ -4,6 +4,8 @@
 #include "PauseCommand.h"
 #include "../Subsystems/Drivetrain.h"
 #include "GearVisionTurn.h"
+#include "_CMG_ShootBall.h"
+
 
 _CMG_AutonomousGearCenterPeg::_CMG_AutonomousGearCenterPeg() {
 	// Add Commands here:
@@ -24,14 +26,15 @@ _CMG_AutonomousGearCenterPeg::_CMG_AutonomousGearCenterPeg() {
 		// arm.
 //	AddSequential(new AutoStraightDrive(48.0, 0.7));
 //	AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
-	AddSequential(new AutoStraightDrive(30.0, 0.5));
+	AddSequential(new AutoStraightDrive(30.0, 0.7));
 	AddSequential(new PauseCommand(0.5));
-	AddSequential(new GearVisionTurn(208));
+	AddSequential(new GearVisionTurn(180));//208
 	AddSequential(new PauseCommand(0.2));
-	AddSequential(new GearVisionTurn(208));
+	AddSequential(new GearVisionTurn(180));
 	AddSequential(new PauseCommand(0.2));
-	AddSequential(new GearVisionTurn(208));
+	AddSequential(new GearVisionTurn(180));
 	AddSequential(new PauseCommand(0.2));
 	AddSequential(new AutoStraightDrive(18.0, 0.5));
 	AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+	AddSequential(new _CMG_ShootBall());
 }

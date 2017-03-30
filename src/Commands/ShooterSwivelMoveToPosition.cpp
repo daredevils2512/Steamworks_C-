@@ -16,8 +16,8 @@ void ShooterSwivelMoveToPosition::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterSwivelMoveToPosition::Execute() {
-	int tolerance = 1000;
-	int slowDownTolerance = 4000;
+	int tolerance = 75;
+	int slowDownTolerance = 2000;
 	double currentPosition = Robot::shooter->GetSwivelPosition();
 	if(m_position-(tolerance/2) <= currentPosition && currentPosition <= m_position + (tolerance/2)) {
 		Robot::shooter->SetSwivelSpeed(0.0);
@@ -27,18 +27,18 @@ void ShooterSwivelMoveToPosition::Execute() {
 		std::cout << "on target" << std::endl;
 	}else if(currentPosition < m_position) {
 		if(m_position-(slowDownTolerance/2) <= currentPosition && currentPosition <= m_position + (slowDownTolerance/2)) {
-			Robot::shooter->SetSwivelSpeed(0.3);
+			Robot::shooter->SetSwivelSpeed(0.1);
 			std::cout << "slow" << std::endl;
 		}else{
-			Robot::shooter->SetSwivelSpeed(0.6);
+			Robot::shooter->SetSwivelSpeed(0.4);
 		}
 		std::cout << "+" << std::endl;
 	}else {
 		if(m_position-(slowDownTolerance/2) <= currentPosition && currentPosition <= m_position + (slowDownTolerance/2)) {
-			Robot::shooter->SetSwivelSpeed(-0.3);
+			Robot::shooter->SetSwivelSpeed(-0.1);
 			std::cout << "slow" << std::endl;
 		}else{
-			Robot::shooter->SetSwivelSpeed(-0.6);
+			Robot::shooter->SetSwivelSpeed(-0.4);
 		}
 		std::cout << "-" << std::endl;
 	}

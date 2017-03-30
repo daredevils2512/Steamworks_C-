@@ -101,14 +101,14 @@ void GearVisionTurn::TrackObject(double objectX) {
 		}else if(objectX < goalPixel) {
 			if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
 				std::cout << "slow" << std::endl;
-				Robot::drivetrain->DriveRobotTank(-0.4, 0.4);
+				Robot::drivetrain->DriveRobotTank(-0.5, 0.5);
 			}else{
 				Robot::drivetrain->DriveRobotTank(-0.7, 0.7);
 			}
 			std::cout << "-" << std::endl;
 		}else{
 			if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
-				Robot::drivetrain->DriveRobotTank(0.4, -0.4);
+				Robot::drivetrain->DriveRobotTank(0.5, -0.5);
 				std::cout << "slow" << std::endl;
 			}else{
 				Robot::drivetrain->DriveRobotTank(0.7, -0.7);

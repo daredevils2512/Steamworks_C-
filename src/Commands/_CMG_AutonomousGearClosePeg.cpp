@@ -13,6 +13,7 @@
 #include "FloorIntakeRunMotor.h"
 #include "_CMG_ShootBall.h"
 #include "GearVisionTurn.h"
+#include "ShooterSwivelMoveToPosition.h"
 
 _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 	// Add Commands here:
@@ -33,17 +34,17 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 	// arm.
 //	AddSequential(new AutoCircleDrive(160.0, 1.0, Drivetrain::Direction::counterClockwise, 80.0));
 	if(Robot::robotAlliance == frc::DriverStation::kBlue) {
-		AddSequential(new AutoStraightDrive(46.0, 0.7));
+		AddSequential(new AutoStraightDrive(34.0, 0.7));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 16.25, Robot::drivetrain->Direction::clockwise));
 		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoStraightDrive(30.0, 0.7));
+		AddSequential(new AutoStraightDrive(26.0, 0.7));//30
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(208));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new GearVisionTurn(208));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new GearVisionTurn(208));
+		AddSequential(new GearVisionTurn(210));
+		AddSequential(new PauseCommand(0.5));
+		AddSequential(new GearVisionTurn(210));
+		AddSequential(new PauseCommand(0.5));
+		AddSequential(new GearVisionTurn(210));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(13.0, 0.5));
 		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
@@ -63,21 +64,26 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 			AddParallel(new FloorIntakeRunMotor(-1.0));
 			AddSequential(new _CMG_ShootBall());
 		}
-	}else{
-		AddSequential(new AutoStraightDrive(46.0, 0.7));
+	}else{//red
+		AddSequential(new AutoStraightDrive(37.0, 0.7));//34
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::counterClockwise));
 		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoStraightDrive(30.0, 0.7));
+		AddSequential(new AutoStraightDrive(30.0, 0.7));//30
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(208));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new GearVisionTurn(208));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new GearVisionTurn(208));
+		AddSequential(new GearVisionTurn(210));
+		AddSequential(new PauseCommand(0.5));
+		AddSequential(new GearVisionTurn(210));
+		AddSequential(new PauseCommand(0.5));
+		AddSequential(new GearVisionTurn(210));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(13.0, 0.5));
 		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+		AddSequential(new GearGetLimitSwitch());
+		AddSequential(new PauseCommand(2.0));
+		AddSequential(new AutoStraightDrive(6.0, -0.5));
+		AddSequential(new ShooterSwivelMoveToPosition(-7900));
+		AddSequential(new _CMG_ShootBall());
 		if(gotoHopper) {
 			AddSequential(new GearGetLimitSwitch());
 			AddSequential(new PauseCommand(1.0));
