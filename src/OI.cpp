@@ -87,7 +87,7 @@ OI::OI()
 
 double OI::GetTurn() {
 	//gets forward/backward values
-	return Desensitize(-driverController.GetRawAxis(4));
+	return Desensitize(driverController.GetRawAxis(4));
 }
 
 double OI::GetMove() {
@@ -95,7 +95,7 @@ double OI::GetMove() {
 	if(InvertDriving()) {
 		return Desensitize(driverController.GetRawAxis(1));
 	}else{
-		return Desensitize(-driverController.GetRawAxis(1));
+		return Desensitize(driverController.GetRawAxis(1));
 	}
 }
 

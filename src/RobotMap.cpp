@@ -60,6 +60,7 @@ void RobotMap::init() {
 
 	drivetrainRearLeftMotor.reset (new CANTalon(DRIVETRAIN_REAR_LEFT_MOTOR));
 	lw->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
+	drivetrainRearLeftMotor->SetInverted(true);
 	//Setting up PID with the back motors since they are the Masters
 
 	drivetrainFrontRightMotor.reset (new CANTalon(DRIVETRAIN_FRONT_RIGHT_MOTOR));
@@ -68,6 +69,7 @@ void RobotMap::init() {
 
 	drivetrainRearRightMotor.reset (new CANTalon(DRIVETRAIN_REAR_RIGHT_MOTOR));
 	lw->AddActuator("Drivetrain" , "RearRightMotor" , drivetrainRearRightMotor);
+	drivetrainRearRightMotor->SetInverted(true);
 	//Setting up PID with the back motors since they are the Masters
 
 	climberMotor.reset (new CANTalon(CLIMBER_MOTOR));
