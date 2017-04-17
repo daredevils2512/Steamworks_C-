@@ -1,11 +1,12 @@
 #include "Gear.h"
 #include "../RobotMap.h"
-#include "../Commands/GearIntakeActuate.h"
 
 Gear::Gear() : Subsystem("Gear") {
 	limitswitch = RobotMap::gearLimitSwitch;
-	solenoid = RobotMap::gearSolenoid;
+	releaseswitch = RobotMap::gearReleaseLimitSwitch;
+	releasesolenoid = RobotMap::gearActiveRelease;
 	previousGearSwitchState = GetLimitSwitch();
+
 }
 
 void Gear::InitDefaultCommand() {
@@ -17,28 +18,35 @@ void Gear::InitDefaultCommand() {
 // here. Call these from Commands.
 
 bool Gear::GetLimitSwitch() {
-	if(limitswitch->Get()) {
-		return false;
-	}else{
-		return true;
-	}
+	return !limitswitch->Get();
+}
+bool Gear::GetReleaseLimitSwitch() {
+	return !releaseswitch->Get();
 }
 
 frc::DoubleSolenoid::Value Gear::GetIntakeDirection() {
 	return solenoid->Get();
 }
 
+frc::DoubleSolenoid::Value Gear::GetReleaseDirection() {
+	return releasesolenoid->Get();
+}
+
 void Gear::ActuateGearIntake(frc::DoubleSolenoid:: Value dir) {
 	solenoid->Set(dir);
 }
 
-void Gear::UpdateGearActuator() {
-	if(GetLimitSwitch() != previousGearSwitchState){
-		if(GetIntakeDirection() == frc::DoubleSolenoid::kForward) {
-			SetCurrentCommand(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
-		}else{
-			SetCurrentCommand(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
-		}
-	}
-	previousGearSwitchState = GetLimitSwitch();
+void Gear::ActuateGearRelease(frc::DoubleSolenoid:: Value dir) {
+	releasesolenoid->Set(dir);
 }
+
+//void Gear::UpdateGearActuator() {
+//	if(GetLimitSwitch() != previousGearSwitchState){
+//		if(GetIntakeDirection() == frc::DoubleSolenoid::kForward) {
+//			SetCurrentCommand(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+//		}else{
+//			SetCurrentCommand(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
+//		}
+//	}
+//	previousGearSwitchState = GetLimitSwitch();
+//}

@@ -25,6 +25,8 @@
 #include "Commands/GearVisionTurn.h"
 #include "Commands/ShooterSwivelMoveToPosition.h"
 #include "Commands/ShooterRunBoosters.h"
+#include "Commands/ConditionallyReleaseGear.h"
+#include "Commands/GearReleaseActuate.h"
 
 
 OI::OI()
@@ -32,14 +34,17 @@ OI::OI()
 	// activates commands here based off of operator input
 	DRC_rightTrigger.WhenPressed(new DrivetrainShift(true));//working
 	DRC_rightTrigger.WhenReleased(new DrivetrainShift(false));//working
-	DRC_rightBumper.WhenPressed(new FloorIntakeRunMotor(-1.0));//working
-	DRC_leftBumper.WhenPressed(new FloorIntakeRunMotor(0.0));//working
+//	DRC_rightBumper.WhenPressed(new FloorIntakeRunMotor(-1.0));//working
+//	DRC_leftBumper.WhenPressed(new FloorIntakeRunMotor(0.0));//working
+	DRC_rightBumper.WhenPressed(new GearReleaseActuate(frc::DoubleSolenoid::kForward));
+	DRC_leftBumper.WhenPressed(new GearReleaseActuate(frc::DoubleSolenoid::kReverse));
 	DRC_xButton.WhileHeld(new ClimberRunMotor(1.0));//working
 	DRC_xButton.WhenReleased(new ClimberRunMotor(0.0));//working
 	DRC_yButton.WhileHeld(new FloorIntakeRunMotor(1.0));//working
 	DRC_yButton.WhenReleased(new FloorIntakeRunMotor(0.0));//working
-	DRC_aButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
-	DRC_bButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
+	DRC_aButton.WhileHeld(new ConditionallyReleaseGear());
+//	DRC_aButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
+//	DRC_bButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
 	DRC_startButton.WhenPressed(new ClimberRunMotor(1.0));
 
 	CDR_trigger.WhileHeld(new _CMG_ShootBall());//working

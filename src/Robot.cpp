@@ -32,7 +32,7 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	compressor.reset(new frc::Compressor());
-	frc::CameraServer::GetInstance()->StartAutomaticCapture();
+//	frc::CameraServer::GetInstance()->StartAutomaticCapture(); //this should be running, commented out for testing
 //	frc::CameraServer::GetInstance()->StartAutomaticCapture();
   }
 
@@ -126,6 +126,7 @@ void Robot::TeleopPeriodic() {
 	//prints information to the smart dashboard
 	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
 	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterFlywheel->GetSpeed());
+	SmartDashboard::PutNumber("fly setpoint", RobotMap::shooterFlywheel->Get());
 	SmartDashboard::PutBoolean("gear limit switch" , Robot::gear->GetLimitSwitch());
 	SmartDashboard::PutNumber("left encoder", RobotMap::drivetrainLeftEncoder->GetDistance());
 //	SmartDashboard::PutBoolean("left encoder digitalcheck", RobotMap::drivetrainLeftEncoder->CheckDigitalChannel(2));
@@ -135,6 +136,7 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("subsystem get right encoder", Robot::drivetrain->GetRightEncoder());
 	SmartDashboard::PutNumber("left encoder raw", RobotMap::drivetrainLeftEncoder->Get());
 	SmartDashboard::PutNumber("right encoder raw", RobotMap::drivetrainRightEncoder->Get());
+	SmartDashboard::PutBoolean("gear release switch", Robot::gear->GetReleaseLimitSwitch());
 }
 
 void Robot::TestPeriodic() {

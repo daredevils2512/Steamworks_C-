@@ -22,10 +22,13 @@ private:
 	bool lastConditionRight;
 	bool lastConditionLeft;
 	double shooterSpeed;
+	double lastSetFlywheel = 0;
 public:
 	Shooter();
 	void InitDefaultCommand();
 	void SetFlywheelSpeed(double speed);
+	void RunFlywheel();
+	void StopFlywheel();
 	void SetBoosterSpeed(double speed);
 	void SetSpinCycleFeedSpeed(double speed);
 	void SetSwivelSpeed(double speed);
