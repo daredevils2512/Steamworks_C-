@@ -27,7 +27,18 @@ void Shooter::ActuateHood(frc::DoubleSolenoid::Value direction){
 	//Sets the hood actuator to the passed enum value
 	hoodActuator->Set(direction);
 }
-
+void Shooter::SaveFlywheelSpeed(double speed){
+	//Set the flywheels to the appropriate speeds
+	if(speed <= 1 && speed >= -1){
+		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+	}else{
+		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
+	}
+	lastSetFlywheel = speed;
+	if(flywheel->Get() != 0) {
+		flywheel->Set(speed);
+	}
+}
 void Shooter::SetFlywheelSpeed(double speed){
 	//Set the flywheels to the appropriate speeds
 	if((speed <= 1) && (speed >=-1)) {
@@ -38,8 +49,8 @@ void Shooter::SetFlywheelSpeed(double speed){
 	flywheel->Set(speed);
 }
 void Shooter::RunFlywheel(){
-	//flywheel->Set(lastSetFlywheel);
-	//this->SetFlywheelSpeed
+	//flywheel->Set();
+	flywheel->Set(lastSetFlywheel);
 }
 void Shooter::StopFlywheel(){
 	flywheel->Set(0);
