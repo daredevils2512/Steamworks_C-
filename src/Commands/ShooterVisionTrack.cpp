@@ -157,7 +157,7 @@ void ShooterVisionTrack::Execute() {
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
 			Robot::shooter->SetSwivelSpeed(-0.2);
 		}else{
-			Robot::shooter->SetSwivelSpeed(-0.4);
+			Robot::shooter->SetSwivelSpeed(-0.3);
 		}
 	}else{
 		// hopefully to the right of middle
@@ -166,7 +166,7 @@ void ShooterVisionTrack::Execute() {
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
 			Robot::shooter->SetSwivelSpeed(0.2);
 		}else{
-			Robot::shooter->SetSwivelSpeed(0.4);
+			Robot::shooter->SetSwivelSpeed(0.3);
 		}
 	}
 }

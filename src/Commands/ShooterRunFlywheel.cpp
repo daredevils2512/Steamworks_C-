@@ -14,6 +14,7 @@ void ShooterRunFlywheel::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void ShooterRunFlywheel::Execute() {
 	Robot::shooter->SetFlywheelSpeed(m_speed);
+	Robot::shooter->RunFlywheel();
 }
 
 // Make this return true when this Command no longer needs to run execute()

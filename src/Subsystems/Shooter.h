@@ -37,7 +37,6 @@ public:
 	bool IsHoodActuated();
 	double GetVirtualDistance(PixySubsystem::ObjectValues object);
 	//int GetVirtualDistance(Pixy::ObjectValues object);
-	void SaveShooterSpeed(double speed);
 	double GetShooterSpeed();
 	double maxEncPosition;
 };

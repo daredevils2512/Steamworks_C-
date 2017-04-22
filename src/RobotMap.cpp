@@ -82,7 +82,8 @@ void RobotMap::init() {
 
 	shooterFlywheel.reset (new CANTalon(SHOOTER_FLYWHEEL));
 	shooterFlywheel->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-	shooterFlywheel->SetPID(0.062 , 0.000055, 4.0, 0.032);
+	//shooterFlywheel->SetPID(0.062 , 0.000055, 4.0, 0.032);
+	shooterFlywheel->SetPID(0.21,0.0000000011,0.023,0.033);
 	lw->AddActuator("Shooter" , "Flywheel" , shooterFlywheel);
 
 	shooterTurretSwivel.reset (new CANTalon(SHOOTER_TURRET_SWIVEL));

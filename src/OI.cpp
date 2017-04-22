@@ -16,7 +16,7 @@
 #include "Commands/ShooterManualSwivel.h"
 #include "Commands/ShooterManualRunFlywheel.h"
 #include "Commands/ShooterPOVHoodControl.h"
-#include "Commands/SetShootBallSpeed.h"
+//#include "Commands/SetShootBallSpeed.h"
 #include "Commands/_CMG_ShooterManualSwivel.h"
 #include "Commands/GearToggleIntake.h"
 #include "Commands/AutoStraightDrive.h"
@@ -42,7 +42,7 @@ OI::OI()
 	DRC_xButton.WhenReleased(new ClimberRunMotor(0.0));//working
 	DRC_yButton.WhileHeld(new FloorIntakeRunMotor(1.0));//working
 	DRC_yButton.WhenReleased(new FloorIntakeRunMotor(0.0));//working
-	DRC_aButton.WhileHeld(new ConditionallyReleaseGear());
+	DRC_leftjoystickButton.WhileHeld(new ConditionallyReleaseGear());
 //	DRC_aButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));//working
 //	DRC_bButton.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));//working
 	DRC_startButton.WhenPressed(new ClimberRunMotor(1.0));
@@ -84,8 +84,8 @@ OI::OI()
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-0.8));//working
 	CDB_bottomRed.WhenReleased(new ClimberRunMotor(0.0));//working
-	CDB_topWhite.WhenPressed(new SetShootBallSpeed(2250));
-	CDB_topRed.WhenPressed(new SetShootBallSpeed(2400));
+	//CDB_topWhite.WhenPressed(new SetShootBallSpeed(2250));
+	//CDB_topRed.WhenPressed(new SetShootBallSpeed(2400));
 	CDB_middleWhite.WhenPressed(new _CMG_ShooterManualSwivel(0.2));
 	CDB_middleRed.WhenPressed(new _CMG_ShooterManualSwivel(-0.2));
 }
@@ -142,6 +142,6 @@ double OI::GetManualShooterSwivel() {
 }
 
 double OI::GetTranslatedThrottle() {
-		return ((-(coDriverController.GetAxis(frc::Joystick::AxisType::kThrottleAxis)) + 1) / 2) * 4600;
+		return ((-(coDriverController.GetAxis(frc::Joystick::AxisType::kThrottleAxis)) + 1) / 2);
 }
 

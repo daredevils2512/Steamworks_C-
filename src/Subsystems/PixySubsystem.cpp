@@ -33,12 +33,13 @@ void PixySubsystem::CollectFrameData(std::shared_ptr<frc::SPI> realPixy, std::sh
 		if(useRealPixy) {
 			realPixy->Read(true, receiveArray, 2);
 			translatedWord = (receiveArray[0] << 8) | receiveArray[1];
-			//std::cout << translatedWord << std::endl;
+			std::cout << translatedWord << std::endl;
 			if(saveData) {
 				if(FoundZeros(translatedWord)) {
 					doneCollecting = true;
 					saveData = false;
 					if(ObjectIsGood(objectData)) {
+						//std::cout << translatedWord << std::endl;
 						frameData.push_back(objectData);
 					}
 					objectData.clear();

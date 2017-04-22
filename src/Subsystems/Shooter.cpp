@@ -30,18 +30,16 @@ void Shooter::ActuateHood(frc::DoubleSolenoid::Value direction){
 
 void Shooter::SetFlywheelSpeed(double speed){
 	//Set the flywheels to the appropriate speeds
-	if(speed <= 1 && speed >= -1){
+	if((speed <= 1) && (speed >=-1)) {
 		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
 	}else{
 		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
 	}
-	lastSetFlywheel = speed;
-	if(flywheel->Get() != 0) {
-		flywheel->Set(speed);
-	}
+	flywheel->Set(speed);
 }
 void Shooter::RunFlywheel(){
-	flywheel->Set(lastSetFlywheel);
+	//flywheel->Set(lastSetFlywheel);
+	//this->SetFlywheelSpeed
 }
 void Shooter::StopFlywheel(){
 	flywheel->Set(0);
@@ -78,12 +76,4 @@ bool Shooter::IsHoodActuated() {
 double Shooter::GetVirtualDistance(PixySubsystem::ObjectValues object){
 	//calculates the distance from the target in inches
 	return (0.00349450614331*(pow(object.y,2))) - (0.0873599815179*(object.y)) + 43.068903964768;
-}
-
-void Shooter::SaveShooterSpeed(double speed) {
-	shooterSpeed = speed;
-}
-
-double Shooter::GetShooterSpeed() {
-	return shooterSpeed;
 }

@@ -137,6 +137,7 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("left encoder raw", RobotMap::drivetrainLeftEncoder->Get());
 	SmartDashboard::PutNumber("right encoder raw", RobotMap::drivetrainRightEncoder->Get());
 	SmartDashboard::PutBoolean("gear release switch", Robot::gear->GetReleaseLimitSwitch());
+	SmartDashboard::PutNumber("flywheel RPM", RobotMap::shooterFlywheel->GetSpeed());
 }
 
 void Robot::TestPeriodic() {
