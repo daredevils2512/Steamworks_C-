@@ -19,7 +19,7 @@ public:
 
 	static std::shared_ptr<CANTalon> shooterFlywheel;
 	static std::shared_ptr<CANTalon> shooterTurretSwivel;
-	static std::shared_ptr<CANTalon> shooterSpinCycleFeed;
+	static std::shared_ptr<Talon> shooterSpinCycleFeed;
 	static std::shared_ptr<CANTalon> shooterBottomBooster;
 	static std::shared_ptr<CANTalon> shooterTopBooster;
 	static std::shared_ptr<frc::SPI> shooterRealPixy;

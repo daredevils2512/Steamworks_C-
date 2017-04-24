@@ -1,12 +1,12 @@
-#include "_CMG_ShootBall.h"
+#include "_CMG_ShootBall_BoosterWatchdog.h"
 #include "ShooterRunSpinCycleFeed.h"
 #include "ShooterRunFlywheel.h"
 #include "PauseCommand.h"
 #include "../Robot.h"
-#include "ShooterRunBoosters.h"
+#include "ShooterRunBoosters_Watchdog.h"
 #include "ShooterStartFlywheel.h"
 
-_CMG_ShootBall::_CMG_ShootBall() {
+_CMG_ShootBall_BoosterWatchdog::_CMG_ShootBall_BoosterWatchdog() {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
 	//      AddSequential(new Command2());
@@ -24,7 +24,7 @@ _CMG_ShootBall::_CMG_ShootBall() {
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 	AddSequential(new ShooterStartFlywheel());//6100; 4200
-	AddSequential(new ShooterRunBoosters(0.75));
+	AddParallel(new ShooterRunBoosters_Watchdog(0.75));
 	AddSequential(new PauseCommand(0.5));
 	AddSequential(new ShooterRunSpinCycleFeed(0.8));
 }

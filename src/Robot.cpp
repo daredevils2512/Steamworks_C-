@@ -137,7 +137,28 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("left encoder raw", RobotMap::drivetrainLeftEncoder->Get());
 	SmartDashboard::PutNumber("right encoder raw", RobotMap::drivetrainRightEncoder->Get());
 	SmartDashboard::PutBoolean("gear release switch", Robot::gear->GetReleaseLimitSwitch());
-	SmartDashboard::PutNumber("flywheel RPM", RobotMap::shooterFlywheel->GetSpeed());
+	std::string toput = ":O";
+
+	if(shooter->lastSetFlywheel == oi->SHOOT_BOILER_RPM){
+			toput = "Boiler (HOOD BACK)";
+
+	}else if(shooter->lastSetFlywheel == oi->SHOOT_BOILER_PEG_RPM){
+			toput = "Boiler Peg";
+
+	}else if(shooter->lastSetFlywheel == oi->SHOOT_CENTER_PEG_RPM){
+			toput = "Center Peg";
+
+	}else if(shooter->lastSetFlywheel == oi->SHOOT_FAR_HOPPER_RPM){
+			toput = "Far Hopper";
+
+	}else if(shooter->lastSetFlywheel == oi->SHOOT_CLOSE_HOPPER_RPM){
+		toput = "Close Hopper (HOOD BACK)";
+	}else{
+			toput = "Manual??";
+	}
+
+	SmartDashboard::PutNumber("PERSIST current fly speed",shooter->lastSetFlywheel);
+	SmartDashboard::PutString("PERSIST current speed mode", toput);
 }
 
 void Robot::TestPeriodic() {

@@ -25,7 +25,7 @@ std::shared_ptr<CANTalon> RobotMap::climberMotor;
 std::shared_ptr<CANTalon> RobotMap::intakeMotor;
 std::shared_ptr<CANTalon> RobotMap::shooterFlywheel;
 std::shared_ptr<CANTalon> RobotMap::shooterTurretSwivel;
-std::shared_ptr<CANTalon> RobotMap::shooterSpinCycleFeed;
+std::shared_ptr<Talon> RobotMap::shooterSpinCycleFeed;
 std::shared_ptr<CANTalon> RobotMap::shooterBottomBooster;
 std::shared_ptr<CANTalon> RobotMap::shooterTopBooster;
 std::shared_ptr<frc::SPI> RobotMap::shooterRealPixy;
@@ -83,7 +83,7 @@ void RobotMap::init() {
 	shooterFlywheel.reset (new CANTalon(SHOOTER_FLYWHEEL));
 	shooterFlywheel->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
 	//shooterFlywheel->SetPID(0.062 , 0.000055, 4.0, 0.032);
-	shooterFlywheel->SetPID(0.21,0.0000000011,0.023,0.033);
+	shooterFlywheel->SetPID(0.18,0.0000000011,0.0512,0.033);
 	lw->AddActuator("Shooter" , "Flywheel" , shooterFlywheel);
 
 	shooterTurretSwivel.reset (new CANTalon(SHOOTER_TURRET_SWIVEL));
@@ -91,7 +91,7 @@ void RobotMap::init() {
 	shooterTurretSwivel->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	//shooterTurretSwivel->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SwitchInputsOnly);
 
-	shooterSpinCycleFeed.reset (new CANTalon(SHOOTER_SPIN_CYCLE_FEED));
+	shooterSpinCycleFeed.reset (new Talon(SHOOTER_SPIN_CYCLE_FEED));
 	lw->AddActuator("Shooter" , "SpinCycleFeed" , shooterSpinCycleFeed);
 
 	shooterBottomBooster.reset(new CANTalon(SHOOTER_BOTTOM_BOOSTER));

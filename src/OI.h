@@ -9,7 +9,14 @@
 //creates all of the inputs on the controllers
 class OI
 {
+public:
+	double SHOOT_BOILER_RPM = 3050; // retested, fucking glorious
+	double SHOOT_FAR_HOPPER_RPM = 4050; // retested, decent
+	double SHOOT_BOILER_PEG_RPM = 4085; // retested, decent, consider ~10 less
+	double SHOOT_CENTER_PEG_RPM = 4550; // retested, meh
+	double SHOOT_CLOSE_HOPPER_RPM = 4025; // retested, decent
 private:
+
 	//declares controllers
 	Joystick driverController{0};
 	Joystick coDriverController{1};

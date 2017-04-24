@@ -8,13 +8,13 @@ ShooterRunFlywheel::ShooterRunFlywheel(double speed) {
 
 // Called just before this Command runs the first time
 void ShooterRunFlywheel::Initialize() {
-	Robot::shooter->SetFlywheelSpeed(0);
+	//Robot::shooter->SetFlywheelSpeed(0);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterRunFlywheel::Execute() {
 	Robot::shooter->SetFlywheelSpeed(m_speed);
-	Robot::shooter->RunFlywheel();
+	//Robot::shooter->RunFlywheel();
 }
 
 // Make this return true when this Command no longer needs to run execute()

@@ -14,7 +14,7 @@ private:
 	// for methods that implement subsystem capabilities
 	std::shared_ptr<CANTalon> flywheel;
 	std::shared_ptr<CANTalon> turretSwivel;
-	std::shared_ptr<CANTalon> spinCycleFeed;
+	std::shared_ptr<Talon> spinCycleFeed;
 	std::shared_ptr<CANTalon> bottomBooster;
 	std::shared_ptr<CANTalon> topBooster;
 	std::shared_ptr<frc::DoubleSolenoid> hoodActuator;

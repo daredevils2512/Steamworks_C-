@@ -29,14 +29,14 @@ void Shooter::ActuateHood(frc::DoubleSolenoid::Value direction){
 }
 void Shooter::SaveFlywheelSpeed(double speed){
 	//Set the flywheels to the appropriate speeds
-	if(speed <= 1 && speed >= -1){
-		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
-	}else{
-		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
-	}
 	lastSetFlywheel = speed;
 	if(flywheel->Get() != 0) {
-		flywheel->Set(speed);
+		if(lastSetFlywheel <= 1 && lastSetFlywheel >= -1){
+			flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+		}else{
+			flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
+		}
+		flywheel->Set(lastSetFlywheel);
 	}
 }
 void Shooter::SetFlywheelSpeed(double speed){
@@ -50,9 +50,15 @@ void Shooter::SetFlywheelSpeed(double speed){
 }
 void Shooter::RunFlywheel(){
 	//flywheel->Set();
+	if(lastSetFlywheel <= 1 && lastSetFlywheel >= -1){
+		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+	}else{
+		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
+	}
 	flywheel->Set(lastSetFlywheel);
 }
 void Shooter::StopFlywheel(){
+	flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
 	flywheel->Set(0);
 }
 
