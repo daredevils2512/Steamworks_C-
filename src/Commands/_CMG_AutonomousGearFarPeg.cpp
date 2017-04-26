@@ -40,7 +40,6 @@ _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 		AddSequential(new GearVisionTurn(180));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(20.0, 0.5));
-		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 	}else{
 		AddSequential(new AutoStraightDrive(45.0, 0.7));
 		AddSequential(new PauseCommand(0.2));
@@ -55,6 +54,5 @@ _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 		AddSequential(new GearVisionTurn(180));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(20.0, 0.5));
-		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 	}
 }

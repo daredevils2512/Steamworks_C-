@@ -3,6 +3,19 @@
 #include "WPILib.h"
 #include "CANTAlon.h"
 
+static const int DRIVETRAIN_FRONT_LEFT_MOTOR = 4;
+static const int DRIVETRAIN_REAR_LEFT_MOTOR = 1;
+static const int DRIVETRAIN_FRONT_RIGHT_MOTOR = 9;
+static const int DRIVETRAIN_REAR_RIGHT_MOTOR = 2;
+static const int CLIMBER_MOTOR = 8;
+static const int INTAKE_MOTOR = 3;
+static const int SHOOTER_FLYWHEEL = 5;
+static const int SHOOTER_TURRET_SWIVEL = 6;
+static const int SHOOTER_SPIN_CYCLE_FEED = 0;
+static const int SHOOTER_BOTTOM_BOOSTER = 7;
+static const int SHOOTER_TOP_BOOSTER =10;
+
+
 //access pointer objects declared in RobotMap.h
 std::shared_ptr<CANTalon> RobotMap::drivetrainFrontLeftMotor;
 std::shared_ptr<CANTalon> RobotMap::drivetrainRearLeftMotor;
@@ -24,11 +37,12 @@ std::shared_ptr<frc::Relay> RobotMap::compressorSpike;
 std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearLimitSwitch;
+std::shared_ptr<frc::DigitalInput> RobotMap::gearReleaseLimitSwitch;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearPixyDigital;
 std::shared_ptr<frc::AnalogInput> RobotMap::gearPixyAnalog;
 std::shared_ptr<frc::SPI> RobotMap::gearRealPixy;
 std::shared_ptr<frc::SPI> RobotMap::gearFakePixy;
-std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearSolenoid;
+std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearActiveRelease;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::shooterHoodActuator;
 //std::shared_ptr<frc::DigitalInput> RobotMap::leftA;
 //std::shared_ptr<frc::DigitalInput> RobotMap::leftB;
@@ -41,44 +55,45 @@ void RobotMap::init() {
 	//Creating new instances of the subsystems
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
 
-	drivetrainFrontLeftMotor.reset (new CANTalon(4));
+	drivetrainFrontLeftMotor.reset (new CANTalon(DRIVETRAIN_FRONT_LEFT_MOTOR));
 	lw->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
 	//Setting the control mode of the front motors to slaves
 
-	drivetrainRearLeftMotor.reset (new CANTalon(1));
+	drivetrainRearLeftMotor.reset (new CANTalon(DRIVETRAIN_REAR_LEFT_MOTOR));
 	lw->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
 	//Setting up PID with the back motors since they are the Masters
 
-	drivetrainFrontRightMotor.reset (new CANTalon(9));
+	drivetrainFrontRightMotor.reset (new CANTalon(DRIVETRAIN_FRONT_RIGHT_MOTOR));
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
 	//Setting the control mode of the front motors to slaves
 
-	drivetrainRearRightMotor.reset (new CANTalon(2));
+	drivetrainRearRightMotor.reset (new CANTalon(DRIVETRAIN_REAR_RIGHT_MOTOR));
 	lw->AddActuator("Drivetrain" , "RearRightMotor" , drivetrainRearRightMotor);
 	//Setting up PID with the back motors since they are the Masters
 
-	climberMotor.reset (new CANTalon(8));
+	climberMotor.reset (new CANTalon(CLIMBER_MOTOR));
 	lw->AddActuator("Climber" , "ClimberMotor" , climberMotor);
 
-	intakeMotor.reset (new CANTalon(3));
+	intakeMotor.reset (new CANTalon(INTAKE_MOTOR));
 	lw->AddActuator("FloorIntake" , "IntakeMotor" , intakeMotor);
 
-	shooterFlywheel.reset (new CANTalon(5));
+	shooterFlywheel.reset (new CANTalon(SHOOTER_FLYWHEEL));
 	shooterFlywheel->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-	shooterFlywheel->SetPID(0.062 , 0.000055, 4.0, 0.032);
+	//shooterFlywheel->SetPID(0.062 , 0.000055, 4.0, 0.032);
+	shooterFlywheel->SetPID(0.18,0.0000000011,0.0512,0.033);
 	lw->AddActuator("Shooter" , "Flywheel" , shooterFlywheel);
 
-	shooterTurretSwivel.reset (new CANTalon(6));
+	shooterTurretSwivel.reset (new CANTalon(SHOOTER_TURRET_SWIVEL));
 	lw->AddActuator("Shooter" , "TurretSwivel" , shooterTurretSwivel);
 	shooterTurretSwivel->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	//shooterTurretSwivel->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SwitchInputsOnly);
 
-	shooterSpinCycleFeed.reset (new CANTalon(0));
+	shooterSpinCycleFeed.reset (new CANTalon(SHOOTER_SPIN_CYCLE_FEED));
 	lw->AddActuator("Shooter" , "SpinCycleFeed" , shooterSpinCycleFeed);
 
-	shooterBottomBooster.reset(new CANTalon(7));
+	shooterBottomBooster.reset(new CANTalon(SHOOTER_BOTTOM_BOOSTER));
 
-	shooterTopBooster.reset(new CANTalon(10));
+	shooterTopBooster.reset(new CANTalon(SHOOTER_TOP_BOOSTER));
 
 	shooterRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS0));
 	shooterFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS2));
@@ -107,6 +122,8 @@ void RobotMap::init() {
 	gearLimitSwitch.reset (new frc::DigitalInput(0));
 	lw ->AddSensor("Gear" , "GearLimitSwitch" , gearLimitSwitch);
 
+	gearReleaseLimitSwitch.reset (new frc::DigitalInput(6));
+
 	gearPixyDigital.reset(new frc::DigitalInput(5));
 
 	gearPixyAnalog.reset(new frc::AnalogInput(0));
@@ -114,7 +131,7 @@ void RobotMap::init() {
 //	gearRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS1));
 //	gearFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS3));
 
-	gearSolenoid.reset (new frc::DoubleSolenoid(0, 2, 3));
-	lw ->AddActuator("Gear" , "GearSolenoid" , gearSolenoid);
+	gearActiveRelease.reset (new frc::DoubleSolenoid(0, 2, 3));
+	lw ->AddActuator("Gear" , "GearSolenoid" , gearActiveRelease);
 
 }

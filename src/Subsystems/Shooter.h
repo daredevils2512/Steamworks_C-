@@ -23,9 +23,13 @@ private:
 	bool lastConditionLeft;
 	double shooterSpeed;
 public:
+	double lastSetFlywheel = 0;
 	Shooter();
 	void InitDefaultCommand();
+	void SaveFlywheelSpeed(double speed);
 	void SetFlywheelSpeed(double speed);
+	void RunFlywheel();
+	void StopFlywheel();
 	void SetBoosterSpeed(double speed);
 	void SetSpinCycleFeedSpeed(double speed);
 	void SetSwivelSpeed(double speed);
@@ -34,7 +38,6 @@ public:
 	bool IsHoodActuated();
 	double GetVirtualDistance(PixySubsystem::ObjectValues object);
 	//int GetVirtualDistance(Pixy::ObjectValues object);
-	void SaveShooterSpeed(double speed);
 	double GetShooterSpeed();
 	double maxEncPosition;
 };

@@ -27,7 +27,18 @@ void Shooter::ActuateHood(frc::DoubleSolenoid::Value direction){
 	//Sets the hood actuator to the passed enum value
 	hoodActuator->Set(direction);
 }
-
+void Shooter::SaveFlywheelSpeed(double speed){
+	//Set the flywheels to the appropriate speeds
+	lastSetFlywheel = speed;
+	if(flywheel->Get() != 0) {
+		if(lastSetFlywheel <= 1 && lastSetFlywheel >= -1){
+			flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+		}else{
+			flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
+		}
+		flywheel->Set(lastSetFlywheel);
+	}
+}
 void Shooter::SetFlywheelSpeed(double speed){
 	//Set the flywheels to the appropriate speeds
 	if((speed <= 1) && (speed >=-1)) {
@@ -36,6 +47,19 @@ void Shooter::SetFlywheelSpeed(double speed){
 		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
 	}
 	flywheel->Set(speed);
+}
+void Shooter::RunFlywheel(){
+	//flywheel->Set();
+	if(lastSetFlywheel <= 1 && lastSetFlywheel >= -1){
+		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+	}else{
+		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
+	}
+	flywheel->Set(lastSetFlywheel);
+}
+void Shooter::StopFlywheel(){
+	flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+	flywheel->Set(0);
 }
 
 void Shooter::SetBoosterSpeed(double speed) {
@@ -69,12 +93,4 @@ bool Shooter::IsHoodActuated() {
 double Shooter::GetVirtualDistance(PixySubsystem::ObjectValues object){
 	//calculates the distance from the target in inches
 	return (0.00349450614331*(pow(object.y,2))) - (0.0873599815179*(object.y)) + 43.068903964768;
-}
-
-void Shooter::SaveShooterSpeed(double speed) {
-	shooterSpeed = speed;
-}
-
-double Shooter::GetShooterSpeed() {
-	return shooterSpeed;
 }

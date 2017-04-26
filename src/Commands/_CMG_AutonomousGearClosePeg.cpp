@@ -6,7 +6,6 @@
 #include "AutoDimeSpin.h"
 #include "../Robot.h"
 #include "PauseCommand.h"
-#include "GearIntakeActuate.h"
 #include "GearGetLimitSwitch.h"
 #include "ShooterSwivelTurret.h"
 #include "ShooterVisionTrack.h"
@@ -47,14 +46,12 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 		AddSequential(new GearVisionTurn(210));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(13.0, 0.5));
-		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 		if(gotoHopper) {
 			AddSequential(new GearGetLimitSwitch());
 			AddSequential(new PauseCommand(1.0));
 			AddParallel(new ShooterSwivelTurret(-0.4));
 			AddSequential(new AutoStraightDrive(25.0, -0.7));
 			AddSequential(new ShooterSwivelTurret(0.0));
-			AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
 			AddSequential(new PauseCommand(0.2));
 			AddSequential(new AutoDimeSpin(0.9, 47.0, Robot::drivetrain->Direction::counterClockwise));
 			AddSequential(new PauseCommand(0.2));
@@ -78,7 +75,6 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 		AddSequential(new GearVisionTurn(210));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(13.0, 0.5));
-		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
 		AddSequential(new GearGetLimitSwitch());
 		AddSequential(new PauseCommand(2.0));
 		AddSequential(new AutoStraightDrive(6.0, -0.5));
@@ -90,7 +86,6 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 			AddParallel(new ShooterSwivelTurret(0.4));
 			AddSequential(new AutoStraightDrive(25.0, -0.7));
 			AddSequential(new ShooterSwivelTurret(0.0));
-			AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
 			AddSequential(new PauseCommand(0.2));
 			AddSequential(new AutoDimeSpin(0.9, 47.0, Robot::drivetrain->Direction::clockwise));
 			AddSequential(new PauseCommand(0.2));
