@@ -74,7 +74,8 @@ public:
 	int GetJoystickPOV();
 	double GetManualShooterSwivel();
 	double GetTranslatedThrottle();
-	bool GetLeftTrigger();
+	bool GetLeftBumper();
+	bool GetB_Button();
 };
 
 #endif  // OI_H

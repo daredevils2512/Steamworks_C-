@@ -16,6 +16,8 @@
 
 //class declaration of the robot
 class Robot : public IterativeRobot {
+private:
+	bool terminateAutoGear;
 public:
 
 	//pointer object declaration for subsystems, autonomous, oi, live window

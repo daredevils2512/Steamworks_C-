@@ -57,18 +57,22 @@ void RobotMap::init() {
 
 	drivetrainFrontLeftMotor.reset (new CANTalon(DRIVETRAIN_FRONT_LEFT_MOTOR));
 	lw->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
+	drivetrainFrontLeftMotor->SetCurrentLimit(35);
 	//Setting the control mode of the front motors to slaves
 
 	drivetrainRearLeftMotor.reset (new CANTalon(DRIVETRAIN_REAR_LEFT_MOTOR));
 	lw->AddActuator("Drivetrain" , "RearLeftMotor" , drivetrainRearLeftMotor);
+	drivetrainRearLeftMotor->SetCurrentLimit(35);
 	//Setting up PID with the back motors since they are the Masters
 
 	drivetrainFrontRightMotor.reset (new CANTalon(DRIVETRAIN_FRONT_RIGHT_MOTOR));
 	lw->AddActuator("Drivetrain" , "FrontRightMotor" , drivetrainFrontRightMotor);
+	drivetrainFrontRightMotor->SetCurrentLimit(35);
 	//Setting the control mode of the front motors to slaves
 
 	drivetrainRearRightMotor.reset (new CANTalon(DRIVETRAIN_REAR_RIGHT_MOTOR));
 	lw->AddActuator("Drivetrain" , "RearRightMotor" , drivetrainRearRightMotor);
+	drivetrainRearRightMotor->SetCurrentLimit(35);
 	//Setting up PID with the back motors since they are the Masters
 
 	climberMotor.reset (new CANTalon(CLIMBER_MOTOR));

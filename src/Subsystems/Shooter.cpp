@@ -14,7 +14,7 @@ Shooter::Shooter() : Subsystem("Shooter") {
 
 	lastConditionRight = false;
 	lastConditionLeft = false;
-	maxEncPosition = 5000;//4500
+	maxEncPosition = 8000;//4500
 	shooterSpeed = 2250;
 }
 

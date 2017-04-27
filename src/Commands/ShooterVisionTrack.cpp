@@ -86,6 +86,10 @@ void ShooterVisionTrack::Execute() {
 						//if this object doesn't match max area checks, skip this iteration
 						continue;
 					}
+					if(pSecBar.y > 120){
+						std::cout<<"SHOOTER: " << pSecBar.y << "px DOES NOT CONFORM TO CONSTRAINTS!" <<std::endl;
+						continue;
+					}
 					if(barsSet){
 						//if bars have been set.
 						if(topBar.y > pSecBar.y || topBar.y > stare.y){

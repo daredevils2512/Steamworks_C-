@@ -1,12 +1,8 @@
-#include "_CMG_ShootBall.h"
-#include "ShooterRunSpinCycleFeed.h"
-#include "ShooterRunFlywheel.h"
+#include "GearReleaseDelay.h"
+#include "GearReleaseActuate.h"
 #include "PauseCommand.h"
-#include "../Robot.h"
-#include "ShooterRunBoosters.h"
-#include "ShooterStartFlywheel.h"
 
-_CMG_ShootBall::_CMG_ShootBall() {
+GearReleaseDelay::GearReleaseDelay() {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
 	//      AddSequential(new Command2());
@@ -23,9 +19,6 @@ _CMG_ShootBall::_CMG_ShootBall() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
-	AddSequential(new ShooterRunFlywheel(5000));//6100; 4200
-//	AddSequential(new ShooterStartFlywheel());
-	AddSequential(new ShooterRunBoosters(0.75));
 	AddSequential(new PauseCommand(0.5));
-	AddSequential(new ShooterRunSpinCycleFeed(0.8));
+	AddSequential(new GearReleaseActuate(frc::DoubleSolenoid::kReverse));
 }

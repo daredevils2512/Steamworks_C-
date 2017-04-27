@@ -28,6 +28,7 @@
 #include "Commands/ShooterRunBoosters.h"
 #include "Commands/ConditionallyReleaseGear.h"
 #include "Commands/GearReleaseActuate.h"
+#include "Commands/GearReleaseDelay.h"
 
 
 OI::OI()
@@ -35,10 +36,11 @@ OI::OI()
 	// activates commands here based off of operator input
 	DRC_rightTrigger.WhenPressed(new DrivetrainShift(true));//working
 	DRC_rightTrigger.WhenReleased(new DrivetrainShift(false));//working
-	DRC_leftTrigger.WhenPressed(new GearReleaseActuate(frc::DoubleSolenoid::kForward));
-	DRC_leftTrigger.WhenReleased(new GearReleaseActuate(frc::DoubleSolenoid::kReverse));
-	DRC_rightBumper.WhenPressed(new FloorIntakeRunMotor(-1.0));//working
-	DRC_leftBumper.WhenPressed(new FloorIntakeRunMotor(0.0));//working
+	DRC_leftBumper.WhenPressed(new GearReleaseActuate(frc::DoubleSolenoid::kForward));
+	DRC_leftBumper.WhenReleased(new GearReleaseDelay());
+	DRC_rightBumper.WhileHeld(new FloorIntakeRunMotor(-1.0));//working
+	DRC_rightBumper.WhenReleased(new FloorIntakeRunMotor(0.0));
+//	DRC_leftBumper.WhenPressed(new FloorIntakeRunMotor(0.0));//working
 	DRC_xButton.WhileHeld(new ClimberRunMotor(1.0));//working
 	DRC_xButton.WhenReleased(new ClimberRunMotor(0.0));//working
 	DRC_yButton.WhileHeld(new FloorIntakeRunMotor(1.0));//working
@@ -138,14 +140,24 @@ int OI::GetJoystickPOV() {
 }
 
 double OI::GetManualShooterSwivel() {
-	return Desensitize(coDriverController.GetRawAxis(2)) / 2;
+	if((Robot::shooter->GetSwivelPosition() > 8000) && ((coDriverController.GetRawAxis(2) > 0))) {
+		return 0.0;
+	}else if((Robot::shooter->GetSwivelPosition() < -8000) && ((coDriverController.GetRawAxis(2) < 0))){
+		return 0.0;
+	}else{
+		return Desensitize(coDriverController.GetRawAxis(2)) / 2;
+	}
 }
 
 double OI::GetTranslatedThrottle() {
 		return ((-(coDriverController.GetAxis(frc::Joystick::AxisType::kThrottleAxis)) + 1) / 2) * 4600;
 }
 
-bool OI::GetLeftTrigger() {
-	return DRC_leftTrigger.Get();
+bool OI::GetLeftBumper() {
+	return DRC_leftBumper.Get();
+}
+
+bool OI::GetB_Button() {
+	return DRC_bButton.Get();
 }
 

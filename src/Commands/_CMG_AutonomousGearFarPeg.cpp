@@ -33,11 +33,11 @@ _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(35.0, 0.7));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(180));
+		AddSequential(new GearVisionTurn(220));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(180));
+		AddSequential(new GearVisionTurn(220));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(180));
+		AddSequential(new GearVisionTurn(220));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(20.0, 0.5));
 	}else{
@@ -47,11 +47,11 @@ _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(35.0, 0.7));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(180));
+		AddSequential(new GearVisionTurn(220));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(180));
+		AddSequential(new GearVisionTurn(220));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(180));
+		AddSequential(new GearVisionTurn(220));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(20.0, 0.5));
 	}

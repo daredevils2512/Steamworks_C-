@@ -34,6 +34,7 @@ void Robot::RobotInit() {
 	compressor.reset(new frc::Compressor());
 	frc::CameraServer::GetInstance()->StartAutomaticCapture();
 //	frc::CameraServer::GetInstance()->StartAutomaticCapture();
+	terminateAutoGear = false;
   }
 
 void Robot::DisabledInit(){
@@ -105,6 +106,14 @@ void Robot::AutonomousPeriodic() {
 	Scheduler::GetInstance()->Run();
 	SmartDashboard::PutNumber("left encoder", RobotMap::drivetrainLeftEncoder->GetDistance());
 	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder->GetDistance());
+
+	if((!Robot::oi->GetLeftBumper()) && (terminateAutoGear == false)) {
+		if(Robot::gear->GetReleaseLimitSwitch()){
+			Robot::gear->ActuateGearRelease(frc::DoubleSolenoid::kForward);
+		}else{
+			Robot::gear->ActuateGearRelease(frc::DoubleSolenoid::kReverse);
+		}
+	}
 }
 
 void Robot::TeleopInit() {
@@ -136,6 +145,21 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("left encoder raw", RobotMap::drivetrainLeftEncoder->Get());
 	SmartDashboard::PutNumber("right encoder raw", RobotMap::drivetrainRightEncoder->Get());
 	SmartDashboard::PutBoolean("gear release switch", Robot::gear->GetReleaseLimitSwitch());
+	SmartDashboard::PutNumber("front left current", RobotMap::drivetrainFrontLeftMotor->GetOutputCurrent());
+	SmartDashboard::PutNumber("front right current", RobotMap::drivetrainFrontRightMotor->GetOutputCurrent());
+	SmartDashboard::PutNumber("back left current", RobotMap::drivetrainRearLeftMotor->GetOutputCurrent());
+	SmartDashboard::PutNumber("back right current", RobotMap::drivetrainRearRightMotor->GetOutputCurrent());
+	SmartDashboard::PutNumber("flywheel current", RobotMap::shooterFlywheel->GetOutputCurrent());
+	SmartDashboard::PutNumber("top booster current", RobotMap::shooterTopBooster->GetOutputCurrent());
+	SmartDashboard::PutNumber("bottom booster current", RobotMap::shooterBottomBooster->GetOutputCurrent());
+	SmartDashboard::PutNumber("swivel current", RobotMap::shooterTurretSwivel->GetOutputCurrent());
+	SmartDashboard::PutNumber("floor intake current", RobotMap::intakeMotor->GetOutputCurrent());
+	SmartDashboard::PutNumber("climber current", RobotMap::climberMotor->GetOutputCurrent());
+	SmartDashboard::PutNumber("spin cycle current", RobotMap::shooterSpinCycleFeed->GetOutputCurrent());
+	RobotMap::drivetrainFrontLeftMotor->EnableCurrentLimit(true);
+	RobotMap::drivetrainRearLeftMotor->EnableCurrentLimit(true);
+	RobotMap::drivetrainFrontRightMotor->EnableCurrentLimit(true);
+	RobotMap::drivetrainRearRightMotor->EnableCurrentLimit(true);
 
 	std::string toput = ":O";
 
@@ -160,15 +184,17 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("PERSIST current fly speed",shooter->lastSetFlywheel);
 	SmartDashboard::PutString("PERSIST current speed mode", toput);
 
-	if(!Robot::oi->GetLeftTrigger()) {
-		if(Robot::gear->GetReleaseLimitSwitch()){
-			std::cout << "Eject" << std::endl;
-			Robot::gear->ActuateGearRelease(frc::DoubleSolenoid::kForward);
-		}else{
-			std::cout << "Retract" << std::endl;
-			Robot::gear->ActuateGearRelease(frc::DoubleSolenoid::kReverse);
-		}
-	}
+//	if(Robot::oi->GetB_Button()) {
+//		terminateAutoGear = true;
+//	}
+//
+//	if((!Robot::oi->GetLeftBumper()) && (terminateAutoGear == false)) {
+//		if(Robot::gear->GetReleaseLimitSwitch()){
+//			Robot::gear->ActuateGearRelease(frc::DoubleSolenoid::kForward);
+//		}else{
+//			Robot::gear->ActuateGearRelease(frc::DoubleSolenoid::kReverse);
+//		}
+//	}
 }
 
 void Robot::TestPeriodic() {
