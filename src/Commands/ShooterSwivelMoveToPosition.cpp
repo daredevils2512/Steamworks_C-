@@ -24,23 +24,23 @@ void ShooterSwivelMoveToPosition::Execute() {
 		onTarget = true;
 		std::cout << m_position << std::endl;
 		std::cout << currentPosition << std::endl;
-		std::cout << "on target" << std::endl;
+//		std::cout << "on target" << std::endl;
 	}else if(currentPosition < m_position) {
 		if(m_position-(slowDownTolerance/2) <= currentPosition && currentPosition <= m_position + (slowDownTolerance/2)) {
 			Robot::shooter->SetSwivelSpeed(0.1);
-			std::cout << "slow" << std::endl;
+//			std::cout << "slow" << std::endl;
 		}else{
 			Robot::shooter->SetSwivelSpeed(0.4);
 		}
-		std::cout << "+" << std::endl;
+//		std::cout << "+" << std::endl;
 	}else {
 		if(m_position-(slowDownTolerance/2) <= currentPosition && currentPosition <= m_position + (slowDownTolerance/2)) {
 			Robot::shooter->SetSwivelSpeed(-0.1);
-			std::cout << "slow" << std::endl;
+//			std::cout << "slow" << std::endl;
 		}else{
 			Robot::shooter->SetSwivelSpeed(-0.4);
 		}
-		std::cout << "-" << std::endl;
+//		std::cout << "-" << std::endl;
 	}
 }
 

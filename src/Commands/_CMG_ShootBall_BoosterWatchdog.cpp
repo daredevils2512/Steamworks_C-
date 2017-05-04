@@ -24,7 +24,7 @@ _CMG_ShootBall_BoosterWatchdog::_CMG_ShootBall_BoosterWatchdog() {
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 	AddSequential(new ShooterStartFlywheel());//6100; 4200
-	AddParallel(new ShooterRunBoosters_Watchdog(0.75));
 	AddSequential(new PauseCommand(0.5));
+	AddParallel(new ShooterRunBoosters_Watchdog(0.75));
 	AddSequential(new ShooterRunSpinCycleFeed(0.8));
 }

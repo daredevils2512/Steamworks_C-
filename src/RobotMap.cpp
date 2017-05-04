@@ -37,12 +37,11 @@ std::shared_ptr<frc::Relay> RobotMap::compressorSpike;
 std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearLimitSwitch;
-std::shared_ptr<frc::DigitalInput> RobotMap::gearReleaseLimitSwitch;
+std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearSolenoid;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearPixyDigital;
 std::shared_ptr<frc::AnalogInput> RobotMap::gearPixyAnalog;
 std::shared_ptr<frc::SPI> RobotMap::gearRealPixy;
 std::shared_ptr<frc::SPI> RobotMap::gearFakePixy;
-std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearActiveRelease;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::shooterHoodActuator;
 //std::shared_ptr<frc::DigitalInput> RobotMap::leftA;
 //std::shared_ptr<frc::DigitalInput> RobotMap::leftB;
@@ -77,6 +76,7 @@ void RobotMap::init() {
 
 	climberMotor.reset (new CANTalon(CLIMBER_MOTOR));
 	lw->AddActuator("Climber" , "ClimberMotor" , climberMotor);
+	climberMotor->SetCurrentLimit(37);
 
 	intakeMotor.reset (new CANTalon(INTAKE_MOTOR));
 	lw->AddActuator("FloorIntake" , "IntakeMotor" , intakeMotor);
@@ -123,10 +123,11 @@ void RobotMap::init() {
 	drivetrainShift.reset (new frc::DoubleSolenoid (0, 4, 5));
 	lw ->AddActuator("Drivetrain" , "DoubleSolenoid" , drivetrainShift);
 
+	gearSolenoid.reset (new frc::DoubleSolenoid (0 , 2, 3));
+
 	gearLimitSwitch.reset (new frc::DigitalInput(0));
 	lw ->AddSensor("Gear" , "GearLimitSwitch" , gearLimitSwitch);
 
-	gearReleaseLimitSwitch.reset (new frc::DigitalInput(6));
 
 	gearPixyDigital.reset(new frc::DigitalInput(5));
 
@@ -135,7 +136,5 @@ void RobotMap::init() {
 //	gearRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS1));
 //	gearFakePixy.reset (new frc::SPI(frc::SPI::kOnboardCS3));
 
-	gearActiveRelease.reset (new frc::DoubleSolenoid(0, 2, 3));
-	lw ->AddActuator("Gear" , "GearSolenoid" , gearActiveRelease);
 
 }

@@ -1,11 +1,11 @@
-#ifndef GearReleaseActuate_H
-#define GearReleaseActuate_H
+#ifndef GearIntakeActuate_H
+#define GearIntakeActuate_H
 
 #include "../CommandBase.h"
 #include "Robot.h"
-class GearReleaseActuate : public CommandBase {
+class GearIntakeActuate : public CommandBase {
 public:
-	GearReleaseActuate(frc::DoubleSolenoid::Value SolenoidDirection);
+	GearIntakeActuate(frc::DoubleSolenoid::Value SolenoidDirection);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
@@ -15,4 +15,4 @@ private:
 	frc::DoubleSolenoid::Value m_SolenoidDirection;
 };
 
-#endif  // GearReleaseActuate_H
+#endif  // GearIntakeActuate_H

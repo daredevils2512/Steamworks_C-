@@ -43,6 +43,7 @@ void Robot::DisabledInit(){
 
 void Robot::DisabledPeriodic() {
 	Scheduler::GetInstance()->Run();
+	SmartDashboard::PutBoolean("gear limit switch" , Robot::gear->GetLimitSwitch());
 }
 
 void Robot::AutonomousInit() {
@@ -107,13 +108,6 @@ void Robot::AutonomousPeriodic() {
 	SmartDashboard::PutNumber("left encoder", RobotMap::drivetrainLeftEncoder->GetDistance());
 	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder->GetDistance());
 
-	if((!Robot::oi->GetLeftBumper()) && (terminateAutoGear == false)) {
-		if(Robot::gear->GetReleaseLimitSwitch()){
-			Robot::gear->ActuateGearRelease(frc::DoubleSolenoid::kForward);
-		}else{
-			Robot::gear->ActuateGearRelease(frc::DoubleSolenoid::kReverse);
-		}
-	}
 }
 
 void Robot::TeleopInit() {
@@ -128,6 +122,11 @@ void Robot::TeleopInit() {
 	compressor->SetClosedLoopControl(true);
 	Robot::shooter->SetSwivelSpeed(0.0);
 	Robot::drivetrain->ResetEncoders();
+	RobotMap::drivetrainFrontLeftMotor->EnableCurrentLimit(true);
+	RobotMap::drivetrainRearLeftMotor->EnableCurrentLimit(true);
+	RobotMap::drivetrainFrontRightMotor->EnableCurrentLimit(true);
+	RobotMap::drivetrainRearRightMotor->EnableCurrentLimit(true);
+	RobotMap::climberMotor->EnableCurrentLimit(true);
 }
 
 void Robot::TeleopPeriodic() {
@@ -144,7 +143,6 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("subsystem get right encoder", Robot::drivetrain->GetRightEncoder());
 	SmartDashboard::PutNumber("left encoder raw", RobotMap::drivetrainLeftEncoder->Get());
 	SmartDashboard::PutNumber("right encoder raw", RobotMap::drivetrainRightEncoder->Get());
-	SmartDashboard::PutBoolean("gear release switch", Robot::gear->GetReleaseLimitSwitch());
 	SmartDashboard::PutNumber("front left current", RobotMap::drivetrainFrontLeftMotor->GetOutputCurrent());
 	SmartDashboard::PutNumber("front right current", RobotMap::drivetrainFrontRightMotor->GetOutputCurrent());
 	SmartDashboard::PutNumber("back left current", RobotMap::drivetrainRearLeftMotor->GetOutputCurrent());
@@ -156,10 +154,7 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("floor intake current", RobotMap::intakeMotor->GetOutputCurrent());
 	SmartDashboard::PutNumber("climber current", RobotMap::climberMotor->GetOutputCurrent());
 	SmartDashboard::PutNumber("spin cycle current", RobotMap::shooterSpinCycleFeed->GetOutputCurrent());
-	RobotMap::drivetrainFrontLeftMotor->EnableCurrentLimit(true);
-	RobotMap::drivetrainRearLeftMotor->EnableCurrentLimit(true);
-	RobotMap::drivetrainFrontRightMotor->EnableCurrentLimit(true);
-	RobotMap::drivetrainRearRightMotor->EnableCurrentLimit(true);
+
 
 	std::string toput = ":O";
 

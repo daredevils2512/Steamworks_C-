@@ -1,35 +1,34 @@
-#include "GearReleaseActuate.h"
+#include "GearIntakeActuate.h"
 #include "Robot.h"
 
-GearReleaseActuate::GearReleaseActuate(frc::DoubleSolenoid::Value SolenoidDirection) {
+GearIntakeActuate::GearIntakeActuate(frc::DoubleSolenoid::Value SolenoidDirection) {
 	// Use Requires() here to declare subsystem dependencies
 	Requires(Robot::gear.get());
 	m_SolenoidDirection = SolenoidDirection;
 }
 
 // Called just before this Command runs the first time
-void GearReleaseActuate::Initialize() {
+void GearIntakeActuate::Initialize() {
 
 }
 
 // Called repeatedly when this Command is scheduled to run
-void GearReleaseActuate::Execute() {
-		Robot::gear->ActuateGearRelease(m_SolenoidDirection);
+void GearIntakeActuate::Execute() {
+		Robot::gear->ActuateGearIntake(m_SolenoidDirection);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool GearReleaseActuate::IsFinished() {
+bool GearIntakeActuate::IsFinished() {
 	return true;
 }
 
 // Called once after isFinished returns true
-void GearReleaseActuate::End() {
+void GearIntakeActuate::End() {
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void GearReleaseActuate::Interrupted() {
+void GearIntakeActuate::Interrupted() {
 
 }
-

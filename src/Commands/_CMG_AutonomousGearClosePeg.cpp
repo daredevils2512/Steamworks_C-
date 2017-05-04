@@ -14,6 +14,9 @@
 #include "GearVisionTurn.h"
 #include "ShooterSwivelMoveToPosition.h"
 #include "ShooterSetFlywheelSpeed.h"
+#include "_CMG_DiscountDoubleCheck.h"
+#include "GearIntakeActuate.h"
+#include "ShooterMoveHood.h"
 
 _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 	// Add Commands here:
@@ -34,26 +37,28 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 	// arm.
 //	AddSequential(new AutoCircleDrive(160.0, 1.0, Drivetrain::Direction::counterClockwise, 80.0));
 	if(Robot::robotAlliance == frc::DriverStation::kBlue) {
-		AddSequential(new AutoStraightDrive(42.0, 0.7));
+//		AddSequential(new AutoStraightDrive(42.0, 0.7));
+		AddParallel(new ShooterSwivelMoveToPosition(7900));
+		AddSequential(new AutoStraightDrive(62.0, 0.7));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 19, Robot::drivetrain->Direction::clockwise));
-		AddSequential(new PauseCommand(0.2));
-		AddParallel(new ShooterSwivelMoveToPosition(7900));
-		AddSequential(new AutoStraightDrive(30.0, 0.7));//30
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(220));
+//		AddSequential(new AutoStraightDrive(30.0, 0.7));//30
+//		AddSequential(new PauseCommand(0.5));
+		AddSequential(new GearVisionTurn(185));//210
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(220));
+		AddSequential(new GearVisionTurn(185));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(220));
+		AddSequential(new GearVisionTurn(185));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(23.0, 0.5));
-		AddSequential(new GearGetLimitSwitch());
-		AddSequential(new PauseCommand(1.0));
-		AddSequential(new AutoStraightDrive(12.0, -0.5));
-		//AddSequential(new ShooterVisionTrack(true));
-		AddSequential(new ShooterSetFlywheelSpeed(4285));
+		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::Value::kForward));
+		AddSequential(new ShooterMoveHood(frc::DoubleSolenoid::Value::kForward));
+//		AddSequential(new ShooterVisionTrack(true));
+		AddSequential(new ShooterSetFlywheelSpeed(4120));
 		AddSequential(new _CMG_ShootBall());
+		AddSequential(new PauseCommand(3.0));
+//		AddSequential(new _CMG_DiscountDoubleCheck());
 		if(gotoHopper) {
 			AddSequential(new GearGetLimitSwitch());
 			AddSequential(new PauseCommand(1.0));
@@ -70,28 +75,28 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 			AddSequential(new _CMG_ShootBall());
 		}
 	}else{//red
-		AddSequential(new AutoStraightDrive(37.0, 0.7));//34
+//		AddSequential(new AutoStraightDrive(42.0, 0.7));//34
+		AddParallel(new ShooterSwivelMoveToPosition(-7900));
+		AddSequential(new AutoStraightDrive(62.0, 0.7));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::counterClockwise));
-		AddSequential(new PauseCommand(0.2));
-		AddParallel(new ShooterSwivelMoveToPosition(-7900));
-		AddSequential(new AutoStraightDrive(30.0, 0.7));//30
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(220));
+//		AddSequential(new AutoStraightDrive(30.0, 0.7));//30
+//		AddSequential(new PauseCommand(0.5));
+		AddSequential(new GearVisionTurn(185));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(220));
+		AddSequential(new GearVisionTurn(185));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(220));
+		AddSequential(new GearVisionTurn(185));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(23.0, 0.5));
-		AddSequential(new GearGetLimitSwitch());
-		AddSequential(new PauseCommand(1.0));
-		AddSequential(new AutoStraightDrive(12.0, -0.5));
-//		AddSequential(new GearGetLimitSwitch());
-//		AddSequential(new PauseCommand(2.0));
-//		AddSequential(new AutoStraightDrive(6.0, -0.5));
-		AddSequential(new ShooterSetFlywheelSpeed(4285));
+		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::Value::kForward));
+		AddSequential(new ShooterMoveHood(frc::DoubleSolenoid::Value::kForward));
+//		AddSequential(new ShooterVisionTrack(true));
+		AddSequential(new ShooterSetFlywheelSpeed(4120));//4085
 		AddSequential(new _CMG_ShootBall());
+		AddSequential(new PauseCommand(3.0));
+//		AddSequential(new _CMG_DiscountDoubleCheck());
 		if(gotoHopper) {
 			AddSequential(new GearGetLimitSwitch());
 			AddSequential(new PauseCommand(1.0));

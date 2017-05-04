@@ -8,18 +8,16 @@
 class Gear : public Subsystem {
 private:
 	std::shared_ptr<DigitalInput> limitswitch;
-	std::shared_ptr<DigitalInput> releaseswitch;
-	std::shared_ptr<DoubleSolenoid> releasesolenoid;
+	std::shared_ptr<DoubleSolenoid> solenoid;
 
 public:
 	Gear();
 	void InitDefaultCommand();
 
 	bool GetLimitSwitch();
-	bool GetReleaseLimitSwitch();
-	frc::DoubleSolenoid::Value GetReleaseDirection();
-	void ActuateGearRelease(frc::DoubleSolenoid:: Value dir);
-	//void UpdateGearActuator();
+	frc::DoubleSolenoid::Value GetIntakeDirection();
+	void ActuateGearIntake(DoubleSolenoid::Value dir);
+	void UpdateGearActuator();
 private:
 	bool previousGearSwitchState;
 };
