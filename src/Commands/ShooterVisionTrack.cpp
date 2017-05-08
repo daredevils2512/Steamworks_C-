@@ -60,6 +60,9 @@ void ShooterVisionTrack::Execute() {
 	if(frame.size() == 1){ // if we have one object
 //		std::cout << "found one object" << std::endl;
 		PixySubsystem::ObjectValues stare = frame[0]; // focused object
+		if(stare.y > 100){
+			return;
+		}
 		if(stare.width*stare.height < maxArea){// if the object is smaller than the maximum area
 			trackedObj = stare;
 			trackedSet = true;
@@ -77,11 +80,17 @@ void ShooterVisionTrack::Execute() {
 		for(unsigned i = 0; i < frame.size(); i++){
 			//iterate through all known objects
 			PixySubsystem::ObjectValues stare = frame[i]; //focused object
+			if(stare.y > 100){
+				continue;
+			}
 			if(stare.width * stare.height < maxArea){
 				// if this current object is within the area maximum
 				for(unsigned j = i+1; j < frame.size(); j++){
 					// iterate through all objects that haven't been "checked"
 					PixySubsystem::ObjectValues pSecBar = frame[j];
+					if(pSecBar.y > 100){
+						continue;
+					}
 					if(pSecBar.width * pSecBar.height >= maxArea){
 						//if this object doesn't match max area checks, skip this iteration
 						continue;
