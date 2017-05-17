@@ -26,6 +26,6 @@ _CMG_ShootBall::_CMG_ShootBall() {
 //	AddSequential(new ShooterRunFlywheel(5000));//6100; 4200
 	AddSequential(new ShooterStartFlywheel());
 	AddSequential(new PauseCommand(0.5));
-	AddSequential(new ShooterRunBoosters(0.75));
-	AddSequential(new ShooterRunSpinCycleFeed(0.8));
+	AddSequential(new ShooterRunBoosters(1.0)); //0.75
+	AddSequential(new ShooterRunSpinCycleFeed(1.0)); //0.8
 }

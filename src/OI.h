@@ -10,7 +10,7 @@
 class OI
 {
 public:
-	double SHOOT_BOILER_RPM = 3050; // retested, fucking glorious
+	double SHOOT_BOILER_RPM = 3100; // retested, fucking glorious
 	double SHOOT_FAR_HOPPER_RPM = 4050; // retested, decent
 	double SHOOT_BOILER_PEG_RPM = 4085; // retested, decent, consider ~10 less
 	double SHOOT_CENTER_PEG_RPM = 4550; // retested, meh

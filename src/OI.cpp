@@ -45,6 +45,7 @@ OI::OI()
 	DRC_yButton.WhileHeld(new FloorIntakeRunMotor(1.0));//working
 	DRC_yButton.WhenReleased(new FloorIntakeRunMotor(0.0));//working
 	DRC_startButton.WhenPressed(new ClimberRunMotor(1.0));
+
 	CDR_trigger.WhileHeld(new _CMG_ShootBall());//working
 //	CDR_trigger.WhenReleased(new ShooterRunFlywheel(0.0));//working
 	CDR_trigger.WhenReleased(new ShooterStopFlywheel());
@@ -78,7 +79,7 @@ OI::OI()
 	CDB_green.WhileHeld(new FloorIntakeRunMotor(1.0));//working
 	CDB_green.WhenReleased(new _CMG_ShooterManualSwivel(0.2));//working
 	CDB_yellow.WhenPressed(new _CMG_ShooterManualSwivel(-0.2));//-7565
-//	CDB_yellow.WhenPressed(new GearVisionTurn(185));
+//	CDB_yellow.WhenPressed(new GearVisionTurn(210)); //185
 	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(1.0));//working
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-1.0));//working

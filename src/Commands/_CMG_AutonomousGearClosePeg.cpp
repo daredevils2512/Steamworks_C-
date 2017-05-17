@@ -39,7 +39,7 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 	if(Robot::robotAlliance == frc::DriverStation::kBlue) {
 //		AddSequential(new AutoStraightDrive(42.0, 0.7));
 		AddParallel(new ShooterSwivelMoveToPosition(7900));
-		AddSequential(new AutoStraightDrive(62.0, 0.7));
+		AddSequential(new AutoStraightDrive(64.0, 0.7)); //62.0
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 19, Robot::drivetrain->Direction::clockwise));
 		AddSequential(new PauseCommand(0.5));
@@ -77,7 +77,7 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 	}else{//red
 //		AddSequential(new AutoStraightDrive(42.0, 0.7));//34
 		AddParallel(new ShooterSwivelMoveToPosition(-7900));
-		AddSequential(new AutoStraightDrive(62.0, 0.7));
+		AddSequential(new AutoStraightDrive(64.0, 0.7)); //62.0
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::counterClockwise));
 		AddSequential(new PauseCommand(0.5));
