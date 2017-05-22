@@ -78,8 +78,8 @@ OI::OI()
 	CDB_bigRed.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kReverse));//working
 	CDB_green.WhileHeld(new FloorIntakeRunMotor(1.0));//working
 	CDB_green.WhenReleased(new _CMG_ShooterManualSwivel(0.2));//working
-	CDB_yellow.WhenPressed(new _CMG_ShooterManualSwivel(-0.2));//-7565
-//	CDB_yellow.WhenPressed(new GearVisionTurn(210)); //185
+//	CDB_yellow.WhenPressed(new _CMG_ShooterManualSwivel(-0.2));//-7565
+	CDB_yellow.WhenPressed(new GearVisionTurn(185)); //185//210
 	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(1.0));//working
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
 	CDB_bottomRed.WhileHeld(new ClimberRunMotor(-1.0));//working

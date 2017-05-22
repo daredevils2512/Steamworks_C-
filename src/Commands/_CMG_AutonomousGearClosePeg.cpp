@@ -38,24 +38,24 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 //	AddSequential(new AutoCircleDrive(160.0, 1.0, Drivetrain::Direction::counterClockwise, 80.0));
 	if(Robot::robotAlliance == frc::DriverStation::kBlue) {
 //		AddSequential(new AutoStraightDrive(42.0, 0.7));
-		AddParallel(new ShooterSwivelMoveToPosition(7900));
+		AddParallel(new ShooterSwivelMoveToPosition(7800));
 		AddSequential(new AutoStraightDrive(64.0, 0.7)); //62.0
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 19, Robot::drivetrain->Direction::clockwise));
 		AddSequential(new PauseCommand(0.5));
 //		AddSequential(new AutoStraightDrive(30.0, 0.7));//30
 //		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(185));//210
+		AddSequential(new GearVisionTurn(200));//210
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(185));
+		AddSequential(new GearVisionTurn(200));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(185));
+		AddSequential(new GearVisionTurn(200));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(23.0, 0.5));
 		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::Value::kForward));
 		AddSequential(new ShooterMoveHood(frc::DoubleSolenoid::Value::kForward));
 //		AddSequential(new ShooterVisionTrack(true));
-		AddSequential(new ShooterSetFlywheelSpeed(4120));
+		AddSequential(new ShooterSetFlywheelSpeed(4250));//4120
 		AddSequential(new _CMG_ShootBall());
 		AddSequential(new PauseCommand(3.0));
 //		AddSequential(new _CMG_DiscountDoubleCheck());
@@ -76,24 +76,24 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 		}
 	}else{//red
 //		AddSequential(new AutoStraightDrive(42.0, 0.7));//34
-		AddParallel(new ShooterSwivelMoveToPosition(-7900));
+		AddParallel(new ShooterSwivelMoveToPosition(-8000));
 		AddSequential(new AutoStraightDrive(64.0, 0.7)); //62.0
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::counterClockwise));
 		AddSequential(new PauseCommand(0.5));
 //		AddSequential(new AutoStraightDrive(30.0, 0.7));//30
 //		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(185));
+		AddSequential(new GearVisionTurn(200));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(185));
+		AddSequential(new GearVisionTurn(200));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(185));
+		AddSequential(new GearVisionTurn(200));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(23.0, 0.5));
 		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::Value::kForward));
 		AddSequential(new ShooterMoveHood(frc::DoubleSolenoid::Value::kForward));
 //		AddSequential(new ShooterVisionTrack(true));
-		AddSequential(new ShooterSetFlywheelSpeed(4120));//4085
+		AddSequential(new ShooterSetFlywheelSpeed(4220));//4085//4120
 		AddSequential(new _CMG_ShootBall());
 		AddSequential(new PauseCommand(3.0));
 //		AddSequential(new _CMG_DiscountDoubleCheck());

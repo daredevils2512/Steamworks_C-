@@ -32,7 +32,7 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	compressor.reset(new frc::Compressor());
-	frc::CameraServer::GetInstance()->StartAutomaticCapture();
+//	frc::CameraServer::GetInstance()->StartAutomaticCapture();
 //	frc::CameraServer::GetInstance()->StartAutomaticCapture();
 	terminateAutoGear = false;
   }

@@ -5,6 +5,7 @@
 #include "../Robot.h"
 #include "ShooterRunBoosters_Watchdog.h"
 #include "ShooterStartFlywheel.h"
+#include "ShooterSetFlywheelSpeed.h"
 
 _CMG_ShootBall_BoosterWatchdog::_CMG_ShootBall_BoosterWatchdog() {
 	// Add Commands here:
@@ -23,6 +24,7 @@ _CMG_ShootBall_BoosterWatchdog::_CMG_ShootBall_BoosterWatchdog() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
+	AddSequential(new ShooterSetFlywheelSpeed(6100));
 	AddSequential(new ShooterStartFlywheel());//6100; 4200
 	AddSequential(new PauseCommand(0.5));
 	AddParallel(new ShooterRunBoosters_Watchdog(0.75));
