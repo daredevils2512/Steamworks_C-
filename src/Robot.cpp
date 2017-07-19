@@ -35,10 +35,15 @@ void Robot::RobotInit() {
 //	frc::CameraServer::GetInstance()->StartAutomaticCapture();
 //	frc::CameraServer::GetInstance()->StartAutomaticCapture();
 	terminateAutoGear = false;
+	vs.reset(new VisionServer());
+	std::cout<<"Setting up VisionServer"<<std::endl;
+	Robot::vs->setupServer();
+	std::thread(VisionServer::visionLoop).detach();
   }
 
 void Robot::DisabledInit(){
 	compressor->SetClosedLoopControl(false);
+	Robot::vs->isActive = false;
 }
 
 void Robot::DisabledPeriodic() {
@@ -48,6 +53,7 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	//starts autonomous
+	Robot::vs->isActive = true;
 	Robot::robotAlliance = frc::DriverStation::GetInstance().GetAlliance();
 
 	Robot::shooter->SetFlywheelSpeed(0.0);
@@ -111,6 +117,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
+	Robot::vs->isActive = true;
 	//stops autonomous command
 	Robot::shooter->SetFlywheelSpeed(0.0);
 	Robot::shooter->SetSpinCycleFeedSpeed(0.0);
