@@ -25,7 +25,15 @@ void GearVisionTurn::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void GearVisionTurn::Execute() {
 	//Gets the frame data from the GearPixy so we can use it
-	double targetX = Robot::pixySubsystem->GetGearPixyData();
+	double targetX = -1;
+	if(VisionServer::targets.size() > 1){
+		for(int i = 0; i < VisionServer::targets.size(); i++){
+			double thisX = VisionServer::targets[0].x;
+			if(thisX > targetX){
+				targetX = thisX;
+			}
+		}
+	}
 	if(targetX == -1) {
 		std::cout << "-1" << std::endl;
 		numberOfNegOne++;

@@ -21,7 +21,6 @@ class Robot : public IterativeRobot {
 private:
 	bool terminateAutoGear;
 public:
-	static std::shared_ptr<VisionServer> vs;
 	//pointer object declaration for subsystems, autonomous, oi, live window
 	std::unique_ptr<frc::CommandGroup> autonomousCommand;
 	static std::unique_ptr<OI> oi;

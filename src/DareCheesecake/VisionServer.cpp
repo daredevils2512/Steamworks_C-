@@ -6,13 +6,26 @@
  */
 
 #include <DareCheesecake/VisionServer.h>
+#include <chrono>
+#include <thread>
 #include "../Robot.h"
 #include "json.hpp"
 using json = nlohmann::json;
 
-VisionServer::VisionServer(){
-	resetVars();
-}
+//PUBLIC
+std::vector<VisionServer::TargetInfo> VisionServer::targets;
+bool VisionServer::hasSetup;
+bool VisionServer::isActive;
+const int VisionServer::port;
+//PRIVATE
+int VisionServer::socketfd;
+int VisionServer::clientfd;
+bool VisionServer::pendingRestart;
+bool VisionServer::mIsConnected;
+double VisionServer::lastMessageReceivedTime;
+long VisionServer::lastReceived;
+int VisionServer::failConnectCount;
+
 void VisionServer::resetVars() {
 	socketfd=-1;
 	clientfd = -1;
@@ -52,6 +65,7 @@ void VisionServer::setupServer(){
 		close(socketfd);
 		if(VisionServer::DEBUG_MODE) std::cout << "closing old server socket" << std::endl;
 	}
+	resetVars();
 	socketfd = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
 	int optval = 1;
 	setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof optval);
@@ -136,6 +150,7 @@ void VisionServer::runServerRoutine() {
 			if(type == "targets" && !didTargets){
 				didTargets = true;
 				targets.clear(); // wipe targets.
+				std::cout<<"clearing targets"<<std::endl;
 				//message is a json string.
 				// "capturedAgoMs" : long
 				// "targets" : array full of {"y":###,"z":###}
@@ -147,9 +162,9 @@ void VisionServer::runServerRoutine() {
 
 					  //target is element
 						TargetInfo target;
-						target.y = element["y"];
-						target.z = element["z"];
-						if(VisionServer::DEBUG_MODE) std::cout << "target: " << target.y << "," << target.z << std::endl;
+						target.x = element["y"];
+						target.y = element["z"];
+						if(VisionServer::DEBUG_MODE) std::cout << "target: " << target.x << "," << target.y << std::endl;
 						targets.push_back(target);
 					}
 				}
@@ -157,7 +172,7 @@ void VisionServer::runServerRoutine() {
 
 		}catch(std::exception e){
 			// failed, invalid json??
-			if(VisionServer::DEBUG_MODE) std::cout<<"server routine json error: " << e.what()<< std::endl;
+			//if(VisionServer::DEBUG_MODE) std::cout<<"server routine json error: " << e.what()<< std::endl;
 		}
 	}
 
@@ -179,37 +194,38 @@ void VisionServer::runServerRoutine() {
 }
 void VisionServer::visionLoop() {
 	while(true){
-		if(Robot::vs->hasSetup){
+		if(hasSetup){
 			visionUpdater();
 		}
 	}
 }
-int VisionServer::failConnectCount;
-std::shared_ptr<VisionServer> Robot::vs;
 void VisionServer::visionUpdater() {
 	std::chrono::milliseconds ms = std::chrono::duration_cast< std::chrono::milliseconds >(
 			std::chrono::system_clock::now().time_since_epoch()
 	);
-	if(!Robot::vs->isConnected()){
+	if(!isConnected()){
 
-		Robot::vs->findCamera();
+		findCamera();
 
 	}
-	if(Robot::vs->isConnected()){
+	if(isConnected()){
 		if(VisionServer::DEBUG_MODE) std::cout<< "connected..." <<std::endl;
 
-		Robot::vs->runServerRoutine();
+		runServerRoutine();
 		failConnectCount = 0;
 
 	}else{
-		if(VisionServer::DEBUG_MODE) std::cout<< "camera is not responding."<<std::endl;
+
 		std::chrono::milliseconds ms = std::chrono::duration_cast< std::chrono::milliseconds >(
 								std::chrono::system_clock::now().time_since_epoch()
 						);
-		if(failConnectCount > 5){
-			if(AdbBridge::reversePortForward(Robot::vs->port,Robot::vs->port)){
-				Robot::vs->setupCamera();
+		if(failConnectCount > 300){
+			if(VisionServer::DEBUG_MODE) std::cout<< "camera is not responding."<<std::endl;
+			if(AdbBridge::reversePortForward(port,port)){
+				setupCamera();
 			}
+		}else{
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
 		}
 		failConnectCount++;
 		long timeTaken = std::chrono::duration_cast< std::chrono::milliseconds >(
@@ -222,3 +238,4 @@ void VisionServer::visionUpdater() {
 	).count() - ms.count();
 	frc::SmartDashboard::PutNumber("debug timeTaken (ms)",timeTaken);
 }
+

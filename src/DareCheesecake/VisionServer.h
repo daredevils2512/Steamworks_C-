@@ -32,39 +32,38 @@
 class VisionServer {
 
 public:
-	static const bool DEBUG_MODE=false;
-	VisionServer();
+	static const bool DEBUG_MODE=true;
 	struct TargetInfo {
+		double x;
 		double y;
-		double z;
 	};
-	void resetVars();
-	void setupServer();
-	void setupCamera();
-	bool isConnected();
-	void reqAppRestart();
-	void findCamera();
-	void runServerRoutine();
+	static void resetVars();
+	static void setupServer();
+	static void setupCamera();
+	static bool isConnected();
+	static void reqAppRestart();
+	static void findCamera();
+	static void runServerRoutine();
 
 	static void visionLoop();
 	static void visionUpdater();
 
 
-	std::vector<TargetInfo> targets;
-	bool hasSetup;
-	bool isActive;
-	const int port = 8254; // Port. Defined by Team254. Not changing it rn.
+	static std::vector<TargetInfo> targets;
+	static bool hasSetup;
+	static bool isActive;
+	static const int port = 8254; // Port. Defined by Team254. Not changing it rn.
 private:
-	int socketfd; // Socket instance ID, used in socket methods.
-	int clientfd;
-	bool pendingRestart;
-	bool mIsConnected;
-	double lastMessageReceivedTime;
-	long lastReceived = 0;
+	static int socketfd; // Socket instance ID, used in socket methods.
+	static int clientfd;
+	static bool pendingRestart;
+	static bool mIsConnected;
+	static double lastMessageReceivedTime;
+	static long lastReceived;
 	static int failConnectCount;
 	template<typename Out>
-	void splitr(const std::string &s, char delim, Out result);
-	std::vector<std::string> split(const std::string &s, char delim);
+	static void splitr(const std::string &s, char delim, Out result);
+	static std::vector<std::string> split(const std::string &s, char delim);
 
 
 };

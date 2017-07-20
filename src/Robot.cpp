@@ -35,15 +35,14 @@ void Robot::RobotInit() {
 //	frc::CameraServer::GetInstance()->StartAutomaticCapture();
 //	frc::CameraServer::GetInstance()->StartAutomaticCapture();
 	terminateAutoGear = false;
-	vs.reset(new VisionServer());
 	std::cout<<"Setting up VisionServer"<<std::endl;
-	Robot::vs->setupServer();
+	VisionServer::setupServer();
 	std::thread(VisionServer::visionLoop).detach();
   }
 
 void Robot::DisabledInit(){
 	compressor->SetClosedLoopControl(false);
-	Robot::vs->isActive = false;
+	VisionServer::isActive = false;
 }
 
 void Robot::DisabledPeriodic() {
@@ -53,7 +52,7 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	//starts autonomous
-	Robot::vs->isActive = true;
+	VisionServer::isActive = true;
 	Robot::robotAlliance = frc::DriverStation::GetInstance().GetAlliance();
 
 	Robot::shooter->SetFlywheelSpeed(0.0);
@@ -117,7 +116,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-	Robot::vs->isActive = true;
+	VisionServer::isActive = true;
 	//stops autonomous command
 	Robot::shooter->SetFlywheelSpeed(0.0);
 	Robot::shooter->SetSpinCycleFeedSpeed(0.0);
@@ -197,6 +196,14 @@ void Robot::TeleopPeriodic() {
 //			Robot::gear->ActuateGearRelease(frc::DoubleSolenoid::kReverse);
 //		}
 //	}
+	frc::SmartDashboard::PutNumber("Targets",VisionServer::targets.size());
+	frc::SmartDashboard::PutBoolean("setupSucceeded",VisionServer::hasSetup);
+	frc::SmartDashboard::PutBoolean("isActive",VisionServer::isActive);
+	frc::SmartDashboard::PutBoolean("isConnected",VisionServer::isConnected());
+	if(VisionServer::targets.size() > 0){
+		frc::SmartDashboard::PutNumber("TargetY",VisionServer::targets[0].z);
+		frc::SmartDashboard::PutNumber("TargetX",VisionServer::targets[0].y);
+	}
 }
 
 void Robot::TestPeriodic() {
