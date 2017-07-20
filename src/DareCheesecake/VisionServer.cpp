@@ -231,11 +231,11 @@ void VisionServer::visionUpdater() {
 		long timeTaken = std::chrono::duration_cast< std::chrono::milliseconds >(
 										std::chrono::system_clock::now().time_since_epoch()
 								).count() - ms.count();
-								frc::SmartDashboard::PutNumber("debug adb check (ms)",timeTaken);
+								//frc::SmartDashboard::PutNumber("debug adb check (ms)",timeTaken);
 	}
 	long timeTaken = std::chrono::duration_cast< std::chrono::milliseconds >(
 			std::chrono::system_clock::now().time_since_epoch()
 	).count() - ms.count();
-	frc::SmartDashboard::PutNumber("debug timeTaken (ms)",timeTaken);
+	//frc::SmartDashboard::PutNumber("debug timeTaken (ms)",timeTaken);
 }
 

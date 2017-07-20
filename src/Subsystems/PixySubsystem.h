@@ -12,10 +12,6 @@ private:
 	// for methods that implement subsystem capabilities
 	std::shared_ptr<frc::SPI> realPixyS;
 	std::shared_ptr<frc::SPI> fakePixyS;
-	std::shared_ptr<frc::SPI> realPixyG;
-	std::shared_ptr<frc::SPI> fakePixyG;
-	std::shared_ptr<frc::DigitalInput> pixyGDigital;
-	std::shared_ptr<frc::AnalogInput> pixyGAnalog;
 	std::vector< std::vector<int> > frameData;
 	std::vector<int> objectData;
 	int emptyFrameCount = 0;
@@ -35,7 +31,6 @@ public:
 	PixySubsystem();
 	void InitDefaultCommand();
 	std::vector<PixySubsystem::ObjectValues> GetShooterPixyData();
-	double GetGearPixyData();
 	bool IsFrameEmpty();
 
 	int GetFrameSize();

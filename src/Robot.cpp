@@ -39,7 +39,9 @@ void Robot::RobotInit() {
 	VisionServer::setupServer();
 	std::thread(VisionServer::visionLoop).detach();
   }
-
+void Robot::RobotPeriodic() {
+	SmartDashboard::PutBoolean("Gear Sees Target", (VisionServer::targets.size() > 0));
+}
 void Robot::DisabledInit(){
 	compressor->SetClosedLoopControl(false);
 	VisionServer::isActive = false;
@@ -196,14 +198,14 @@ void Robot::TeleopPeriodic() {
 //			Robot::gear->ActuateGearRelease(frc::DoubleSolenoid::kReverse);
 //		}
 //	}
-	frc::SmartDashboard::PutNumber("Targets",VisionServer::targets.size());
-	frc::SmartDashboard::PutBoolean("setupSucceeded",VisionServer::hasSetup);
-	frc::SmartDashboard::PutBoolean("isActive",VisionServer::isActive);
-	frc::SmartDashboard::PutBoolean("isConnected",VisionServer::isConnected());
-	if(VisionServer::targets.size() > 0){
-		frc::SmartDashboard::PutNumber("TargetY",VisionServer::targets[0].z);
-		frc::SmartDashboard::PutNumber("TargetX",VisionServer::targets[0].y);
-	}
+//	frc::SmartDashboard::PutNumber("Targets",VisionServer::targets.size());
+//	frc::SmartDashboard::PutBoolean("setupSucceeded",VisionServer::hasSetup);
+//	frc::SmartDashboard::PutBoolean("isActive",VisionServer::isActive);
+//	frc::SmartDashboard::PutBoolean("isConnected",VisionServer::isConnected());
+//	if(VisionServer::targets.size() > 0){
+//		frc::SmartDashboard::PutNumber("TargetY",VisionServer::targets[0].y);
+//		frc::SmartDashboard::PutNumber("TargetX",VisionServer::targets[0].x);
+//	}
 }
 
 void Robot::TestPeriodic() {

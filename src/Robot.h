@@ -38,6 +38,7 @@ static std::shared_ptr<frc::Compressor> compressor;
 
 //declaration of robot class functions
 virtual void RobotInit();
+virtual void RobotPeriodic();
 virtual void DisabledInit();
 virtual void DisabledPeriodic();
 virtual void AutonomousInit();

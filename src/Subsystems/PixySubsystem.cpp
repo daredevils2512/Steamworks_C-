@@ -4,10 +4,6 @@
 PixySubsystem::PixySubsystem() : Subsystem("ExampleSubsystem") {
 	realPixyS = RobotMap::shooterRealPixy;
 	fakePixyS = RobotMap::shooterFakePixy;
-	realPixyG = RobotMap::gearRealPixy;
-	fakePixyG = RobotMap::gearFakePixy;
-	pixyGDigital = RobotMap::gearPixyDigital;
-	pixyGAnalog = RobotMap::gearPixyAnalog;
 }
 
 void PixySubsystem::InitDefaultCommand() {
@@ -131,22 +127,22 @@ std::vector<PixySubsystem::ObjectValues> PixySubsystem::GetShooterPixyData() {
 	return GetObjectData();
 }
 
-double PixySubsystem::GetGearPixyData() {
-//	CollectFrameData(realPixyG, fakePixyG);
-//	return GetObjectData();
-	double mult = 318/3.3;
-	double pixyVoltage = pixyGAnalog->GetAverageVoltage();
-	if(pixyGDigital->Get()) {
-		if(pixyVoltage > 0) {
-			return pixyVoltage * mult;
-		}else{
-			std::cout << "ERROR: No data available for object" << std::endl;
-			return -1;
-		}
-	}else{
-		std::cout << "ERROR: No object detected" << std::endl;
-		return -1;
-	}
-}
+//double PixySubsystem::GetGearPixyData() {
+////	CollectFrameData(realPixyG, fakePixyG);
+////	return GetObjectData();
+//	double mult = 318/3.3;
+//	double pixyVoltage = pixyGAnalog->GetAverageVoltage();
+//	if(pixyGDigital->Get()) {
+//		if(pixyVoltage > 0) {
+//			return pixyVoltage * mult;
+//		}else{
+//			std::cout << "ERROR: No data available for object" << std::endl;
+//			return -1;
+//		}
+//	}else{
+//		std::cout << "ERROR: No object detected" << std::endl;
+//		return -1;
+//	}
+//}
 
 

@@ -36,13 +36,9 @@ public:
 	static std::shared_ptr<frc::DoubleSolenoid> drivetrainShift;
 	//1 limit switch to notify once gear is in the slot
 	static std::shared_ptr<frc::DigitalInput> gearLimitSwitch;
-	//1 photoeye to notify if the gear is far enough out of the slot
-	static std::shared_ptr<frc::DigitalInput> gearPixyDigital;
-	static std::shared_ptr<frc::DoubleSolenoid> gearSolenoid;
-	static std::shared_ptr<frc::AnalogInput> gearPixyAnalog;
 
-	static std::shared_ptr<frc::SPI> gearRealPixy;
-	static std::shared_ptr<frc::SPI> gearFakePixy;
+	static std::shared_ptr<frc::DoubleSolenoid> gearSolenoid;
+
 
 	static std::shared_ptr<frc::DoubleSolenoid> shooterHoodActuator;
 
