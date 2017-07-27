@@ -80,6 +80,7 @@ void Robot::AutonomousInit() {
 		if(!ifs.eof()){
 			lastPart = lastPart.substr(0,lastPart.size()-1);
 		}
+		std::cout << firstPart << " - " << lastPart << std::endl;
 		if (firstPart == "Autonomous") {
 			if (lastPart == "Far") {
 				autonomousCommand.reset(new _CMG_AutonomousGearFarPeg());
@@ -162,6 +163,7 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("floor intake current", RobotMap::intakeMotor->GetOutputCurrent());
 	SmartDashboard::PutNumber("climber current", RobotMap::climberMotor->GetOutputCurrent());
 	SmartDashboard::PutNumber("spin cycle current", RobotMap::shooterSpinCycleFeed->GetOutputCurrent());
+	SmartDashboard::PutBoolean("gear intake actuate", Robot::gear->GetIntake());
 
 
 	std::string toput = ":O";
@@ -202,10 +204,16 @@ void Robot::TeleopPeriodic() {
 //	frc::SmartDashboard::PutBoolean("setupSucceeded",VisionServer::hasSetup);
 //	frc::SmartDashboard::PutBoolean("isActive",VisionServer::isActive);
 //	frc::SmartDashboard::PutBoolean("isConnected",VisionServer::isConnected());
-//	if(VisionServer::targets.size() > 0){
-//		frc::SmartDashboard::PutNumber("TargetY",VisionServer::targets[0].y);
-//		frc::SmartDashboard::PutNumber("TargetX",VisionServer::targets[0].x);
-//	}
+	if(VisionServer::targets.size() > 0){
+		double targetX = -1;
+		for(int i = 0; i < VisionServer::targets.size(); i++){
+			double thisX = VisionServer::targets[0].x;
+			if(thisX > targetX){
+				targetX = thisX;
+			}
+		}
+		frc::SmartDashboard::PutNumber("TargetX",targetX);
+	}
 }
 
 void Robot::TestPeriodic() {

@@ -24,6 +24,14 @@ bool Gear::GetLimitSwitch() {
 	}
 }
 
+bool Gear::GetIntake() {
+	if(GetIntakeDirection() == frc::DoubleSolenoid::kReverse) {
+		return true;
+	}else{
+		return false;
+	}
+}
+
 frc::DoubleSolenoid::Value Gear::GetIntakeDirection() {
 	return solenoid->Get();
 }

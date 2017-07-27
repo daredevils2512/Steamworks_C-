@@ -32,17 +32,17 @@ void AutoDimeSpin::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool AutoDimeSpin::IsFinished() {
-	double leftDistance = abs(Robot::drivetrain->GetLeftEncoder());
+	//double leftDistance = abs(Robot::drivetrain->GetLeftEncoder());
 		double rightDistance = abs(Robot::drivetrain->GetRightEncoder());
-		if(abs(leftDistance - rightDistance) > 2) {
+		/*if(abs(leftDistance - rightDistance) > 2) {
 			//set lagging encoder to value of other encoder
 			if(leftDistance > rightDistance) {
 				rightDistance = leftDistance;
 			}else{
 				leftDistance = rightDistance;
 			}
-		}
-		return (leftDistance + rightDistance) / 2 >= m_turnDistance;
+		}*/
+		return (rightDistance) >= m_turnDistance;
 }
 
 // Called once after isFinished returns true

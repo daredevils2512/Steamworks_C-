@@ -25,12 +25,18 @@ void GearVisionTurn::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void GearVisionTurn::Execute() {
 	//Gets the frame data from the GearPixy so we can use it
-	double targetX = -1;
-	if(VisionServer::targets.size() > 1){
+	double targetX = 320;
+	if(VisionServer::targets.size() > 0){
+		targetX = 0;
+		std::cout<<"Objects exist."<<std::endl;
 		for(int i = 0; i < VisionServer::targets.size(); i++){
+			std::cout<<"evaluating target..."<<std::endl;
 			double thisX = VisionServer::targets[0].x;
 			if(thisX > targetX){
+				std::cout<<"new working x: " << thisX <<std::endl;
 				targetX = thisX;
+			}else{
+				std::cout<<"too small x: " << thisX <<std::endl;
 			}
 		}
 	}
@@ -100,7 +106,7 @@ void GearVisionTurn::TurnDirection(double m_targetX , double centerX){
 
 void GearVisionTurn::TrackObject(double objectX) {
 	std::cout << objectX << std::endl;
-	int tolerance = 30;
+	int tolerance = 8;
 		int slowDownTolerance = 100;
 		if(goalPixel-(tolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
 			Robot::drivetrain->DriveRobotTank(0.0, 0.0);
@@ -109,14 +115,14 @@ void GearVisionTurn::TrackObject(double objectX) {
 		}else if(objectX < goalPixel) {
 			if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
 				std::cout << "slow" << std::endl;
-				Robot::drivetrain->DriveRobotTank(-0.5, 0.5);
+				Robot::drivetrain->DriveRobotTank(-0.55, 0.55); //0.5
 			}else{
 				Robot::drivetrain->DriveRobotTank(-0.7, 0.7);
 			}
 			std::cout << "-" << std::endl;
 		}else{
 			if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
-				Robot::drivetrain->DriveRobotTank(0.5, -0.5);
+				Robot::drivetrain->DriveRobotTank(0.55, -0.55); //0.5
 				std::cout << "slow" << std::endl;
 			}else{
 				Robot::drivetrain->DriveRobotTank(0.7, -0.7);

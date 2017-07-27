@@ -150,7 +150,7 @@ void VisionServer::runServerRoutine() {
 			if(type == "targets" && !didTargets){
 				didTargets = true;
 				targets.clear(); // wipe targets.
-				std::cout<<"clearing targets"<<std::endl;
+				if(VisionServer::DEBUG_MODE) std::cout<<"clearing targets"<<std::endl;
 				//message is a json string.
 				// "capturedAgoMs" : long
 				// "targets" : array full of {"y":###,"z":###}

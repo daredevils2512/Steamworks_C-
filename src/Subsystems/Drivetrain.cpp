@@ -50,7 +50,7 @@ void Drivetrain::Shifter(frc::DoubleSolenoid::Value dir) {
 
 double Drivetrain::GetLeftEncoder() {
 	//gets distance moved since last reset scaled by distance per pulse
-	return leftEncoder->GetDistance();
+	return rightEncoder->GetDistance();
 }
 
 double Drivetrain::GetRightEncoder() {
@@ -61,7 +61,7 @@ double Drivetrain::GetRightEncoder() {
 
 void Drivetrain::ResetEncoders() {
 	//resets the drivetrain encoder values
-	leftEncoder->Reset();
+	//leftEncoder->Reset();
 	rightEncoder->Reset();
 }
 

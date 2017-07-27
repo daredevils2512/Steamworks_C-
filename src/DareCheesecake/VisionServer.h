@@ -32,7 +32,7 @@
 class VisionServer {
 
 public:
-	static const bool DEBUG_MODE=true;
+	static const bool DEBUG_MODE=false;
 	struct TargetInfo {
 		double x;
 		double y;

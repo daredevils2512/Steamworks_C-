@@ -24,20 +24,20 @@ void AutoStraightDrive::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool AutoStraightDrive::IsFinished() {
-	double leftDistance = abs(Robot::drivetrain->GetLeftEncoder());
+	//double leftDistance = abs(Robot::drivetrain->GetLeftEncoder());
 	double rightDistance = abs(Robot::drivetrain->GetRightEncoder());
-	if(abs(leftDistance - rightDistance) > 6) {
-		//set lagging encoder to value of other encoder
-		if(leftDistance > rightDistance) {
-			rightDistance = leftDistance;
-		}else{
-			leftDistance = rightDistance;
-		}
-	}
+//	if(abs(leftDistance - rightDistance) > 6) {
+//		//set lagging encoder to value of other encoder
+//		if(leftDistance > rightDistance) {
+//			rightDistance = leftDistance;
+//		}else{
+//			leftDistance = rightDistance;
+//		}
+//	}
 	if(IsTimedOut()) {
 		std::cout << "timed out" << std::endl;
 	}
-	return ((leftDistance + rightDistance) / 2 >= m_targetFeet) || IsTimedOut();
+	return rightDistance >= m_targetFeet || IsTimedOut();
 }
 
 // Called once after isFinished returns true

@@ -15,6 +15,7 @@ public:
 	void InitDefaultCommand();
 
 	bool GetLimitSwitch();
+	bool GetIntake();
 	frc::DoubleSolenoid::Value GetIntakeDirection();
 	void ActuateGearIntake(DoubleSolenoid::Value dir);
 	void UpdateGearActuator();
