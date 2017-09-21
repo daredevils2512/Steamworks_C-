@@ -12,7 +12,6 @@
 #include "Subsystems/Shooter.h"
 #include "Subsystems/PixySubsystem.h"
 #include "OI.h"
-#include "FileIO.h"
 
 #include "DareCheesecake/VisionServer.h"
 
@@ -24,27 +23,24 @@ public:
 	//pointer object declaration for subsystems, autonomous, oi, live window
 	std::unique_ptr<frc::CommandGroup> autonomousCommand;
 	static std::unique_ptr<OI> oi;
+	static std::shared_ptr<Drivetrain> drivetrain;
+	static std::shared_ptr<Climber> climber;
+	static std::shared_ptr<FloorIntake> floorIntake;
+	static std::shared_ptr<Gear> gear;
+	static std::shared_ptr<Shooter> shooter;
+	static std::shared_ptr<PixySubsystem> pixySubsystem;
+	static std::shared_ptr<frc::Compressor> compressor;
 	static frc::DriverStation::Alliance robotAlliance;
 
-
-static std::shared_ptr<Drivetrain> drivetrain;
-static std::shared_ptr<Climber> climber;
-static std::shared_ptr<FloorIntake> floorIntake;
-static std::shared_ptr<Gear> gear;
-static std::shared_ptr<Shooter> shooter;
-static std::shared_ptr<PixySubsystem> pixySubsystem;
-
-static std::shared_ptr<frc::Compressor> compressor;
-
-//declaration of robot class functions
-virtual void RobotInit();
-virtual void RobotPeriodic();
-virtual void DisabledInit();
-virtual void DisabledPeriodic();
-virtual void AutonomousInit();
-virtual void AutonomousPeriodic();
-virtual void TeleopInit();
-virtual void TeleopPeriodic();
-virtual void TestPeriodic();
+	//declaration of robot class functions
+	virtual void RobotInit();
+	virtual void RobotPeriodic();
+	virtual void DisabledInit();
+	virtual void DisabledPeriodic();
+	virtual void AutonomousInit();
+	virtual void AutonomousPeriodic();
+	virtual void TeleopInit();
+	virtual void TeleopPeriodic();
+	virtual void TestPeriodic();
 };
 #endif

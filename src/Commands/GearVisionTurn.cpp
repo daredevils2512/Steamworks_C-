@@ -29,7 +29,7 @@ void GearVisionTurn::Execute() {
 	if(VisionServer::targets.size() > 0){
 		targetX = 0;
 		std::cout<<"Objects exist."<<std::endl;
-		for(int i = 0; i < VisionServer::targets.size(); i++){
+		for(size_t i = 0; i < VisionServer::targets.size(); i++){
 			std::cout<<"evaluating target..."<<std::endl;
 			double thisX = VisionServer::targets[0].x;
 			if(thisX > targetX){

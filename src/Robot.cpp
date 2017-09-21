@@ -1,4 +1,7 @@
 #include "Robot.h"
+
+#include <fstream>
+
 #include "Commands/AutoTimedDriveForward.h"
 #include <Encoder.h>
 #include "Commands/_CMG_AutonomousGearFarPeg.h"
@@ -15,7 +18,6 @@ std::shared_ptr<Shooter> Robot::shooter;
 std::shared_ptr<PixySubsystem> Robot::pixySubsystem;
 std::unique_ptr<OI> Robot::oi;
 frc::DriverStation::Alliance Robot::robotAlliance;
-
 std::shared_ptr<frc::Compressor> Robot::compressor;
 
 void Robot::RobotInit() {
@@ -27,14 +29,13 @@ void Robot::RobotInit() {
     gear.reset(new Gear());
     shooter.reset(new Shooter());
     pixySubsystem.reset(new PixySubsystem());
-
     //starts operator interface
 	oi.reset(new OI());
-
 	compressor.reset(new frc::Compressor());
 //	frc::CameraServer::GetInstance()->StartAutomaticCapture();
 //	frc::CameraServer::GetInstance()->StartAutomaticCapture();
 	terminateAutoGear = false;
+	//setting up the vision server for the nexus
 	std::cout<<"Setting up VisionServer"<<std::endl;
 	VisionServer::setupServer();
 	std::thread(VisionServer::visionLoop).detach();
@@ -63,6 +64,7 @@ void Robot::AutonomousInit() {
 	Robot::shooter->SetSwivelSpeed(0.0);
 	Robot::drivetrain->SetAutonomous(true);
 	Robot::drivetrain->ResetEncoders();
+	//deciding which autonomous to run based off of the file
 	std::ifstream ifs("/home/lvuser/Autonomous.txt");
 	if(!ifs.good()) {
 		std::cout << "ERROR: no auto file" << std::endl;
@@ -72,6 +74,8 @@ void Robot::AutonomousInit() {
 	while (!ifs.eof()) {
 		std::string firstPart;
 		std::string lastPart;
+		//splitting the lines in the file into two, before the colon and after
+		//Ex.	Autonomous: Far
 		std::getline(ifs, firstPart, ':');
 		std::getline(ifs, lastPart);
 		while(lastPart[0] == ' '){
@@ -103,7 +107,6 @@ void Robot::AutonomousInit() {
 				autonomousCommand.reset(new _CMG_AutonomousGearClosePeg(false));
 				std::cout << "close without hopper" << std::endl;
 			}
-
 		}
 	}
 	ifs.close();
@@ -189,24 +192,15 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("PERSIST current fly speed",shooter->lastSetFlywheel);
 	SmartDashboard::PutString("PERSIST current speed mode", toput);
 
-//	if(Robot::oi->GetB_Button()) {
-//		terminateAutoGear = true;
-//	}
-//
-//	if((!Robot::oi->GetLeftBumper()) && (terminateAutoGear == false)) {
-//		if(Robot::gear->GetReleaseLimitSwitch()){
-//			Robot::gear->ActuateGearRelease(frc::DoubleSolenoid::kForward);
-//		}else{
-//			Robot::gear->ActuateGearRelease(frc::DoubleSolenoid::kReverse);
-//		}
-//	}
 //	frc::SmartDashboard::PutNumber("Targets",VisionServer::targets.size());
 //	frc::SmartDashboard::PutBoolean("setupSucceeded",VisionServer::hasSetup);
 //	frc::SmartDashboard::PutBoolean("isActive",VisionServer::isActive);
 //	frc::SmartDashboard::PutBoolean("isConnected",VisionServer::isConnected());
+
+	//finding the x-coordinate for the center of the target
 	if(VisionServer::targets.size() > 0){
 		double targetX = -1;
-		for(int i = 0; i < VisionServer::targets.size(); i++){
+		for(size_t i = 0; i < VisionServer::targets.size(); i++){
 			double thisX = VisionServer::targets[0].x;
 			if(thisX > targetX){
 				targetX = thisX;

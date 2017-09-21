@@ -39,16 +39,15 @@ std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearLimitSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearSolenoid;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::shooterHoodActuator;
-//std::shared_ptr<frc::DigitalInput> RobotMap::leftA;
-//std::shared_ptr<frc::DigitalInput> RobotMap::leftB;
-//std::shared_ptr<frc::DigitalInput> RobotMap::RightA;
-//std::shared_ptr<frc::DigitalInput> RobotMap::RightB;
 
 //runs at startup of robot
 void RobotMap::init() {
 	//assigns ports and settings to pointer objects declared in RobotMap.h
 	//Creating new instances of the subsystems
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
+
+	//SetCurrentLimit is used to prevent the motors from drawing
+	//too much current and blowing a breaker
 
 	drivetrainFrontLeftMotor.reset (new CANTalon(DRIVETRAIN_FRONT_LEFT_MOTOR));
 	lw->AddActuator("Drivetrain" , "FrontLeftMotor" , drivetrainFrontLeftMotor);
@@ -102,9 +101,9 @@ void RobotMap::init() {
 	drivetrainChassis.reset (new frc::RobotDrive (drivetrainFrontLeftMotor , drivetrainRearLeftMotor , drivetrainFrontRightMotor , drivetrainRearRightMotor));
 
 	drivetrainChassis ->SetSafetyEnabled(false);
-		drivetrainChassis ->SetExpiration(0.5);
-		drivetrainChassis ->SetSensitivity(0.5);
-		drivetrainChassis ->SetMaxOutput(1.0);
+	drivetrainChassis ->SetExpiration(0.5);
+	drivetrainChassis ->SetSensitivity(0.5);
+	drivetrainChassis ->SetMaxOutput(1.0);
 
 	drivetrainLeftEncoder.reset(new frc::Encoder(1, 2, false, Encoder::k4X));//1, 2
 	drivetrainLeftEncoder->SetReverseDirection(true);

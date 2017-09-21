@@ -106,10 +106,10 @@ void VisionServer::reqAppRestart(){
 void VisionServer::findCamera(){
 
 	sockaddr_in clientAddr;
-	fd_set readset;
-	timeval time;
-	time.tv_sec=4;
-	time.tv_usec=0;
+//	fd_set readset;
+//	timeval time;
+//	time.tv_sec=4;
+//	time.tv_usec=0;
 	//if(VisionServer::DEBUG_MODE) std::cout << "Finding Camera..." << std::endl;
 	socklen_t sin_size=sizeof(struct sockaddr_in);
 	clientfd=accept(socketfd,(struct sockaddr*)&clientAddr, &sin_size);
@@ -135,7 +135,7 @@ void VisionServer::runServerRoutine() {
 	if(VisionServer::DEBUG_MODE) std::cout << "RAW: " << receivedStr<<std::endl;
 	std::vector<std::string> messages = split(std::string(receivedStr),'\n');
 
-	for(int i = 0; i < messages.size() && !didTargets; i++) {
+	for(size_t i = 0; i < messages.size() && !didTargets; i++) {
 
 		//pch is now message.
 		//PCH is a json string.
@@ -170,14 +170,14 @@ void VisionServer::runServerRoutine() {
 				}
 			}
 
-		}catch(std::exception e){
+		}catch(std::exception& e){
 			// failed, invalid json??
 			//if(VisionServer::DEBUG_MODE) std::cout<<"server routine json error: " << e.what()<< std::endl;
 		}
 	}
 
 	//if(VisionServer::DEBUG_MODE) std::cout<<"heartbeat"<<std::endl;
-	char* heartbeatmsg = "{\"type\":\"heartbeat\",\"message\":\"{}\"}";
+	char heartbeatmsg[] = "{\"type\":\"heartbeat\",\"message\":\"{}\"}";
 	int writeStatus = send(clientfd,heartbeatmsg,strlen(heartbeatmsg),0);
 	if(writeStatus == -1){
 		if(VisionServer::DEBUG_MODE) std::cout << "heartbeat errno: " << errno << std::endl;
@@ -228,14 +228,14 @@ void VisionServer::visionUpdater() {
 			std::this_thread::sleep_for(std::chrono::milliseconds(1));
 		}
 		failConnectCount++;
-		long timeTaken = std::chrono::duration_cast< std::chrono::milliseconds >(
-										std::chrono::system_clock::now().time_since_epoch()
-								).count() - ms.count();
-								//frc::SmartDashboard::PutNumber("debug adb check (ms)",timeTaken);
+//		long timeTaken = std::chrono::duration_cast< std::chrono::milliseconds >(
+//										std::chrono::system_clock::now().time_since_epoch()
+//								).count() - ms.count();
+//								frc::SmartDashboard::PutNumber("debug adb check (ms)",timeTaken);
 	}
-	long timeTaken = std::chrono::duration_cast< std::chrono::milliseconds >(
-			std::chrono::system_clock::now().time_since_epoch()
-	).count() - ms.count();
-	//frc::SmartDashboard::PutNumber("debug timeTaken (ms)",timeTaken);
+//	long timeTaken = std::chrono::duration_cast< std::chrono::milliseconds >(
+//			std::chrono::system_clock::now().time_since_epoch()
+//	).count() - ms.count();
+//	frc::SmartDashboard::PutNumber("debug timeTaken (ms)",timeTaken);
 }
 

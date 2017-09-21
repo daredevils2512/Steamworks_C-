@@ -10,7 +10,8 @@
 class OI
 {
 public:
-	double SHOOT_BOILER_RPM = 3100; // retested, fucking glorious
+	//RPM setpoints for the turret
+	double SHOOT_BOILER_RPM = 3100; // retested, glorious
 	double SHOOT_FAR_HOPPER_RPM = 4050; // retested, decent
 	double SHOOT_BOILER_PEG_RPM = 4085; // retested, decent, consider ~10 less
 	double SHOOT_CENTER_PEG_RPM = 4550; // retested, meh
@@ -23,7 +24,7 @@ private:
 	Joystick coDriverBox{2};
 
 
-	//driver controls
+	//xbox controls
 	TriggerButton DRC_rightTrigger{&driverController, 3, 0.8};
 	TriggerButton DRC_leftTrigger{&driverController, 2, 0.8};
 	JoystickButton DRC_rightBumper{&driverController, 6};
@@ -34,6 +35,7 @@ private:
 	JoystickButton DRC_yButton{&driverController, 4};
 	JoystickButton DRC_startButton{&driverController, 8};
 
+	//co-driver logitech controls
 	JoystickButton CDR_trigger{&coDriverController, 1};
 	JoystickButton CDR_sideJoystickButton{&coDriverController, 2};
 	JoystickButton CDR_bottomLeftJoystick{&coDriverController, 3};
@@ -51,6 +53,7 @@ private:
 	TriggerButton CDR_zNegativeAxis{&coDriverController, 2, -0.2};
 	ThrottleButton CDR_throttle{&coDriverController, 3};
 
+	//co-driver button box controls
 	JoystickButton CDB_topWhite{&coDriverBox, 2};
 	JoystickButton CDB_topRed{&coDriverBox, 6};
 	JoystickButton CDB_middleWhite{&coDriverBox, 8};

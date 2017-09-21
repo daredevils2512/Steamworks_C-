@@ -66,6 +66,7 @@ void Drivetrain::ResetEncoders() {
 }
 
 void Drivetrain::TurnDirection(double m_targetX , double centerX){
+	//determining which direction to turn for vision turning
 	double error = centerX - m_targetX;
 	error = error * 0.005;
 	if (error > 0.5) {

@@ -1,4 +1,3 @@
-#include <Commands/AutoCircleDrive.h>
 #include "OI.h"
 #include "SmartDashboard/SmartDashboard.h"
 #include "WPILib.h"
@@ -37,7 +36,6 @@ OI::OI()
 	DRC_rightTrigger.WhenReleased(new DrivetrainShift(false));//working
 	DRC_rightBumper.WhileHeld(new FloorIntakeRunMotor(-1.0));
 	DRC_rightBumper.WhenReleased(new FloorIntakeRunMotor(0.0));
-//	DRC_leftBumper.WhenPressed(new GearIntakeActuate(frc::DoubleSolenoid::kForward));
 	DRC_leftBumper.WhenPressed(new GearToggleIntake());
 	DRC_xButton.WhenPressed(new ClimberDisableCurrentLimit());
 	DRC_xButton.WhileHeld(new ClimberRunMotor(1.0));//working
@@ -47,7 +45,6 @@ OI::OI()
 	DRC_startButton.WhenPressed(new ClimberRunMotor(1.0));
 
 	CDR_trigger.WhileHeld(new _CMG_ShootBall());//working
-//	CDR_trigger.WhenReleased(new ShooterRunFlywheel(0.0));//working
 	CDR_trigger.WhenReleased(new ShooterStopFlywheel());
 	CDR_trigger.WhenReleased(new ShooterRunSpinCycleFeed(0.0));//working
 	CDR_trigger.WhenReleased(new ShooterRunBoosters(0.0));
@@ -77,8 +74,6 @@ OI::OI()
 	CDB_bigWhite.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kForward));//working
 	CDB_bigRed.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kReverse));//working
 	CDB_green.WhileHeld(new FloorIntakeRunMotor(1.0));//working
-	CDB_green.WhenReleased(new _CMG_ShooterManualSwivel(0.2));//working
-//	CDB_yellow.WhenPressed(new _CMG_ShooterManualSwivel(-0.2));//-7565
 	CDB_yellow.WhenPressed(new GearVisionTurn(265));//185//210//185//260
 	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(1.0));//working
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working
@@ -88,17 +83,15 @@ OI::OI()
 	CDB_topRed.WhenPressed(new ShooterSetFlywheelSpeed(SHOOT_FAR_HOPPER_RPM));
 	CDB_middleWhite.WhenPressed(new ShooterSetFlywheelSpeed(SHOOT_CLOSE_HOPPER_RPM));
 	CDB_middleRed.WhenPressed(new ShooterSetFlywheelSpeed(SHOOT_BOILER_RPM));
-//	CDB_middleWhite.WhenPressed(new _CMG_ShooterManualSwivel(0.2));
-//	CDB_middleRed.WhenPressed(new _CMG_ShooterManualSwivel(-0.2));
 }
 
 double OI::GetTurn() {
-	//gets forward/backward values
+	//gets turning values
 	return Desensitize(-driverController.GetRawAxis(4));
 }
 
 double OI::GetMove() {
-	//gets turning values
+	//gets forward/backward values
 	if(InvertDriving()) {
 		return Desensitize(driverController.GetRawAxis(1));
 	}else{
@@ -140,6 +133,8 @@ int OI::GetJoystickPOV() {
 }
 
 double OI::GetManualShooterSwivel() {
+	//swivels the turret based on co-driver logitech z-axis
+	//8000 is the position of the CTR-Magnetic Encoders where turning farther is bad
 	if((Robot::shooter->GetSwivelPosition() > 8000) && ((coDriverController.GetRawAxis(2) > 0))) {
 		return 0.0;
 	}else if((Robot::shooter->GetSwivelPosition() < -8000) && ((coDriverController.GetRawAxis(2) < 0))){
@@ -150,14 +145,8 @@ double OI::GetManualShooterSwivel() {
 }
 
 double OI::GetTranslatedThrottle() {
-		return ((-(coDriverController.GetAxis(frc::Joystick::AxisType::kThrottleAxis)) + 1) / 2) * 4600;
+	//getting the inverted raw value from the co-driver's throttle
+	//changing the range -1 to 1 to the range 0 to 1 and multiplying
+	//to get the RPM speed for the shooter flywheel
+	return ((-(coDriverController.GetAxis(frc::Joystick::AxisType::kThrottleAxis)) + 1) / 2) * 4600;
 }
-
-bool OI::GetLeftBumper() {
-	return DRC_leftBumper.Get();
-}
-
-bool OI::GetB_Button() {
-	return DRC_bButton.Get();
-}
-

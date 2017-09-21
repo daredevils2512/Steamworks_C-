@@ -7,24 +7,26 @@
 
 class RobotMap {
 public:
-	//4 speed controllers for drivetrain
+	//speed controllers for drivetrain
 	static std::shared_ptr<CANTalon> drivetrainFrontLeftMotor;
 	static std::shared_ptr<CANTalon> drivetrainRearLeftMotor;
 	static std::shared_ptr<CANTalon> drivetrainFrontRightMotor;
 	static std::shared_ptr<CANTalon> drivetrainRearRightMotor;
-	//1 speed controller for running the climber motor
+	//speed controller for running the climber motor
 	static std::shared_ptr<CANTalon> climberMotor;
-	//1 speed controller for running the intake motor
+	//speed controller for running the intake motor
 	static std::shared_ptr<CANTalon> intakeMotor;
-
+	//speed controllers for the shooter
 	static std::shared_ptr<CANTalon> shooterFlywheel;
 	static std::shared_ptr<CANTalon> shooterTurretSwivel;
 	static std::shared_ptr<CANTalon> shooterSpinCycleFeed;
 	static std::shared_ptr<CANTalon> shooterBottomBooster;
 	static std::shared_ptr<CANTalon> shooterTopBooster;
+	//pixy objects for the shooter
+	//A fake pixy is needed because you need to toggle the pixy to receive data
+	//because the roborio can't toggle the same pixy repeatedly
 	static std::shared_ptr<frc::SPI> shooterRealPixy;
 	static std::shared_ptr<frc::SPI> shooterFakePixy;
-
 	//robot drivetrain
 	static std::shared_ptr<frc::RobotDrive> drivetrainChassis;
 	static std::shared_ptr<frc::Encoder> drivetrainLeftEncoder;
@@ -32,14 +34,13 @@ public:
 	//compressor switch and sensor to regulate compressor when connected to robot
 	static std::shared_ptr<frc::Relay> compressorSpike;
 	static std::shared_ptr<frc::DigitalInput> compressorPressureSwitch;
-	//1 pneumatic actuator for shifting gears on drivetrain
+	//pneumatic actuator for shifting gears on drivetrain
 	static std::shared_ptr<frc::DoubleSolenoid> drivetrainShift;
-	//1 limit switch to notify once gear is in the slot
+	//limit switch to notify once gear is in the slot
 	static std::shared_ptr<frc::DigitalInput> gearLimitSwitch;
-
+	//solenoid to actuate gear slot in and out
 	static std::shared_ptr<frc::DoubleSolenoid> gearSolenoid;
-
-
+	//solenoid to actuate the shooter hood forward and back
 	static std::shared_ptr<frc::DoubleSolenoid> shooterHoodActuator;
 
 	static void init();
