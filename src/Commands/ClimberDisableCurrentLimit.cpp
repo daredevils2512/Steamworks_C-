@@ -13,6 +13,7 @@ void ClimberDisableCurrentLimit::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ClimberDisableCurrentLimit::Execute() {
+	//disabling the climber motors current limit so it can draw as much as it needs
 	RobotMap::climberMotor->EnableCurrentLimit(false);
 }
 

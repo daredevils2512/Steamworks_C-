@@ -11,11 +11,13 @@ AutoDimeSpin::AutoDimeSpin(double speed, double turnDistance, Drivetrain::Direct
 
 // Called just before this Command runs the first time
 void AutoDimeSpin::Initialize() {
+	//resets the encoder before we start
 	Robot::drivetrain->ResetEncoders();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AutoDimeSpin::Execute() {
+	//spins the robot on a dime using the inputed speed
 	switch(m_direction) {
 		case Drivetrain::Direction::clockwise:
 			Robot::drivetrain->DriveRobotTank(m_speed, -m_speed);
@@ -32,6 +34,7 @@ void AutoDimeSpin::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool AutoDimeSpin::IsFinished() {
+	//determines if the robot  is done turning based off of reading the encoders
 	double leftDistance = abs(Robot::drivetrain->GetLeftEncoder());
 		double rightDistance = abs(Robot::drivetrain->GetRightEncoder());
 		if(abs(leftDistance - rightDistance) > 2) {
@@ -47,6 +50,7 @@ bool AutoDimeSpin::IsFinished() {
 
 // Called once after isFinished returns true
 void AutoDimeSpin::End() {
+	//turns off the motors when we're done
 	Robot::drivetrain->DriveRobotTank(0.0, 0.0);
 }
 

@@ -14,6 +14,7 @@ void FloorIntakeRunMotor::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void FloorIntakeRunMotor::Execute() {
+	//turns on the floor intake at the inputed speed
 	Robot::floorIntake->SetSpeed(m_speed);
 }
 

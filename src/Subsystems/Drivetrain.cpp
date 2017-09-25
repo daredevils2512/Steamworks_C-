@@ -84,6 +84,7 @@ void Drivetrain::TurnDirection(double m_targetX , double centerX){
 }
 
 bool Drivetrain::IsWithinThreshold(double obj1X, double obj2X, int threshold){
+	//determining if two objects are within a certain range of each other
 	int tol = threshold / 2;
 	return (obj1X - tol <= obj2X && obj1X + tol >= obj2X) && (obj2X - tol <= obj1X && obj2X + tol >= obj1X);
 }

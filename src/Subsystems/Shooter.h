@@ -19,10 +19,12 @@ private:
 	std::shared_ptr<CANTalon> topBooster;
 	std::shared_ptr<frc::DoubleSolenoid> hoodActuator;
 
+	//bools for comparisons later on
 	bool lastConditionRight;
 	bool lastConditionLeft;
 	double shooterSpeed;
 public:
+	//creating all the usable functions
 	double lastSetFlywheel = 0;
 	Shooter();
 	void InitDefaultCommand();
@@ -39,6 +41,7 @@ public:
 	double GetVirtualDistance(PixySubsystem::ObjectValues object);
 	//int GetVirtualDistance(Pixy::ObjectValues object);
 	double GetShooterSpeed();
+	//the maximum encoder clicks we allow for the shooter's swivel
 	double maxEncPosition;
 };
 

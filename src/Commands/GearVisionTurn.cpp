@@ -16,6 +16,7 @@ GearVisionTurn::GearVisionTurn(double targetX) {
 
 // Called just before this Command runs the first time
 void GearVisionTurn::Initialize() {
+	//resets all of our counters and booleans so we can start tracking
 	targetAcquired = false;
 	abort = false;
 	numberOfNegOne = 0;
@@ -80,28 +81,13 @@ int GearVisionTurn::CenterXFinder(double obj1, double obj2, double xDiff) {
 }
 
 bool GearVisionTurn::IsHeightSame(double obj1, double obj2, double threshold) {
+	//checking if the height of two objects is the same
 	return Robot::drivetrain->IsWithinThreshold(obj1, obj2, threshold);
 }
 
 bool GearVisionTurn::IsYSame(double obj1, double obj2, double threshold) {
+	//checking if the center y-coordinates of two objects are the same
 	return Robot::drivetrain->IsWithinThreshold(obj1, obj2, threshold);
-}
-
-void GearVisionTurn::TurnDirection(double m_targetX , double centerX){
-	double error = centerX - m_targetX;
-	error = error * 0.005;
-	if (error > 0.5) {
-		error = 0.5;
-	} else if (error < -0.5){
-		error = -0.5;
-	}
-	if(Robot::drivetrain->IsWithinThreshold(m_targetX, centerX, 5)) {
-		Robot::drivetrain->DriveRobotTank(0.5, 0.0);
-	} else if(centerX != m_targetX) {
-		Robot::drivetrain->DriveRobotTank(0.0, error);
-	} else {
-		Robot::drivetrain->DriveRobotTank(0.0, 0.0);
-	}
 }
 
 void GearVisionTurn::TrackObject(double objectX) {

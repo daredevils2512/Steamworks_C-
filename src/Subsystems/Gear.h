@@ -11,6 +11,7 @@ private:
 	std::shared_ptr<DoubleSolenoid> solenoid;
 
 public:
+	//creating the usable functions
 	Gear();
 	void InitDefaultCommand();
 
@@ -20,6 +21,7 @@ public:
 	void ActuateGearIntake(DoubleSolenoid::Value dir);
 	void UpdateGearActuator();
 private:
+	//a bool to save what the previous state of the gear limit switch
 	bool previousGearSwitchState;
 };
 

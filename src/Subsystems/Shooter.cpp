@@ -58,11 +58,13 @@ void Shooter::RunFlywheel(){
 	flywheel->Set(lastSetFlywheel);
 }
 void Shooter::StopFlywheel(){
+	//stops the flywheel
 	flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
 	flywheel->Set(0);
 }
 
 void Shooter::SetBoosterSpeed(double speed) {
+	//turns on the boosters to the inputed speed
 	bottomBooster->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
 	bottomBooster->Set(speed);
 	topBooster->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
@@ -81,6 +83,7 @@ void Shooter::SetSwivelSpeed(double speed){
 }
 
 double Shooter::GetSwivelPosition() {
+	// returns the current encoder clicks of the shooter
 	return turretSwivel->GetEncPosition();
 }
 

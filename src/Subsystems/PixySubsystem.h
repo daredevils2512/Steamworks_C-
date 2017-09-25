@@ -19,6 +19,7 @@ private:
 
 
 public:
+	//setting up the ObjectValues structure so we can store the data returned by the pixy
 	struct ObjectValues {
 		int checksum;
 		int signature;
@@ -36,6 +37,7 @@ public:
 	int GetFrameSize();
 
 private:
+	//creating the usable functions and booleans
 	void CollectFrameData(std::shared_ptr<frc::SPI> realPixy, std::shared_ptr<frc::SPI> fakePixy);
 	bool ObjectIsGood(Nullable< std::vector<int> > objectVector);
 	std::vector<ObjectValues> GetObjectData();

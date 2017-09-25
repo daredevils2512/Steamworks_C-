@@ -13,6 +13,7 @@ void GearToggleIntake::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void GearToggleIntake::Execute() {
+	//actuates the gear solenoid in the opposite direction it was previously
 	if(Robot::gear->GetIntakeDirection() == frc::DoubleSolenoid::kForward) {
 		Robot::gear->ActuateGearIntake(frc::DoubleSolenoid::kReverse);
 	}else{
