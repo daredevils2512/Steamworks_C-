@@ -12,6 +12,7 @@ void ShooterSetFlywheelSpeed::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterSetFlywheelSpeed::Execute() {
+	//saves the current RPM of the shooter's flywheel
 	Robot::shooter->SaveFlywheelSpeed(m_speed);
 }
 

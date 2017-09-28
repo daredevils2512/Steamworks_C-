@@ -13,6 +13,7 @@ void ShooterPOVHoodControl::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterPOVHoodControl::Execute() {
+	//actuates the shooter hood based off of the POV button on the co-drivers joystick
 	Robot::shooter->ActuateHood(Robot::oi->POVHoodControl());
 }
 

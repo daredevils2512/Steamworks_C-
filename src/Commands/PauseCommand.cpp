@@ -35,6 +35,7 @@ void PauseCommand::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool PauseCommand::IsFinished() {
+	//used to make the robot stop doing everything for a certain length of time
     return IsTimedOut();
 }
 

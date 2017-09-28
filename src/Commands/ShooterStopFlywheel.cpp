@@ -11,6 +11,7 @@ void ShooterStopFlywheel::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterStopFlywheel::Execute() {
+	//turns off the flywheel
 	Robot::shooter->StopFlywheel();
 }
 

@@ -14,7 +14,7 @@ void ShooterRunSpinCycleFeed::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterRunSpinCycleFeed::Execute() {
-	//go the speed
+	//turns on the spin-cycle at the speed inputed
 	Robot::shooter->SetSpinCycleFeedSpeed(m_speed);
 }
 

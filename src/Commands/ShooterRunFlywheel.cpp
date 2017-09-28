@@ -13,6 +13,7 @@ void ShooterRunFlywheel::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterRunFlywheel::Execute() {
+	//runs the shooter at the inputed speed
 	Robot::shooter->SetFlywheelSpeed(m_speed);
 }
 

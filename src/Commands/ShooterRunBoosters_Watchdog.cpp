@@ -14,6 +14,7 @@ void ShooterRunBoosters_Watchdog::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterRunBoosters_Watchdog::Execute() {
+	//turns on the boosters for the shooter unless the shooter RPM is 25 RPM lower than it's setpoint
 	if(Robot::shooter->lastSetFlywheel-25 > RobotMap::shooterFlywheel->GetSpeed()){
 		Robot::shooter->SetBoosterSpeed(0);
 	}else{

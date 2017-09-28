@@ -91,28 +91,32 @@ bool GearVisionTurn::IsYSame(double obj1, double obj2, double threshold) {
 }
 
 void GearVisionTurn::TrackObject(double objectX) {
+	//vision tracks an object using the gear pixy by going until it finds the centerX coordinate inputed
 	std::cout << objectX << std::endl;
 	int tolerance = 8;
-		int slowDownTolerance = 100;
-		if(goalPixel-(tolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
-			Robot::drivetrain->DriveRobotTank(0.0, 0.0);
-			std::cout << "Gear target acquired" << std::endl;
-			targetAcquired = true;
-		}else if(objectX < goalPixel) {
-			if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
-				std::cout << "slow" << std::endl;
-				Robot::drivetrain->DriveRobotTank(-0.55, 0.55); //0.5
-			}else{
-				Robot::drivetrain->DriveRobotTank(-0.7, 0.7);
-			}
-			std::cout << "-" << std::endl;
+	int slowDownTolerance = 100;
+	//checking if the object found has a centerX coordinate that is more or less the same as the target one
+	if(goalPixel-(tolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
+		Robot::drivetrain->DriveRobotTank(0.0, 0.0);
+		std::cout << "Gear target acquired" << std::endl;
+		targetAcquired = true;
+	}else if(objectX < goalPixel) {
+		//checking if the object found has a centerX coordinate that is to the right of the target coordinate
+		if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
+			std::cout << "slow" << std::endl;
+			Robot::drivetrain->DriveRobotTank(-0.55, 0.55); //0.5
 		}else{
-			if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
-				Robot::drivetrain->DriveRobotTank(0.55, -0.55); //0.5
-				std::cout << "slow" << std::endl;
-			}else{
-				Robot::drivetrain->DriveRobotTank(0.7, -0.7);
-			}
-			std::cout << "+" << std::endl;
+			Robot::drivetrain->DriveRobotTank(-0.7, 0.7);
 		}
+		std::cout << "-" << std::endl;
+	}else{
+		//checking if the object found has a centerX coordinate that is to the left of the target coordinate
+		if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
+			Robot::drivetrain->DriveRobotTank(0.55, -0.55); //0.5
+			std::cout << "slow" << std::endl;
+		}else{
+			Robot::drivetrain->DriveRobotTank(0.7, -0.7);
+		}
+		std::cout << "+" << std::endl;
+	}
 }

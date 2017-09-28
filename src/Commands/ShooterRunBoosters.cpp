@@ -13,6 +13,7 @@ void ShooterRunBoosters::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterRunBoosters::Execute() {
+	//turns on the shooter's booster to the inputed speed
 	Robot::shooter->SetBoosterSpeed(m_speed);
 }
 

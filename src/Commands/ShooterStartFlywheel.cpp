@@ -11,6 +11,7 @@ void ShooterStartFlywheel::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterStartFlywheel::Execute() {
+	//turns on the flywheel
 	Robot::shooter->RunFlywheel();
 }
 
