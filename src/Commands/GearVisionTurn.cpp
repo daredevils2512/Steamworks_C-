@@ -71,6 +71,7 @@ void GearVisionTurn::Interrupted() {
 }
 
 int GearVisionTurn::CenterXFinder(double obj1, double obj2, double xDiff) {
+	//finds the centerX coordinate of two objects so we can treat them as one object
 	int centerX = 159;
 	if (obj1 > obj2) {
 		centerX = obj1 - xDiff;
