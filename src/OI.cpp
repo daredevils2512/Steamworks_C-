@@ -28,6 +28,7 @@
 #include "Commands/ShooterSwivelMoveToPosition.h"
 #include "Commands/ShooterRunBoosters.h"
 #include "Commands/ClimberDisableCurrentLimit.h"
+#include "Commands/LightToggle.h"
 
 OI::OI()
 {
@@ -73,7 +74,7 @@ OI::OI()
 
 	CDB_bigWhite.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kForward));//working
 	CDB_bigRed.WhenPressed(new ShooterMoveHood(frc::DoubleSolenoid::kReverse));//working
-	CDB_green.WhileHeld(new FloorIntakeRunMotor(1.0));//working
+	CDB_green.WhenPressed(new LightToggle());//working
 	CDB_yellow.WhenPressed(new GearVisionTurn(265));//185//210//185//260
 	CDB_bottomWhite.WhileHeld(new ClimberRunMotor(1.0));//working
 	CDB_bottomWhite.WhenReleased(new ClimberRunMotor(0.0));//working

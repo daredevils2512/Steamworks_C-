@@ -46,6 +46,7 @@ void Robot::RobotPeriodic() {
 void Robot::DisabledInit(){
 	compressor->SetClosedLoopControl(false);
 	VisionServer::isActive = false;
+	RobotMap::spotlightRelay->Set(frc::Relay::Value::kOff);
 }
 
 void Robot::DisabledPeriodic() {
@@ -122,6 +123,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
+	RobotMap::spotlightRelay->Set(frc::Relay::Value::kOff);
 	VisionServer::isActive = true;
 	//stops autonomous command
 	Robot::shooter->SetFlywheelSpeed(0.0);

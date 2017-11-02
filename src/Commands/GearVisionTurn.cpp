@@ -21,6 +21,7 @@ void GearVisionTurn::Initialize() {
 	abort = false;
 	numberOfNegOne = 0;
 	std::cout << "start gear tracking" << std::endl;
+	RobotMap::spotlightRelay->Set(frc::Relay::Value::kOn);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -61,7 +62,7 @@ bool GearVisionTurn::IsFinished() {
 
 // Called once after isFinished returns true
 void GearVisionTurn::End() {
-
+	RobotMap::spotlightRelay->Set(frc::Relay::Value::kOff);
 }
 
 // Called when another command which requires one or more of the same

@@ -43,6 +43,9 @@ public:
 	//solenoid to actuate the shooter hood forward and back
 	static std::shared_ptr<frc::DoubleSolenoid> shooterHoodActuator;
 
+    static std::shared_ptr<frc::Relay> spotlightRelay;
+
+
 	static void init();
 };
 /**

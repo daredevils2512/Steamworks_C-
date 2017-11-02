@@ -39,6 +39,8 @@ std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearLimitSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearSolenoid;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::shooterHoodActuator;
+std::shared_ptr<frc::Relay> RobotMap::spotlightRelay;
+
 
 //runs at startup of robot
 void RobotMap::init() {
@@ -123,6 +125,7 @@ void RobotMap::init() {
 	gearLimitSwitch.reset (new frc::DigitalInput(0));
 	lw ->AddSensor("Gear" , "GearLimitSwitch" , gearLimitSwitch);
 
+	spotlightRelay.reset (new Relay(0,Relay::kForwardOnly));
 
 
 //	gearRealPixy.reset (new frc::SPI(frc::SPI::kOnboardCS1));

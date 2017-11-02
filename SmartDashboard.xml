@@ -1,0 +1,95 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Gear Sees Target" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="91" y="746"/>
+		<width>346</width>
+		<height>218</height>
+	</widget>
+	<widget field="gear intake actuate" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="89" y="429"/>
+		<width>392</width>
+		<height>303</height>
+	</widget>
+	<widget field="TargetX" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="554" y="845"/>
+	</widget>
+	<widget field="Millis between updates" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="470" y="867"/>
+	</widget>
+	<widget field="gear limit switch" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="493" y="22"/>
+		<width>1162</width>
+		<height>806</height>
+	</widget>
+	<widget field="back right current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="89" y="242"/>
+	</widget>
+	<widget field="spin cycle current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="90" y="346"/>
+		<height>22</height>
+	</widget>
+	<widget field="subsystem get right encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="28" y="156"/>
+	</widget>
+	<widget field="left encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="122" y="49"/>
+	</widget>
+	<widget field="front right current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="88" y="221"/>
+	</widget>
+	<widget field="PERSIST current fly speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1601" y="554"/>
+	</widget>
+	<widget field="right encoder raw" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="88" y="111"/>
+	</widget>
+	<widget field="PERSIST current speed mode" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1563" y="608"/>
+		<width>333</width>
+		<height>167</height>
+		<property name="Background" value="153.153.255.255"/>
+	</widget>
+	<widget field="flywheel current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="98" y="263"/>
+	</widget>
+	<widget field="climber current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="103" y="390"/>
+	</widget>
+	<widget field="floor intake current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="81" y="368"/>
+	</widget>
+	<widget field="back left current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="97" y="200"/>
+	</widget>
+	<widget field="right encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="114" y="90"/>
+	</widget>
+	<widget field="swivel current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="110" y="283"/>
+		<height>22</height>
+	</widget>
+	<widget field="left flywheel speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1642" y="498"/>
+	</widget>
+	<widget field="subsystem get left encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="36" y="134"/>
+	</widget>
+	<widget field="swivel encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1662" y="447"/>
+	</widget>
+	<widget field="bottom booster current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="58" y="326"/>
+	</widget>
+	<widget field="front left current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="96" y="178"/>
+	</widget>
+	<widget field="left encoder raw" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="96" y="68"/>
+	</widget>
+	<widget field="top booster current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="80" y="305"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>
