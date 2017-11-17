@@ -95,7 +95,7 @@ bool GearVisionTurn::IsYSame(double obj1, double obj2, double threshold) {
 void GearVisionTurn::TrackObject(double objectX) {
 	//vision tracks an object using the gear pixy by going until it finds the centerX coordinate inputed
 	std::cout << objectX << std::endl;
-	int tolerance = 8;
+	int tolerance = 18;
 	int slowDownTolerance = 100;
 	//checking if the object found has a centerX coordinate that is more or less the same as the target one
 	if(goalPixel-(tolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {

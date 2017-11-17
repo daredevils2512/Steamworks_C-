@@ -9,7 +9,7 @@ AutoStraightDrive::AutoStraightDrive(double targetFeet, double speed) {
 	m_targetFeet = targetFeet;
 	m_speed = speed;
 	//setting a timeout in case it doesn't move so it doesn't keep trying forever
-	SetTimeout(2.5);
+	SetTimeout(3.0);
 }
 
 // Called just before this Command runs the first time
@@ -41,7 +41,7 @@ bool AutoStraightDrive::IsFinished() {
 	if(IsTimedOut()) {
 		std::cout << "timed out" << std::endl;
 	}
-	return (rightDistance + leftDistance) >= m_targetFeet || IsTimedOut();
+	return ((rightDistance + leftDistance) /2 >= m_targetFeet) || IsTimedOut();
 }
 
 // Called once after isFinished returns true

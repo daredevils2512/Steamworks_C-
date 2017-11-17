@@ -42,6 +42,30 @@ void Robot::RobotInit() {
   }
 void Robot::RobotPeriodic() {
 	SmartDashboard::PutBoolean("Gear Sees Target", (VisionServer::targets.size() > 0));
+	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
+	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterFlywheel->GetSpeed());
+	SmartDashboard::PutBoolean("gear limit switch" , Robot::gear->GetLimitSwitch());
+
+	SmartDashboard::PutBoolean("gear intake actuate", Robot::gear->GetIntake());
+	SmartDashboard::PutNumber("left encoder", RobotMap::drivetrainLeftEncoder->GetDistance());
+//	SmartDashboard::PutBoolean("left encoder digitalcheck", RobotMap::drivetrainLeftEncoder->CheckDigitalChannel(2));
+	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder->GetDistance());
+//	SmartDashboard::PutBoolean("right encoder digitalcheck", RobotMap::drivetrainRightEncoder->CheckDigitalChannel(4));
+	SmartDashboard::PutNumber("subsystem get left encoder", Robot::drivetrain->GetLeftEncoder());
+	SmartDashboard::PutNumber("subsystem get right encoder", Robot::drivetrain->GetRightEncoder());
+	SmartDashboard::PutNumber("left encoder raw", RobotMap::drivetrainLeftEncoder->Get());
+	SmartDashboard::PutNumber("right encoder raw", RobotMap::drivetrainRightEncoder->Get());
+	SmartDashboard::PutNumber("front left current", RobotMap::drivetrainFrontLeftMotor->GetOutputCurrent());
+	SmartDashboard::PutNumber("front right current", RobotMap::drivetrainFrontRightMotor->GetOutputCurrent());
+	SmartDashboard::PutNumber("back left current", RobotMap::drivetrainRearLeftMotor->GetOutputCurrent());
+	SmartDashboard::PutNumber("back right current", RobotMap::drivetrainRearRightMotor->GetOutputCurrent());
+	SmartDashboard::PutNumber("flywheel current", RobotMap::shooterFlywheel->GetOutputCurrent());
+	SmartDashboard::PutNumber("top booster current", RobotMap::shooterTopBooster->GetOutputCurrent());
+	SmartDashboard::PutNumber("bottom booster current", RobotMap::shooterBottomBooster->GetOutputCurrent());
+	SmartDashboard::PutNumber("swivel current", RobotMap::shooterTurretSwivel->GetOutputCurrent());
+	SmartDashboard::PutNumber("floor intake current", RobotMap::intakeMotor->GetOutputCurrent());
+	SmartDashboard::PutNumber("climber current", RobotMap::climberMotor->GetOutputCurrent());
+	SmartDashboard::PutNumber("spin cycle current", RobotMap::shooterSpinCycleFeed->GetOutputCurrent());
 }
 void Robot::DisabledInit(){
 	compressor->SetClosedLoopControl(false);
@@ -146,29 +170,7 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
 	//prints information to the smart dashboard
-	SmartDashboard::PutNumber("swivel encoder", RobotMap::shooterTurretSwivel->GetEncPosition());
-	SmartDashboard::PutNumber("left flywheel speed", RobotMap::shooterFlywheel->GetSpeed());
-	SmartDashboard::PutBoolean("gear limit switch" , Robot::gear->GetLimitSwitch());
-	SmartDashboard::PutNumber("left encoder", RobotMap::drivetrainLeftEncoder->GetDistance());
-//	SmartDashboard::PutBoolean("left encoder digitalcheck", RobotMap::drivetrainLeftEncoder->CheckDigitalChannel(2));
-	SmartDashboard::PutNumber("right encoder", RobotMap::drivetrainRightEncoder->GetDistance());
-//	SmartDashboard::PutBoolean("right encoder digitalcheck", RobotMap::drivetrainRightEncoder->CheckDigitalChannel(4));
-	SmartDashboard::PutNumber("subsystem get left encoder", Robot::drivetrain->GetLeftEncoder());
-	SmartDashboard::PutNumber("subsystem get right encoder", Robot::drivetrain->GetRightEncoder());
-	SmartDashboard::PutNumber("left encoder raw", RobotMap::drivetrainLeftEncoder->Get());
-	SmartDashboard::PutNumber("right encoder raw", RobotMap::drivetrainRightEncoder->Get());
-	SmartDashboard::PutNumber("front left current", RobotMap::drivetrainFrontLeftMotor->GetOutputCurrent());
-	SmartDashboard::PutNumber("front right current", RobotMap::drivetrainFrontRightMotor->GetOutputCurrent());
-	SmartDashboard::PutNumber("back left current", RobotMap::drivetrainRearLeftMotor->GetOutputCurrent());
-	SmartDashboard::PutNumber("back right current", RobotMap::drivetrainRearRightMotor->GetOutputCurrent());
-	SmartDashboard::PutNumber("flywheel current", RobotMap::shooterFlywheel->GetOutputCurrent());
-	SmartDashboard::PutNumber("top booster current", RobotMap::shooterTopBooster->GetOutputCurrent());
-	SmartDashboard::PutNumber("bottom booster current", RobotMap::shooterBottomBooster->GetOutputCurrent());
-	SmartDashboard::PutNumber("swivel current", RobotMap::shooterTurretSwivel->GetOutputCurrent());
-	SmartDashboard::PutNumber("floor intake current", RobotMap::intakeMotor->GetOutputCurrent());
-	SmartDashboard::PutNumber("climber current", RobotMap::climberMotor->GetOutputCurrent());
-	SmartDashboard::PutNumber("spin cycle current", RobotMap::shooterSpinCycleFeed->GetOutputCurrent());
-	SmartDashboard::PutBoolean("gear intake actuate", Robot::gear->GetIntake());
+
 
 
 	std::string toput = ":O";
