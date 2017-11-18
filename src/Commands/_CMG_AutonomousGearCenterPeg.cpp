@@ -34,6 +34,6 @@ _CMG_AutonomousGearCenterPeg::_CMG_AutonomousGearCenterPeg() {
 	AddSequential(new PauseCommand(0.2));
 //	AddSequential(new GearVisionTurn(265));
 //	AddSequential(new PauseCommand(0.2));
-	AddSequential(new AutoStraightDrive(20.0, 0.55)); //20.0
+	AddSequential(new AutoStraightDrive(19.0, 0.55)); //20.0
 	AddSequential(new _CMG_ShootBall_BoosterWatchdog());
 }

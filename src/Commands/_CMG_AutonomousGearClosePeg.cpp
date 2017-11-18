@@ -39,7 +39,7 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 	if(Robot::robotAlliance == frc::DriverStation::kBlue) {
 //		AddSequential(new AutoStraightDrive(42.0, 0.7));
 		AddParallel(new ShooterSwivelMoveToPosition(7800));
-		AddSequential(new AutoStraightDrive(64.0, 0.7)); //62.0//64.0//62
+		AddSequential(new AutoStraightDrive(62.0, 0.7)); //62.0//64.0//62
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::clockwise)); //15.0
 		AddSequential(new PauseCommand(0.5));
@@ -47,8 +47,8 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 //		AddSequential(new PauseCommand(0.5));
 		AddSequential(new GearVisionTurn(265));//210//200
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(265));
-		AddSequential(new PauseCommand(0.5));
+//		AddSequential(new GearVisionTurn(265));
+//		AddSequential(new PauseCommand(0.5));
 //		AddSequential(new GearVisionTurn(265));
 //		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(23.0, 0.5));
@@ -77,7 +77,7 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 	}else{//red
 //		AddSequential(new AutoStraightDrive(42.0, 0.7));//34
 		AddParallel(new ShooterSwivelMoveToPosition(-8000));
-		AddSequential(new AutoStraightDrive(64.0, 0.7)); //62.0
+		AddSequential(new AutoStraightDrive(62.0, 0.7)); //62.0
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::counterClockwise));
 		AddSequential(new PauseCommand(0.5));
@@ -85,8 +85,8 @@ _CMG_AutonomousGearClosePeg::_CMG_AutonomousGearClosePeg(bool gotoHopper) {
 //		AddSequential(new PauseCommand(0.5));
 		AddSequential(new GearVisionTurn(265)); //200
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(265));
-		AddSequential(new PauseCommand(0.5));
+//		AddSequential(new GearVisionTurn(265));
+//		AddSequential(new PauseCommand(0.5));
 //		AddSequential(new GearVisionTurn(265));
 //		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(23.0, 0.5));

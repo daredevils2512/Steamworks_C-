@@ -27,7 +27,7 @@ _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 	// arm.
 //	AddSequential(new AutoCircleDrive(160.0, 1.0, Drivetrain::Direction::clockwise, 80.0));
 	if(Robot::robotAlliance == frc::DriverStation::kBlue){
-		AddSequential(new AutoStraightDrive(64.0, 0.7)); //64.0
+		AddSequential(new AutoStraightDrive(62.0, 0.7)); //64.0
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::counterClockwise)); //19.0
 //		AddSequential(new PauseCommand(0.2));
@@ -35,13 +35,13 @@ _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 		AddSequential(new PauseCommand(0.5));
 		AddSequential(new GearVisionTurn(265)); //185
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(265));
-		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(265));
-		AddSequential(new PauseCommand(0.2));
+//		AddSequential(new GearVisionTurn(265));
+//		AddSequential(new PauseCommand(0.5));
+//		AddSequential(new GearVisionTurn(265));
+//		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(23.0, 0.5));
 	}else{
-		AddSequential(new AutoStraightDrive(64.0, 0.7));
+		AddSequential(new AutoStraightDrive(62.0, 0.7));
 		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoDimeSpin(0.9, 19.0, Robot::drivetrain->Direction::clockwise));
 //		AddSequential(new PauseCommand(0.2));
@@ -49,10 +49,10 @@ _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 		AddSequential(new PauseCommand(0.5));
 		AddSequential(new GearVisionTurn(265)); //185
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(265));
-		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(265));
-		AddSequential(new PauseCommand(0.2));
+//		AddSequential(new GearVisionTurn(265));
+//		AddSequential(new PauseCommand(0.5));
+//		AddSequential(new GearVisionTurn(265));
+//		AddSequential(new PauseCommand(0.2));
 		AddSequential(new AutoStraightDrive(23.0, 0.5));
 	}
 }
