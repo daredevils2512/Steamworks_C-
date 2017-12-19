@@ -4,16 +4,17 @@
 
 Shooter::Shooter() : Subsystem("Shooter") {
 	//quick defines
-	leftFlywheel = RobotMap::shooterLeftFlywheel;
-	rightFlywheel = RobotMap::shooterRightFlywheel;
+	flywheel = RobotMap::shooterFlywheel;
 	spinCycleFeed = RobotMap::shooterSpinCycleFeed;
 	turretSwivel = RobotMap::shooterTurretSwivel;
+	bottomBooster = RobotMap::shooterBottomBooster;
+	topBooster = RobotMap::shooterTopBooster;
 
 	hoodActuator = RobotMap::shooterHoodActuator;
 
 	lastConditionRight = false;
 	lastConditionLeft = false;
-	maxEncPosition = 8500;
+	maxEncPosition = 8000;//4500
 	shooterSpeed = 2250;
 }
 
@@ -26,18 +27,48 @@ void Shooter::ActuateHood(frc::DoubleSolenoid::Value direction){
 	//Sets the hood actuator to the passed enum value
 	hoodActuator->Set(direction);
 }
-
+void Shooter::SaveFlywheelSpeed(double speed){
+	//Set the flywheels to the appropriate speeds
+	lastSetFlywheel = speed;
+	if(flywheel->Get() != 0) {
+		if(lastSetFlywheel <= 1 && lastSetFlywheel >= -1){
+			flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+		}else{
+			flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
+		}
+		flywheel->Set(lastSetFlywheel);
+	}
+}
 void Shooter::SetFlywheelSpeed(double speed){
 	//Set the flywheels to the appropriate speeds
 	if((speed <= 1) && (speed >=-1)) {
-		leftFlywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
-		rightFlywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
 	}else{
-		leftFlywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
-		rightFlywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
+		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
 	}
-	leftFlywheel->Set(speed);
-	rightFlywheel->Set(-speed);
+	flywheel->Set(speed);
+}
+void Shooter::RunFlywheel(){
+	//flywheel->Set();
+	if(lastSetFlywheel <= 1 && lastSetFlywheel >= -1){
+		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+	}else{
+		flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
+	}
+	flywheel->Set(lastSetFlywheel);
+}
+void Shooter::StopFlywheel(){
+	//stops the flywheel
+	flywheel->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+	flywheel->Set(0);
+}
+
+void Shooter::SetBoosterSpeed(double speed) {
+	//turns on the boosters to the inputed speed
+	bottomBooster->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+	bottomBooster->Set(speed);
+	topBooster->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
+	topBooster->Set(speed);
 }
 
 void Shooter::SetSpinCycleFeedSpeed(double speed){
@@ -52,6 +83,7 @@ void Shooter::SetSwivelSpeed(double speed){
 }
 
 double Shooter::GetSwivelPosition() {
+	// returns the current encoder clicks of the shooter
 	return turretSwivel->GetEncPosition();
 }
 
@@ -64,12 +96,4 @@ bool Shooter::IsHoodActuated() {
 double Shooter::GetVirtualDistance(PixySubsystem::ObjectValues object){
 	//calculates the distance from the target in inches
 	return (0.00349450614331*(pow(object.y,2))) - (0.0873599815179*(object.y)) + 43.068903964768;
-}
-
-void Shooter::SaveShooterSpeed(double speed) {
-	shooterSpeed = speed;
-}
-
-double Shooter::GetShooterSpeed() {
-	return shooterSpeed;
 }

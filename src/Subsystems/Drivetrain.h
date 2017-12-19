@@ -11,6 +11,7 @@
  */
 class Drivetrain: public Subsystem {
 private:
+	//sped controllers for drivetrain motors
 	std::shared_ptr<CANTalon> FrontLeftMotor;
 	std::shared_ptr<CANTalon> RearLeftMotor;
 	std::shared_ptr<CANTalon> FrontRightMotor;
@@ -39,8 +40,10 @@ public:
 	bool IsWithinThreshold(double obj1X, double obj2X, int threshold);
 	void SetAutonomous(bool isAutonomous);
 	bool GetAutonomous();
+	//determining whether to disable joysticks because autonomous is active or to leave them active
 	bool blockJoysticks;
 
+	//directions for turning in the various autonomous turnings
 	enum class Direction {
 		clockwise,
 		counterClockwise,

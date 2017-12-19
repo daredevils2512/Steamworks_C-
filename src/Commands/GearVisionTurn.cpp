@@ -11,29 +11,55 @@ GearVisionTurn::GearVisionTurn(double targetX) {
 	abort = false;
 	goalPixel = targetX;
 	numberOfNegOne = 0;
+	maxXcoord = 480; //added during prior lake
 	SetTimeout(1.0);
 }
 
 // Called just before this Command runs the first time
 void GearVisionTurn::Initialize() {
+	//resets all of our counters and booleans so we can start tracking
 	targetAcquired = false;
 	abort = false;
 	numberOfNegOne = 0;
+	std::cout << "start gear tracking" << std::endl;
+	RobotMap::spotlightRelay->Set(frc::Relay::Value::kOn);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void GearVisionTurn::Execute() {
 	//Gets the frame data from the GearPixy so we can use it
-	double targetX = Robot::pixySubsystem->GetGearPixyData();
-	std::cout << targetX << std::endl;
+	double targetX = 159;
+	if(VisionServer::targets.size() > 0){
+		targetX = 0;
+		std::cout<<"Objects exist."<<std::endl;
+		for(size_t i = 0; i < VisionServer::targets.size(); i++){
+			std::cout<<"evaluating target..."<<std::endl;
+			double thisX = VisionServer::targets[0].x;
+			if(thisX > targetX){
+				std::cout<<"new working x: " << thisX <<std::endl;
+				targetX = thisX;
+			} else{
+				std::cout<<"too small x: " << thisX <<std::endl;
+			}
+		}
+//	} else if(VisionServer::targets.size() <= 0) { //added during prior lake to stop tracking if there is no object
+//		abort = true;
+//		std::cout << "gear tracking aborted: object has no size" << std::endl; //added during prior lake
+	}
 	if(targetX == -1) {
 		std::cout << "-1" << std::endl;
 		numberOfNegOne++;
 		if(numberOfNegOne >= 20) {
 			abort = true;
-			std::cout << "gear tracking aborted" << std::endl;
+			std::cout << "gear tracking aborted: no value" << std::endl; //added during prior lake
 		}
-	}else{
+	} else if(targetX == 0){ //added check during prior lake
+		abort = true;
+		std::cout << "gear tracking aborted: invalid center x-coordinate: " << targetX << std::endl;
+	} else if(targetX == maxXcoord){
+		abort = true;
+		std::cout << "gear tracking aborted: invalid center x-coordinate: " << targetX << std::endl;
+	} else {
 		numberOfNegOne = 0;
 		TrackObject(targetX);
 	}
@@ -41,12 +67,12 @@ void GearVisionTurn::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool GearVisionTurn::IsFinished() {
-	return targetAcquired || IsTimedOut() || abort;
+	return targetAcquired || abort || IsTimedOut();
 }
 
 // Called once after isFinished returns true
 void GearVisionTurn::End() {
-
+	RobotMap::spotlightRelay->Set(frc::Relay::Value::kOff);
 }
 
 // Called when another command which requires one or more of the same
@@ -56,6 +82,7 @@ void GearVisionTurn::Interrupted() {
 }
 
 int GearVisionTurn::CenterXFinder(double obj1, double obj2, double xDiff) {
+	//finds the centerX coordinate of two objects so we can treat them as one object
 	int centerX = 159;
 	if (obj1 > obj2) {
 		centerX = obj1 - xDiff;
@@ -66,49 +93,41 @@ int GearVisionTurn::CenterXFinder(double obj1, double obj2, double xDiff) {
 }
 
 bool GearVisionTurn::IsHeightSame(double obj1, double obj2, double threshold) {
+	//checking if the height of two objects is the same
 	return Robot::drivetrain->IsWithinThreshold(obj1, obj2, threshold);
 }
 
 bool GearVisionTurn::IsYSame(double obj1, double obj2, double threshold) {
+	//checking if the center y-coordinates of two objects are the same
 	return Robot::drivetrain->IsWithinThreshold(obj1, obj2, threshold);
 }
 
-void GearVisionTurn::TurnDirection(double m_targetX , double centerX){
-	double error = centerX - m_targetX;
-	error = error * 0.005;
-	if (error > 0.5) {
-		error = 0.5;
-	} else if (error < -0.5){
-		error = -0.5;
-	}
-	if(Robot::drivetrain->IsWithinThreshold(m_targetX, centerX, 5)) {
-		Robot::drivetrain->DriveRobotTank(0.5, 0.0);
-	} else if(centerX != m_targetX) {
-		Robot::drivetrain->DriveRobotTank(0.0, error);
-	} else {
-		Robot::drivetrain->DriveRobotTank(0.0, 0.0);
-	}
-}
-
 void GearVisionTurn::TrackObject(double objectX) {
-	int tolerance = 30;
+	//vision tracks an object using the gear pixy by going until it finds the centerX coordinate inputed
+	std::cout << objectX << std::endl;
+	int tolerance = 15;
 	int slowDownTolerance = 100;
+	//checking if the object found has a centerX coordinate that is more or less the same as the target one
 	if(goalPixel-(tolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
 		Robot::drivetrain->DriveRobotTank(0.0, 0.0);
 		std::cout << "Gear target acquired" << std::endl;
 		targetAcquired = true;
 	}else if(objectX < goalPixel) {
+		//checking if the object found has a centerX coordinate that is to the right of the target coordinate
 		if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
-			Robot::drivetrain->DriveRobotTank(-0.4, 0.4);
+			std::cout << "slow" << std::endl;
+			Robot::drivetrain->DriveRobotTank(-0.55, 0.55); //0.5
 		}else{
-			Robot::drivetrain->DriveRobotTank(-0.7, 0.7);
+			Robot::drivetrain->DriveRobotTank(-0.70, 0.70); //0.7
 		}
 		std::cout << "-" << std::endl;
 	}else{
+		//checking if the object found has a centerX coordinate that is to the left of the target coordinate
 		if(goalPixel - (slowDownTolerance/2) <= objectX && objectX <= goalPixel + (tolerance/2)) {
-			Robot::drivetrain->DriveRobotTank(0.4, -0.4);
+			Robot::drivetrain->DriveRobotTank(0.55, -0.55); //0.5
+			std::cout << "slow" << std::endl;
 		}else{
-			Robot::drivetrain->DriveRobotTank(0.7, -0.7);
+			Robot::drivetrain->DriveRobotTank(0.70, -0.70); //0.7
 		}
 		std::cout << "+" << std::endl;
 	}

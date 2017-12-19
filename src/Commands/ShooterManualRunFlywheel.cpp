@@ -13,6 +13,7 @@ void ShooterManualRunFlywheel::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterManualRunFlywheel::Execute() {
+	//runs the shooter's flywheel off of the co-driver's throttle
 	Robot::shooter->SetFlywheelSpeed(Robot::oi->GetTranslatedThrottle());
 }
 

@@ -9,11 +9,13 @@
 
 class AutoCircleDrive : public CommandBase {
 private:
+	//a struct of speeds for both sides of the robot
 	struct Speeds {
 		double leftSpeed;
 		double rightSpeed;
 	};
 
+	//the variables used to store the inputed speeds
 	double m_leftSpeed;
 	double m_rightSpeed;
 	double m_degrees;
@@ -21,6 +23,7 @@ private:
 	Drivetrain::Direction  m_direction;
 
 public:
+	//the functions for the command
 	AutoCircleDrive(double radius, double outerSpeed, Drivetrain::Direction direction, double degrees);
 	void Initialize();
 	void Execute();

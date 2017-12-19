@@ -16,31 +16,34 @@ void ShooterSwivelMoveToPosition::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterSwivelMoveToPosition::Execute() {
-	int tolerance = 1000;
-	int slowDownTolerance = 4000;
+	int tolerance = 75;
+	int slowDownTolerance = 2000;
 	double currentPosition = Robot::shooter->GetSwivelPosition();
+	//stops the swiveling when the current encoder position is close to the desired position
 	if(m_position-(tolerance/2) <= currentPosition && currentPosition <= m_position + (tolerance/2)) {
 		Robot::shooter->SetSwivelSpeed(0.0);
 		onTarget = true;
 		std::cout << m_position << std::endl;
 		std::cout << currentPosition << std::endl;
-		std::cout << "on target" << std::endl;
+//		std::cout << "on target" << std::endl;
 	}else if(currentPosition < m_position) {
+		//turns the turret right if the current position is to the left of the desired position
 		if(m_position-(slowDownTolerance/2) <= currentPosition && currentPosition <= m_position + (slowDownTolerance/2)) {
-			Robot::shooter->SetSwivelSpeed(0.3);
-			std::cout << "slow" << std::endl;
+			Robot::shooter->SetSwivelSpeed(0.1);
+//			std::cout << "slow" << std::endl;
 		}else{
-			Robot::shooter->SetSwivelSpeed(0.6);
+			Robot::shooter->SetSwivelSpeed(0.4);
 		}
-		std::cout << "+" << std::endl;
+//		std::cout << "+" << std::endl;
 	}else {
+		//turns the turret to the left if the current position is the the left of the desired position
 		if(m_position-(slowDownTolerance/2) <= currentPosition && currentPosition <= m_position + (slowDownTolerance/2)) {
-			Robot::shooter->SetSwivelSpeed(-0.3);
-			std::cout << "slow" << std::endl;
+			Robot::shooter->SetSwivelSpeed(-0.1);
+//			std::cout << "slow" << std::endl;
 		}else{
-			Robot::shooter->SetSwivelSpeed(-0.6);
+			Robot::shooter->SetSwivelSpeed(-0.4);
 		}
-		std::cout << "-" << std::endl;
+//		std::cout << "-" << std::endl;
 	}
 }
 

@@ -4,10 +4,6 @@
 PixySubsystem::PixySubsystem() : Subsystem("ExampleSubsystem") {
 	realPixyS = RobotMap::shooterRealPixy;
 	fakePixyS = RobotMap::shooterFakePixy;
-	realPixyG = RobotMap::gearRealPixy;
-	fakePixyG = RobotMap::gearFakePixy;
-	pixyGDigital = RobotMap::gearPixyDigital;
-	pixyGAnalog = RobotMap::gearPixyAnalog;
 }
 
 void PixySubsystem::InitDefaultCommand() {
@@ -19,6 +15,7 @@ void PixySubsystem::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void PixySubsystem::CollectFrameData(std::shared_ptr<frc::SPI> realPixy, std::shared_ptr<frc::SPI> fakePixy) {
+	//collects the data from the pixy
 	uint8_t receiveArray[2];
 	uint8_t fakeReceive[2];
 	bool useRealPixy = true;
@@ -29,6 +26,7 @@ void PixySubsystem::CollectFrameData(std::shared_ptr<frc::SPI> realPixy, std::sh
 	int translatedWord = 0;
 	int zeroCount = 0;
 	frameData.clear();
+	//this loop will keep going until we say we're done collecting data or we've collected 16 zeros
 	while(!doneCollecting && zeroCount < 16) {
 		if(useRealPixy) {
 			realPixy->Read(true, receiveArray, 2);
@@ -36,6 +34,7 @@ void PixySubsystem::CollectFrameData(std::shared_ptr<frc::SPI> realPixy, std::sh
 			//std::cout << translatedWord << std::endl;
 			if(saveData) {
 				if(FoundZeros(translatedWord)) {
+					//if we get a zero back we stop collecting data because it's not an object
 					doneCollecting = true;
 					saveData = false;
 					if(ObjectIsGood(objectData)) {
@@ -44,7 +43,9 @@ void PixySubsystem::CollectFrameData(std::shared_ptr<frc::SPI> realPixy, std::sh
 					objectData.clear();
 				}else{
 					if(IsStartValue(translatedWord)) {
+						//if the data returned is the start code then we start collecting the data afterwards
 						if(!foundOneStartValue) {
+							//checking if we've already found a start value
 							foundOneStartValue = true;
 							if(!firstTime && ObjectIsGood(objectData)) {
 								frameData.push_back(objectData);
@@ -52,8 +53,10 @@ void PixySubsystem::CollectFrameData(std::shared_ptr<frc::SPI> realPixy, std::sh
 								firstTime = false;
 							}
 						}else{
+							//otherwise we clear the data for the frame
 							frameData.clear();
 						}
+						//clearing the object data once we're done so we can get the data for the next one
 						objectData.clear();
 					}else{
 						foundOneStartValue = false;
@@ -62,15 +65,19 @@ void PixySubsystem::CollectFrameData(std::shared_ptr<frc::SPI> realPixy, std::sh
 				}
 			}else{
 				if(IsStartValue(translatedWord)) {
+					//if the data returned is the start value then we know we've hit the end
+					//of the current frame so we save the data and start again
 					frameData.clear();
 					saveData = true;
 					firstTime = true;
 				}else{
+					//otherwise add a zero to our counter
 					zeroCount++;
 				}
 			}
 			useRealPixy = false;
 		}else{
+			//otherwise read data from the fakePixy so we can read from the real one again
 			fakePixy->Read(true, fakeReceive, 2);
 			useRealPixy = true;
 		}
@@ -83,10 +90,12 @@ void PixySubsystem::CollectFrameData(std::shared_ptr<frc::SPI> realPixy, std::sh
 }
 
 bool PixySubsystem::ObjectIsGood(Nullable< std::vector<int> > objectVector) {
+	//checking to see if the object is what we want by checking the height, width, and x, and y-coords
 	return (objectVector.GetValue()[1] - objectVector.GetValue()[2] - objectVector.GetValue()[3] - objectVector.GetValue()[4] - objectVector.GetValue()[5] - objectVector.GetValue()[6]) == 0;
 }
 
 bool PixySubsystem::IsStartValue(int value) {
+	//checking if the data string returned is equal to the hexadecimal string for starting
 	const int startValue = 0xaa55;//43605
 	if(value == startValue) {
 		return true;
@@ -96,6 +105,7 @@ bool PixySubsystem::IsStartValue(int value) {
 }
 
 bool PixySubsystem::FoundZeros(int value) {
+	//returns true if the pixy sends a zero because that means there's no data found
 	if(value == 0) {
 		return true;
 	}else{
@@ -108,6 +118,7 @@ bool PixySubsystem::IsFrameEmpty() {
 }
 
 std::vector<PixySubsystem::ObjectValues> PixySubsystem::GetObjectData() {
+	//getting the object data from the pixy and storing it in an ObjectValues object
 	std::vector<ObjectValues> objectAccumulator;
 	for(auto object : frameData) {
 		ObjectValues currentObject;
@@ -123,30 +134,12 @@ std::vector<PixySubsystem::ObjectValues> PixySubsystem::GetObjectData() {
 }
 
 int PixySubsystem::GetFrameSize() {
+	//returns the size of the frame in pixels
 	return frameData.size();
 }
 
 std::vector<PixySubsystem::ObjectValues> PixySubsystem::GetShooterPixyData() {
+	//collecting the data from both the real and fake pixy
 	CollectFrameData(realPixyS, fakePixyS);
 	return GetObjectData();
 }
-
-double PixySubsystem::GetGearPixyData() {
-//	CollectFrameData(realPixyG, fakePixyG);
-//	return GetObjectData();
-	double mult = 318/3.3;
-	double pixyVoltage = pixyGAnalog->GetAverageVoltage();
-	if(pixyGDigital->Get()) {
-		if(pixyVoltage > 0) {
-			return pixyVoltage * mult;
-		}else{
-			std::cout << "ERROR: No data available for object" << std::endl;
-			return -1;
-		}
-	}else{
-		std::cout << "ERROR: No object detected" << std::endl;
-		return -1;
-	}
-}
-
-

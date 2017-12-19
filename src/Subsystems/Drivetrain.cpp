@@ -66,6 +66,7 @@ void Drivetrain::ResetEncoders() {
 }
 
 void Drivetrain::TurnDirection(double m_targetX , double centerX){
+	//determining which direction to turn for vision turning
 	double error = centerX - m_targetX;
 	error = error * 0.005;
 	if (error > 0.5) {
@@ -83,6 +84,7 @@ void Drivetrain::TurnDirection(double m_targetX , double centerX){
 }
 
 bool Drivetrain::IsWithinThreshold(double obj1X, double obj2X, int threshold){
+	//determining if two objects are within a certain range of each other
 	int tol = threshold / 2;
 	return (obj1X - tol <= obj2X && obj1X + tol >= obj2X) && (obj2X - tol <= obj1X && obj2X + tol >= obj1X);
 }

@@ -8,20 +8,26 @@ AutoStraightDrive::AutoStraightDrive(double targetFeet, double speed) {
 	Requires(Robot::drivetrain.get());
 	m_targetFeet = targetFeet;
 	m_speed = speed;
+	//setting a timeout in case it doesn't move so it doesn't keep trying forever
+	SetTimeout(3.0);
 }
 
 // Called just before this Command runs the first time
 void AutoStraightDrive::Initialize() {
+	//reseting the encoders before we start
 	Robot::drivetrain->ResetEncoders();
+	std::cout << "drive started" << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AutoStraightDrive::Execute() {
+	//drives the robot using tank drive so each side drives the same
 	Robot::drivetrain->DriveRobotTank(m_speed, m_speed);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool AutoStraightDrive::IsFinished() {
+	//determines if the robot is done driving based off of encoders or if it timed out
 	double leftDistance = abs(Robot::drivetrain->GetLeftEncoder());
 	double rightDistance = abs(Robot::drivetrain->GetRightEncoder());
 	if(abs(leftDistance - rightDistance) > 6) {
@@ -32,11 +38,16 @@ bool AutoStraightDrive::IsFinished() {
 			leftDistance = rightDistance;
 		}
 	}
-	return (leftDistance + rightDistance) / 2 >= m_targetFeet;
+	if(IsTimedOut()) {
+		std::cout << "timed out" << std::endl;
+	}
+	return ((rightDistance + leftDistance) /2 >= m_targetFeet) || IsTimedOut();
 }
 
 // Called once after isFinished returns true
 void AutoStraightDrive::End() {
+	//turns off the motors when we're done
+	std::cout << "drive completed" << std::endl;
 	Robot::drivetrain->DriveRobotTank(0.0 , 0.0);
 }
 

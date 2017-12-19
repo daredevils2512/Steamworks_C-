@@ -4,15 +4,18 @@ AutoCircleDrive::AutoCircleDrive(double radius, double outerSpeed, Drivetrain::D
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::drivetrain.get());
+	//quick declares for the inputed values
 	m_leftSpeed = 0.0;
 	m_rightSpeed = 0.0;
 	m_direction = direction;
 	m_degrees = degrees;
 	m_radius = radius;
 	int width = 27;
+	//calculating the speed the inner wheels need to spin at to drive in a circle with the inputed radius
 	double innerSpeed = ((m_radius - (width / 2)) / (m_radius + (width/2)) * outerSpeed);
 	std::cout << "Inner speed: " << innerSpeed << std::endl;
 	switch (m_direction) {
+	//determining which is the inner side and which is the outer side for the wheels
 		case Drivetrain::Direction::clockwise:
 			m_leftSpeed = outerSpeed;
 			m_rightSpeed = innerSpeed;
@@ -32,16 +35,19 @@ AutoCircleDrive::AutoCircleDrive(double radius, double outerSpeed, Drivetrain::D
 
 // Called just before this Command runs the first time
 void AutoCircleDrive::Initialize() {
+	//reseting the encoders before we start
 	Robot::drivetrain->ResetEncoders();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AutoCircleDrive::Execute() {
+	//drives the robot in a circle using the speeds figured out in the constructor
 	Robot::drivetrain->DriveRobotTank(m_leftSpeed, m_rightSpeed);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool AutoCircleDrive::IsFinished() {
+	//seeing if the robot is done turning based off of reading the encoders
 	double feetsGone;
 	double middleCircumference = 2.0 * M_PI * m_radius;
 	double partOfCircle = m_degrees / 360.0;
@@ -66,6 +72,7 @@ bool AutoCircleDrive::IsFinished() {
 
 // Called once after isFinished returns true
 void AutoCircleDrive::End() {
+	//turns off the motors when we're done
 	Robot::drivetrain->DriveRobotTank(0.0, 0.0);
 }
 

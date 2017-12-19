@@ -11,7 +11,7 @@ ShooterVisionTrack::ShooterVisionTrack(bool isAutonomous) {
 	abort = false;
 	targetAcquired = false;
 	m_isAutonomous = isAutonomous;
-	speed = 0.7;
+	speed = 0.4;
 	fwdLastPressed = false;
 	revLastPressed = false;
 	fwdLastPassed = false;
@@ -42,10 +42,10 @@ void ShooterVisionTrack::Execute() {
 //
 //		}
 		if(FwdEncPassedThisTime()) {
-			speed = -0.7;
+			speed = -0.4;
 		}
 		if(RevEncPassedThisTime()) {
-			speed = 0.7;
+			speed = 0.4;
 		}
 		Robot::shooter->SetSwivelSpeed(speed);
 		return;
@@ -60,6 +60,9 @@ void ShooterVisionTrack::Execute() {
 	if(frame.size() == 1){ // if we have one object
 //		std::cout << "found one object" << std::endl;
 		PixySubsystem::ObjectValues stare = frame[0]; // focused object
+		if(stare.y > 90){
+			return;
+		}
 		if(stare.width*stare.height < maxArea){// if the object is smaller than the maximum area
 			trackedObj = stare;
 			trackedSet = true;
@@ -77,13 +80,23 @@ void ShooterVisionTrack::Execute() {
 		for(unsigned i = 0; i < frame.size(); i++){
 			//iterate through all known objects
 			PixySubsystem::ObjectValues stare = frame[i]; //focused object
+			if(stare.y > 90){
+				continue;
+			}
 			if(stare.width * stare.height < maxArea){
 				// if this current object is within the area maximum
 				for(unsigned j = i+1; j < frame.size(); j++){
 					// iterate through all objects that haven't been "checked"
 					PixySubsystem::ObjectValues pSecBar = frame[j];
+//					if(pSecBar.y > 100){
+//						continue;
+//					}
 					if(pSecBar.width * pSecBar.height >= maxArea){
 						//if this object doesn't match max area checks, skip this iteration
+						continue;
+					}
+					if(pSecBar.y > 90){
+						std::cout<<"SHOOTER: " << pSecBar.y << "px DOES NOT CONFORM TO CONSTRAINTS!" <<std::endl;
 						continue;
 					}
 					if(barsSet){
@@ -137,7 +150,7 @@ void ShooterVisionTrack::Execute() {
 	int middle = 160;//159
 	//sets the acceptable tolerance of the target
 	int tolerance = 20;
-	int slowDownTolerance = 80;
+	int slowDownTolerance = 150;
 	//sets the minimum and maximum speeds of the turret swivel
 
 	//double minspeed = 0.1;
@@ -155,18 +168,18 @@ void ShooterVisionTrack::Execute() {
 //		std::cout << "-" << std::endl;
 		targetAcquired = false;
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
-			Robot::shooter->SetSwivelSpeed(-0.3);
+			Robot::shooter->SetSwivelSpeed(-0.2);
 		}else{
-			Robot::shooter->SetSwivelSpeed(-0.7);
+			Robot::shooter->SetSwivelSpeed(-0.4);
 		}
 	}else{
 		// hopefully to the right of middle
 //		std::cout << "+" << std::endl;
 		targetAcquired = false;
 		if(middle-(slowDownTolerance/2) <= trackedObj.x && trackedObj.x <= middle + (slowDownTolerance/2)) {
-			Robot::shooter->SetSwivelSpeed(0.3);
+			Robot::shooter->SetSwivelSpeed(0.2);
 		}else{
-			Robot::shooter->SetSwivelSpeed(0.7);
+			Robot::shooter->SetSwivelSpeed(0.4);
 		}
 	}
 	//SmartDashboard::PutBoolean("Boiler Acquired", targetAcquired);

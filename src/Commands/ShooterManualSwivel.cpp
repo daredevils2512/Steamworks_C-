@@ -14,6 +14,7 @@ void ShooterManualSwivel::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterManualSwivel::Execute() {
+	//swivels the turret manually based off of the co-drivers joystick
 	Robot::shooter->SetSwivelSpeed(Robot::oi->GetManualShooterSwivel());
 }
 

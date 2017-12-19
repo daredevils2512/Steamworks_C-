@@ -2,10 +2,10 @@
 #include <Commands/AutoStraightDrive.h>
 #include "GearGetLimitSwitch.h"
 #include "PauseCommand.h"
-#include "GearGetLimitSwitch.h"
-#include "PauseCommand.h"
 #include "../Subsystems/Drivetrain.h"
 #include "GearVisionTurn.h"
+#include "_CMG_ShootBall_BoosterWatchdog.h"
+
 
 _CMG_AutonomousGearCenterPeg::_CMG_AutonomousGearCenterPeg() {
 	// Add Commands here:
@@ -24,15 +24,16 @@ _CMG_AutonomousGearCenterPeg::_CMG_AutonomousGearCenterPeg() {
 		// e.g. if Command1 requires chassis, and Command2 requires arm,
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
-	AddSequential(new AutoStraightDrive(30.0, 0.7));
-	AddSequential(new PauseCommand(0.5));
-	AddSequential(new GearVisionTurn(216));
-	AddSequential(new PauseCommand(0.2));
-	AddSequential(new GearVisionTurn(216));
-	AddSequential(new PauseCommand(0.2));
-	AddSequential(new GearVisionTurn(216));
-	AddSequential(new PauseCommand(0.2));
-	AddSequential(new AutoStraightDrive(18.0, 0.7));
 //	AddSequential(new AutoStraightDrive(48.0, 0.7));
-	AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+//	AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+	AddSequential(new AutoStraightDrive(31.0, 0.7)); //30//0.7
+	AddSequential(new PauseCommand(0.75));
+//	AddSequential(new GearVisionTurn(265));//208//210//200
+//	AddSequential(new PauseCommand(0.2));
+//	AddSequential(new GearVisionTurn(265));
+//	AddSequential(new PauseCommand(0.2));
+//	AddSequential(new GearVisionTurn(265));
+//	AddSequential(new PauseCommand(0.2));
+	AddSequential(new AutoStraightDrive(20.0, 0.55)); //20.0
+	AddSequential(new _CMG_ShootBall_BoosterWatchdog());
 }

@@ -15,6 +15,7 @@ void AutoTimedDriveForward::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void AutoTimedDriveForward::Execute() {
+	//drives forward based off of a time inputed
 	Robot::drivetrain->DriveRobotArcade(0.4, 0.0);
 }
 

@@ -31,6 +31,7 @@ private:
 	bool abort;
 	int goalPixel;
 	int numberOfNegOne;
+	int maxXcoord; //added during Prior Lake
 };
 
 #endif  // GearVisionTurn_H

@@ -12,10 +12,6 @@ private:
 	// for methods that implement subsystem capabilities
 	std::shared_ptr<frc::SPI> realPixyS;
 	std::shared_ptr<frc::SPI> fakePixyS;
-	std::shared_ptr<frc::SPI> realPixyG;
-	std::shared_ptr<frc::SPI> fakePixyG;
-	std::shared_ptr<frc::DigitalInput> pixyGDigital;
-	std::shared_ptr<frc::AnalogInput> pixyGAnalog;
 	std::vector< std::vector<int> > frameData;
 	std::vector<int> objectData;
 	int emptyFrameCount = 0;
@@ -23,6 +19,7 @@ private:
 
 
 public:
+	//setting up the ObjectValues structure so we can store the data returned by the pixy
 	struct ObjectValues {
 		int checksum;
 		int signature;
@@ -35,12 +32,12 @@ public:
 	PixySubsystem();
 	void InitDefaultCommand();
 	std::vector<PixySubsystem::ObjectValues> GetShooterPixyData();
-	double GetGearPixyData();
 	bool IsFrameEmpty();
 
 	int GetFrameSize();
 
 private:
+	//creating the usable functions and booleans
 	void CollectFrameData(std::shared_ptr<frc::SPI> realPixy, std::shared_ptr<frc::SPI> fakePixy);
 	bool ObjectIsGood(Nullable< std::vector<int> > objectVector);
 	std::vector<ObjectValues> GetObjectData();

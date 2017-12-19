@@ -27,34 +27,32 @@ _CMG_AutonomousGearFarPeg::_CMG_AutonomousGearFarPeg() {
 	// arm.
 //	AddSequential(new AutoCircleDrive(160.0, 1.0, Drivetrain::Direction::clockwise, 80.0));
 	if(Robot::robotAlliance == frc::DriverStation::kBlue){
-		AddSequential(new AutoStraightDrive(45.0, 0.7));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoDimeSpin(0.9, 23.0, Robot::drivetrain->Direction::counterClockwise));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoStraightDrive(33.0, 0.7));//48
+		AddSequential(new AutoStraightDrive(62.0, 0.7)); //64.0
+		AddSequential(new PauseCommand(1.0));
+		AddSequential(new AutoDimeSpin(0.9, 20.0, Robot::drivetrain->Direction::counterClockwise)); //19.0
+//		AddSequential(new PauseCommand(0.2));
+//		AddSequential(new AutoStraightDrive(30.0, 0.7));
 		AddSequential(new PauseCommand(0.5));
-		AddSequential(new GearVisionTurn(216));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new GearVisionTurn(216));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new GearVisionTurn(216));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoStraightDrive(15.0, 0.7));
-		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
-	}else{//red working
-		AddSequential(new AutoStraightDrive(45.0, 0.7));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoDimeSpin(0.9, 17.0, Robot::drivetrain->Direction::clockwise));
-		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoStraightDrive(30.0, 0.7));//44
+		AddSequential(new GearVisionTurn(265)); //185
 		AddSequential(new PauseCommand(0.5));
-//		AddSequential(new GearVisionTurn(216));
+//		AddSequential(new GearVisionTurn(265));
+//		AddSequential(new PauseCommand(0.5));
+//		AddSequential(new GearVisionTurn(265));
 //		AddSequential(new PauseCommand(0.2));
-//		AddSequential(new GearVisionTurn(216));
+		AddSequential(new AutoStraightDrive(23.0, 0.55));
+	}else{
+		AddSequential(new AutoStraightDrive(62.0, 0.7));
+		AddSequential(new PauseCommand(1.0));
+		AddSequential(new AutoDimeSpin(0.9, 20.0, Robot::drivetrain->Direction::clockwise));
 //		AddSequential(new PauseCommand(0.2));
-//		AddSequential(new GearVisionTurn(216));
+//		AddSequential(new AutoStraightDrive(30.0, 0.7));
+		AddSequential(new PauseCommand(0.5));
+		AddSequential(new GearVisionTurn(265)); //185
+		AddSequential(new PauseCommand(0.5));
+//		AddSequential(new GearVisionTurn(265));
+//		AddSequential(new PauseCommand(0.5));
+//		AddSequential(new GearVisionTurn(265));
 //		AddSequential(new PauseCommand(0.2));
-		AddSequential(new AutoStraightDrive(13.0, 0.5));
-		AddSequential(new GearIntakeActuate(frc::DoubleSolenoid::kReverse));
+		AddSequential(new AutoStraightDrive(23.0, 0.55));
 	}
 }
