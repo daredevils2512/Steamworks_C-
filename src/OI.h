@@ -13,8 +13,8 @@ public:
 	//RPM setpoints for the turret
 	double SHOOT_BOILER_RPM = 3100; // retested, glorious
 	double SHOOT_FAR_HOPPER_RPM = 4050; // retested, decent
-	double SHOOT_BOILER_PEG_RPM = 4085; // retested, decent, consider ~10 less
-	double SHOOT_CENTER_PEG_RPM = 4550; // retested, meh
+	double SHOOT_BOILER_PEG_RPM = 4085; // retested, decent,
+	double SHOOT_CENTER_PEG_RPM = 4550; // retested, decent
 	double SHOOT_CLOSE_HOPPER_RPM = 4025; // retested, decent
 
 private:

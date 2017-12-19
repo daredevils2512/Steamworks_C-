@@ -1,7 +1,7 @@
 #include "RobotMap.h"
 #include "LiveWindow/LiveWindow.h"
 #include "WPILib.h"
-#include "CANTAlon.h"
+#include "CANTalon.h" // CTRLib 4.4.1.12
 
 static const int DRIVETRAIN_FRONT_LEFT_MOTOR = 4;
 static const int DRIVETRAIN_REAR_LEFT_MOTOR = 1;
@@ -33,8 +33,6 @@ std::shared_ptr<frc::SPI> RobotMap::shooterFakePixy;
 std::shared_ptr<frc::RobotDrive> RobotMap::drivetrainChassis;
 std::shared_ptr<frc::Encoder> RobotMap::drivetrainLeftEncoder;
 std::shared_ptr<frc::Encoder> RobotMap::drivetrainRightEncoder;
-std::shared_ptr<frc::Relay> RobotMap::compressorSpike;
-std::shared_ptr<frc::DigitalInput> RobotMap::compressorPressureSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::drivetrainShift;
 std::shared_ptr<frc::DigitalInput> RobotMap::gearLimitSwitch;
 std::shared_ptr<frc::DoubleSolenoid> RobotMap::gearSolenoid;
@@ -102,10 +100,10 @@ void RobotMap::init() {
 	//creating a new chassis consisting of all the drivetrain motors
 	drivetrainChassis.reset (new frc::RobotDrive (drivetrainFrontLeftMotor , drivetrainRearLeftMotor , drivetrainFrontRightMotor , drivetrainRearRightMotor));
 
-	drivetrainChassis ->SetSafetyEnabled(false);
-	drivetrainChassis ->SetExpiration(0.5);
-	drivetrainChassis ->SetSensitivity(0.5);
-	drivetrainChassis ->SetMaxOutput(1.0);
+	drivetrainChassis->SetSafetyEnabled(false);
+	drivetrainChassis->SetExpiration(0.5);
+	drivetrainChassis->SetSensitivity(0.5);
+	drivetrainChassis->SetMaxOutput(1.0);
 
 	drivetrainLeftEncoder.reset(new frc::Encoder(1, 2, false, Encoder::k4X));//1, 2
 	drivetrainLeftEncoder->SetReverseDirection(true);
